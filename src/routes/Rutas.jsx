@@ -1,5 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Login from '../components/user/Login'
+
 
 export const Rutas = () => {
     return (
@@ -8,13 +10,8 @@ export const Rutas = () => {
                 <div className="header-nav"></div>
                 <section id="content">
                     <Routes>
-                        <Route path='/' element />
-                        <Route path='/home' element />
-                        <Route path='/' element />
-                        <Route path='/' element />
-                        <Route path='/' element />
-                        <Route path='/' element />
-                        <Route path='/' element />
+                        <Route path='/' element={<Login />} />
+                        <Route path='/home' />
 
 
                         <Route path="*" element={
