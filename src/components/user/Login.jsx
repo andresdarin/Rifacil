@@ -2,6 +2,10 @@ import React, { useState } from 'react'
 import { useForm } from '../../hooks/useForm'
 import { Global } from '../../helpers/Global'
 
+//iconos
+import { FaUser } from 'react-icons/fa'
+import { FaLock } from 'react-icons/fa'
+
 export const Login = () => {
     const { form, changed } = useForm({});
     const [loged, setLoged] = useState("not_sended");
@@ -45,23 +49,41 @@ export const Login = () => {
 
     return (
         <>
-            <header className="content__header content__header--public">
-                <h1 className="content__title">Login</h1>
-            </header>
-
             <div className="form-container sign-up">
+                <header className="content__header content__header--public">
+                    <h1 className="content__title">Login</h1>
+                </header>
                 {loged === 'loged' && <strong className='alert alert-success'>Usuario Identificado Correctamente</strong>}
                 {loged === 'error' && <strong className='alert alert-danger'>Usuario no Identificado</strong>}
                 <form className='form-login' onSubmit={loginUser}>
                     <div className="form-group">
-                        <label htmlFor='email'>Email</label>
-                        <input type='email' name='email' onChange={changed} />
+                        <label htmlFor='email' />
+                        <input type='email' name='email' placeholder='eMail' onChange={changed} />
+                        <FaUser className='icon' />
                     </div>
                     <div className="form-group">
-                        <label htmlFor='password'>Contraseña</label>
-                        <input type='password' name='password' onChange={changed} />
+                        <label htmlFor='password' />
+                        <input type='password' name='password' placeholder='Contraseña' onChange={changed} />
+                        <FaLock className='icon' />
                     </div>
-                    <input type="submit" value='Identifícate' className='btn btn-success' />
+                    <div className="remember-forgot">
+                        <label><input type='checkbox' />Recuérdame</label>
+                        <a href="#">Olvidaste la contraseña?</a>
+                    </div>
+                    <div className="buttons-login">
+                        <input type="submit" value='Iniciar Sesión' className='btn' />
+                    </div>
+                    <div className="buttons-login-label">
+                        <span>No tienes cuenta todavía?</span>
+                        <a href="#">Regístrate</a>
+                    </div>
+                    <div className="social-icons">
+                        <a href="#" className="social-icon"><i className="fa-brands fa-google-plus-g"></i></a>
+                        <a href="#" className="social-icon"><i className="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" className="social-icon"><i className="fa-brands fa-github"></i></a>
+                        <a href="#" className="social-icon"><i className="fa-brands fa-linkedin-in"></i></a>
+                    </div>
+
                 </form>
             </div>
         </>
