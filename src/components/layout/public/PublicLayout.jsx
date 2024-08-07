@@ -15,3 +15,4 @@ export const PublicLayout = () => {
         </>
     )
 }
+export default PublicLayout;

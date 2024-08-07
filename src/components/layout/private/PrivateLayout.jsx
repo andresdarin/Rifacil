@@ -5,7 +5,7 @@ import { Sidebar } from './Sidebar'
 
 export const PrivateLayout = () => {
     return (
-        <>
+        <div>
             {/*Layout*/}
             {/*Cabecera de Navegacion*/}
             <Header />
@@ -18,6 +18,7 @@ export const PrivateLayout = () => {
             {/*Barra Lateral*/}
             <Sidebar />
 
-        </>
+        </div>
     )
 }
+export default PrivateLayout;

@@ -1,7 +1,13 @@
-import React from 'react'
+// src/components/user/Register.jsx
+import React from 'react';
 
-export const Register = () => {
+const Register = () => {
     return (
-        <div>Register</div>
-    )
-}
+        <div>
+            <h1>Register</h1>
+            {/* Tu código de registro aquí */}
+        </div>
+    );
+};
+
+export default Register;
