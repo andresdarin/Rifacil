@@ -15,12 +15,13 @@ export const Rutas = () => {
                     <Route index element={<Login />} />
                     <Route path='login' element={<Login />} />
                     <Route path='registro' element={<Register />} />
+
                 </Route>
 
-                <Route path='/social' element={<PrivateLayout />}>
+                <Route path='/admin' element={<PrivateLayout />}>
                     <Route index element={<Login />} />
                     <Route path='login' element={<Login />} />
-                    <Route path='registro' element={<Register />} />
+                    <Route path='registro' element={<Register />} />  //va a ser alta de vendedor
                 </Route>
 
                 <Route path='*' element={

@@ -9,6 +9,7 @@ export const Header = () => {
                     <img src="/Logo-Circulo.png" alt="Logo" className="navbar__logo-image" />
                 </a>
             </div>
+            <Nav />
         </header>
     )
 }

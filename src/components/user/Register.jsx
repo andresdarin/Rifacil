@@ -15,7 +15,7 @@ const Register = () => {
         let newUser = form;
 
         //guardar usuario en el backend
-        const request = await fetch(Global.url + 'user/register', {
+        const request = await fetch(Global.url + 'usuario/register', {
             method: 'POST',
             body: JSON.stringify(newUser),
             headers: {
@@ -73,12 +73,12 @@ const Register = () => {
                         </div>
                         <div className="form-group">
                             <label htmlFor='passwordRep' />
-                            <input type='passwordRep' name='password' placeholder='Confirma tu Contraseña' onChange={changed} />
+                            <input type='password' name='password' placeholder='Confirma tu Contraseña' onChange={changed} />
                         </div>
 
 
                         <div className="buttons-login">
-                            <input type="submit" value='Registrarse' className='btn' />
+                            <button type="submit" className='btn'>Registrarse</button>
                         </div>
 
                     </form>
