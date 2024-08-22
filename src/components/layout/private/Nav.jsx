@@ -37,11 +37,6 @@ export const Nav = () => {
 
             <ul className="container-lists__list-end">
                 <li className="list-end__item">
-                    <a href="#" className="list-end__link-image">
-                        <img src={avatar} className="list-end__img" alt="Imagen de perfil" />
-                    </a>
-                </li>
-                <li className="list-end__item">
                     <a href="#" className="list-end__link">
                         <span className="list-end__name">nick</span>
                     </a>

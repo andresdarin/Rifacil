@@ -5,6 +5,7 @@ import { Global } from '../../helpers/Global'
 //iconos
 import { FaUser } from 'react-icons/fa'
 import { FaLock } from 'react-icons/fa'
+import { Navigate } from 'react-router-dom'
 
 export const Login = () => {
     const { form, changed } = useForm({});
@@ -38,6 +39,7 @@ export const Login = () => {
                 localStorage.setItem('user', JSON.stringify(data.user));
 
                 setLoged('loged');
+                Navigate('/landing')
             } else {
                 setLoged('error');
             }
