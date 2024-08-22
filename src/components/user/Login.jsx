@@ -1,15 +1,18 @@
-import React, { useState } from 'react'
-import { useForm } from '../../hooks/useForm'
-import { Global } from '../../helpers/Global'
+import React, { useState } from 'react';
+import { useForm } from '../../hooks/useForm';
+import { Global } from '../../helpers/Global';
+import useAuth from '../../hooks/useAuth';
+import { useNavigate } from 'react-router-dom'; // Importa useNavigate
 
-//iconos
-import { FaUser } from 'react-icons/fa'
-import { FaLock } from 'react-icons/fa'
-import { Navigate } from 'react-router-dom'
+// Iconos
+import { FaUser } from 'react-icons/fa';
+import { FaLock } from 'react-icons/fa';
 
 export const Login = () => {
     const { form, changed } = useForm({});
     const [loged, setLoged] = useState("not_sended");
+    const { setAuth } = useAuth();
+    const navigate = useNavigate(); // Crea una instancia de navigate
 
     const loginUser = async (e) => {
         e.preventDefault();
@@ -38,8 +41,13 @@ export const Login = () => {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify(data.user));
 
+                // Actualizar el estado de autenticación
+                setAuth(data.user);
+
                 setLoged('loged');
-                Navigate('/landing')
+
+                // Redirigir a la landing page
+                navigate('admin/landing'); // Cambia '/landing' por la ruta de tu landing page
             } else {
                 setLoged('error');
             }
@@ -52,7 +60,7 @@ export const Login = () => {
     return (
         <>
             <div className="form-container sign-up">
-                <header className="content__header content__header--public">
+                <header className="content_header content_header--public">
                     <h1 className="content__title">Login</h1>
                 </header>
                 {loged === 'loged' && <strong className='alert alert-success'>Usuario Identificado Correctamente</strong>}
@@ -89,7 +97,7 @@ export const Login = () => {
                 </form>
             </div>
         </>
-    )
+    );
 }
 
 export default Login;

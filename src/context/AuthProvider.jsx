@@ -71,7 +71,7 @@ const AuthProvider = ({ children }) => {
         // Verifica que userId no sea undefined antes de hacer las solicitudes
         if (userId) {
             // Asegúrate de que la URL sea correcta
-            const userProfileUrl = `${Global.url}user/profile/${userId}`;
+            const userProfileUrl = `${Global.url}usuario/profile/${userId}`;
 
             const userData = await fetchData(userProfileUrl, token);
 
