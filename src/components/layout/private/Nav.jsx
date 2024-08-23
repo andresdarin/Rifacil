@@ -35,7 +35,7 @@ export const Nav = () => {
                 </li>
             </ul>
 
-            <ul className="container-lists__list-end">
+            {/*<ul className="container-lists__list-end">
                 <li className="list-end__item">
                     <a href="#" className="list-end__link">
                         <span className="list-end__name">nick</span>
@@ -49,7 +49,7 @@ export const Nav = () => {
                         <span className="list-end__name">Cerrar Sesión</span>
                     </a>
                 </li>
-            </ul>
+            </ul>*/}
 
         </nav>
     )

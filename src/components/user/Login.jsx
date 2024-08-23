@@ -30,10 +30,6 @@ export const Login = () => {
                 }
             });
 
-            if (!request.ok) {
-                throw new Error('Network response was not ok');
-            }
-
             const data = await request.json();
 
             if (data.status === 'success') {

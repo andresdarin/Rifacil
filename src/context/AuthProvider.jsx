@@ -28,19 +28,18 @@ const AuthProvider = ({ children }) => {
 
             // Manejar respuestas no OK
             if (!response.ok) {
-                // Lanza un error con un mensaje claro que incluye el código de estado
-                throw new Error(Error`fetching data: ${response.status} ${response.statusText}`);
+                throw new Error(`Error fetching data: ${response.status} ${response.statusText}`);
             }
 
             // Convertir la respuesta a JSON
             const data = await response.json();
             return data;
         } catch (error) {
-            // Manejar y mostrar errores de forma adecuada
             console.error("Error fetching data:", error);
             return null; // Devuelve null en caso de error
         }
     };
+
 
     const authUser = async () => {
         const token = localStorage.getItem("token");
