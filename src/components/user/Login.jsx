@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { useForm } from '../../hooks/useForm';
 import { Global } from '../../helpers/Global';
 import useAuth from '../../hooks/useAuth';
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate
+import { NavLink, useNavigate } from 'react-router-dom'; // Importa useNavigate
 
 // Iconos
 import { FaUser } from 'react-icons/fa';
 import { FaLock } from 'react-icons/fa';
+import Register from './Register';
 
 export const Login = () => {
     const { form, changed } = useForm({});
@@ -82,7 +83,7 @@ export const Login = () => {
                     </div>
                     <div className="buttons-login-label">
                         <span>No tienes cuenta todavía?</span>
-                        <a href="#">Regístrate</a>
+                        <NavLink to='/registro'>Regístrate</NavLink>
                     </div>
                     <div className="social-icons">
                         <a href="#" className="social-icon"><i className="fa-brands fa-google-plus-g"></i></a>

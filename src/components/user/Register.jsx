@@ -36,7 +36,7 @@ const Register = () => {
             <>
                 <div className="form-container sign-up">
                     <header className="content__header content__header--public">
-                        <h1 className="content__title">Register</h1>
+                        <h1 className="content__title">Registro</h1>
                     </header>
 
                     {saved == 'saved' ? <strong className='alert alert-success'>Ususario registado Correctamente </strong> : ''}
