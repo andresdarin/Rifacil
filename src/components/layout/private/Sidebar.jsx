@@ -5,8 +5,8 @@ export const Sidebar = () => {
     return (
         <aside className="layout__aside">
 
-            <header className="aside__header">
-                <h1 className="aside__title">Hola, Victor</h1>
+            {/*<header className="aside__header">
+                <h1 className="aside__title">Hola Nombre de Usuario</h1>
             </header>
 
             <div className="aside__container">
@@ -16,42 +16,16 @@ export const Sidebar = () => {
                     <div className="profile-info__general-info">
 
                         <div className="general-info__container-names">
-                            <a href="#" className="container-names__name">Victor Robles</a>
-                            <p className="container-names__nickname">VictorWeb</p>
+                            <a href="#" className="container-names__name">Nombre Completo Usuario</a>
+                            <p className="container-names__nickname">Nick</p>
                         </div>
-                    </div>
-
-                    <div className="profile-info__stats">
-
-                        <div className="stats__following">
-                            <a href="#" className="following__link">
-                                <span className="following__title">Siguiendo</span>
-                                <span className="following__number">10</span>
-                            </a>
-                        </div>
-                        <div className="stats__following">
-                            <a href="#" className="following__link">
-                                <span className="following__title">Seguidores</span>
-                                <span className="following__number">13</span>
-                            </a>
-                        </div>
-
-
-                        <div className="stats__following">
-                            <a href="#" className="following__link">
-                                <span className="following__title">Publicaciones</span>
-                                <span className="following__number">17</span>
-                            </a>
-                        </div>
-
-
                     </div>
                 </div>
 
 
                 <div className="aside__container-form">
 
-                    <form className="container-form__form-post">
+                    {/*  <form className="container-form__form-post">
 
                         <div className="form-post__inputs">
                             <label htmlFor="post" className="form-post__label">¿Que estas pesando hoy?</label>
@@ -69,7 +43,7 @@ export const Sidebar = () => {
 
                 </div>
 
-            </div>
+            </div>*/}
 
         </aside>
     )

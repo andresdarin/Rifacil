@@ -14,6 +14,7 @@ export const Login = () => {
     const { setAuth } = useAuth();
     const navigate = useNavigate(); // Crea una instancia de navigate
 
+
     const loginUser = async (e) => {
         e.preventDefault();
 
@@ -43,7 +44,7 @@ export const Login = () => {
                 setLoged('loged');
 
                 // Redirigir a la landing page
-                navigate('admin/landing'); // Cambia '/landing' por la ruta de tu landing page
+                navigate('/admin/landing'); //ruta absoluta para que no nos cargue como login/admin/landing 
             } else {
                 setLoged('error');
             }
@@ -77,7 +78,7 @@ export const Login = () => {
                         <a href="#">Olvidaste la contraseña?</a>
                     </div>
                     <div className="buttons-login">
-                        <input type="submit" value='Iniciar Sesión' className='btn' />
+                        <button type="submit" className='btn'>Iniciar Sesion</button>
                     </div>
                     <div className="buttons-login-label">
                         <span>No tienes cuenta todavía?</span>
