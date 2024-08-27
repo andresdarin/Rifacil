@@ -38,17 +38,25 @@ export const Login = () => {
                 // Persistir los datos en el navegador
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify(data.user));
+                localStorage.setItem('rol', JSON.stringify(data.user.rol));
 
                 // Actualizar el estado de autenticación
                 setAuth(data.user);
 
                 setLoged('loged');
 
-                // Redirigir a la landing page
-                navigate('/admin/landing'); //ruta absoluta para que no nos cargue como login/admin/landing 
+                // Redirigir a la landing page según el rol del usuario
+                if (data.user.rol === 'admin') {
+                    navigate('/admin/profile');
+                } else if (data.user.rol === 'vendedor') {
+                    navigate('/vendedor/profile');
+                } else {
+                    navigate('/landing');
+                }
             } else {
                 setLoged('error');
             }
+
         } catch (error) {
             console.error('Error en la solicitud:', error);
             setLoged('error');
