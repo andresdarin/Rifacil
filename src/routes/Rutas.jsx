@@ -34,6 +34,7 @@ export const Rutas = () => {
 
                 <Route path='/vendedor' element={<PrivateLayout />}>
                     <Route path='profile' element={<VendedorProfile />} />
+                    <Route path='logout' element={<Logout />} />
                 </Route>
 
                 <Route path='*' element={

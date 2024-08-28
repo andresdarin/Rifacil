@@ -2,11 +2,13 @@
 import React, { useState } from 'react'
 import { useForm } from '../../hooks/useForm'
 import { Global } from '../../helpers/Global'
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
 
     const { form, changed } = useForm({})
     const [saved, setSaved] = useState('not_sended')
+    const navigate = useNavigate();
     const saveUser = async (e) => {
         //prevenir actualizacin de pantalla
         e.preventDefault();
@@ -27,6 +29,7 @@ const Register = () => {
 
         if (data.status == 'success') {
             setSaved('saved');
+            navigate('/landing');
         } else {
             setSaved('error')
         }

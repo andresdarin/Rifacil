@@ -4,9 +4,11 @@ import { NavLink } from 'react-router-dom'
 
 const NavVendedor = () => {
     return (
-        <div>
-            NavVendedor
-        </div>
+        <li className="menu-list__item">
+            <NavLink to='/vendedor/logout' className="menu-list__link">
+                <span className="menu-list__title">Cerrar Sesión</span>
+            </NavLink>
+        </li>
     );
 };
 
