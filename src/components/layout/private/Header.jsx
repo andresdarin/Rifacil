@@ -1,6 +1,6 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom';
-import logo from '../../../assets/img/Logo-Circulo.png';
+import logo from '../../../assets/img/LogoTransparente.png';
 import { Nav } from '../private/Nav'
 import { NavAdmin } from './admin/NavAdmin';
 import NavVendedor from './vendedor/NavVendedor';
