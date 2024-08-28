@@ -1,19 +1,25 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom';
 import logo from '../../../assets/img/Logo-Circulo.png';
-import { Nav } from './Nav'
+import { Nav } from '../private/Nav'
 import { NavAdmin } from './admin/NavAdmin';
 import NavVendedor from './vendedor/NavVendedor';
+import useAuth from '../../../hooks/useAuth';
 
 export const Header = () => {
     const location = useLocation();
+    const { auth } = useAuth(); // Obtenemos el estado de autenticación
 
-    // Determinar qué componente de navegación renderizar basado en la ruta actual
     let NavComponent;
 
-    if (location.pathname.startsWith('/admin/profile')) {
+    if (location.pathname === '/login' || location.pathname === '/registro') {
+        return null; // No renderiza el header si la ruta es '/login'
+    }
+
+    // Si el usuario está autenticado y tiene un rol
+    if (auth?.rol === 'admin' && location.pathname.startsWith('/admin')) {
         NavComponent = NavAdmin;
-    } else if (location.pathname.startsWith('/vendedor/profile')) {
+    } else if (auth?.rol === 'vendedor' && location.pathname.startsWith('/vendedor')) {
         NavComponent = NavVendedor;
     } else {
         NavComponent = Nav;
@@ -27,4 +33,4 @@ export const Header = () => {
             <NavComponent />
         </header>
     );
-}
+};
