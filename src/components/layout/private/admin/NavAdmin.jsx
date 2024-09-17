@@ -1,5 +1,6 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
+import { AltaVendedor } from './AltaVendedor'
 
 export const NavAdmin = () => {
     return (
@@ -13,9 +14,9 @@ export const NavAdmin = () => {
                 </li>
 
                 <li className="menu-list__item">
-                    <a href="#" className="menu-list__link">
+                    <NavLink to="/admin/alta-vendedor" className="menu-list__link">
                         <span className="menu-list__title">Vendedores</span>
-                    </a>
+                    </NavLink>
                 </li>
 
                 <li className="menu-list__item">

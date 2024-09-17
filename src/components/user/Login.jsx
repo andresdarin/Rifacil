@@ -13,7 +13,7 @@ export const Login = () => {
     const { form, changed } = useForm({});
     const [loged, setLoged] = useState("not_sended");
     const { setAuth } = useAuth();
-    const navigate = useNavigate(); // Crea una instancia de navigate
+    const navigate = useNavigate(); 
 
 
     const loginUser = async (e) => {

@@ -8,6 +8,7 @@ import { LandingPage } from '../components/user/LandingPage.jsx'
 import { Logout } from '../components/user/Logout.jsx';
 import { Profile as AdminProfile } from '../components/layout/private/admin/Profile.jsx';
 import { Profile as VendedorProfile } from '../components/layout/private/vendedor/Profile.jsx';
+import { AltaVendedor } from '../components/layout/private/admin/AltaVendedor.jsx';
 
 
 
@@ -27,7 +28,7 @@ export const Rutas = () => {
                     <Route index element={<Login />} />
                     <Route path='login' element={<Login />} />
                     <Route path='logout' element={<Logout />} />
-                    <Route path='registro' element={<Register />} />  //va a ser alta de vendedor
+                    <Route path='alta-vendedor' element={<AltaVendedor />} />
                     <Route path='landing' element={<LandingPage />} />
                     <Route path='profile' element={<AdminProfile />} />
                 </Route>
