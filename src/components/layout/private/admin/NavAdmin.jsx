@@ -8,9 +8,9 @@ export const NavAdmin = () => {
 
             <ul className="container-lists__menu-list">
                 <li className="menu-list__item">
-                    <a href="#" className="menu-list__link">
+                    <NavLink to='/admin/profile' className="menu-list__link">
                         <span className="menu-list__title">Perfil</span>
-                    </a>
+                    </NavLink>
                 </li>
 
                 <li className="menu-list__item">
@@ -26,9 +26,9 @@ export const NavAdmin = () => {
                 </li>
 
                 <li className="menu-list__item">
-                    <a href="#" className="menu-list__link">
+                    <NavLink to='admin/productos' className="menu-list__link">
                         <span className="menu-list__title">Productos</span>
-                    </a>
+                    </NavLink>
                 </li>
 
                 <li className="menu-list__item">

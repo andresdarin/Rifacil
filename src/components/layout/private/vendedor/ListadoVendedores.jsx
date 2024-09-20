@@ -6,7 +6,7 @@ export const ListadoVendedores = () => {
     const [vendedores, setVendedores] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [page, setPage] = useState(1); // Estado para la página
+    const [page, setPage] = useState(1);
 
     const fetchVendedores = async (page) => {
         try {

@@ -75,12 +75,15 @@ const AuthProvider = ({ children }) => {
             const userData = await fetchData(userProfileUrl, token);
 
             if (userData && userData.status === "success") {
-                setAuth(userData.user);
+                setAuth({
+                    ...userData.user,
+                    rol: userData.user.rol || 'public',
+                });
             } else {
                 setAuth({});
             }
         } else {
-            console.error("User ID is missing");
+            console.error("No existe el user ID");
         }
 
         setLoading(false);

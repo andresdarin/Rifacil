@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ListadoVendedores } from './ListadoVendedores'
+import { ListadoVendedores } from '../vendedor/ListadoVendedores'
+import ListadoProductos from '../../../productos/ListadoProductos';
+
 
 export const Profile = () => {
 
@@ -10,6 +12,7 @@ export const Profile = () => {
             </div>
             <div className="profile-content">
                 <ListadoVendedores />
+                <ListadoProductos />
             </div>
         </div>
     );

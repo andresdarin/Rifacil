@@ -1,17 +1,16 @@
-import React from 'react'
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom'
-import { Login } from '../components/user/Login.jsx'
+import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Login } from '../components/user/Login.jsx';
 import Register from '../components/user/Register.jsx';
 import PrivateLayout from "../components/layout/private/PrivateLayout.jsx";
 import PublicLayout from "../components/layout/public/PublicLayout.jsx";
-import { LandingPage } from '../components/user/LandingPage.jsx'
+import { LandingPage } from '../components/user/LandingPage.jsx';
 import { Logout } from '../components/user/Logout.jsx';
 import { Profile as AdminProfile } from '../components/layout/private/admin/Profile.jsx';
 import { Profile as VendedorProfile } from '../components/layout/private/vendedor/Profile.jsx';
 import { AltaVendedor } from '../components/layout/private/admin/AltaVendedor.jsx';
-
-
-
+import ListadoProductos from '../components/productos/ListadoProductos.jsx';
+import Error404 from '../routes/Error404.jsx'; // Asegúrate de que la ruta y el nombre sean correctos
 
 export const Rutas = () => {
     return (
@@ -26,10 +25,10 @@ export const Rutas = () => {
 
                 <Route path='/admin' element={<PrivateLayout />}>
                     <Route index element={<Login />} />
-                    <Route path='login' element={<Login />} />
                     <Route path='logout' element={<Logout />} />
+                    <Route path='perfil' element={<AdminProfile />} />
                     <Route path='alta-vendedor' element={<AltaVendedor />} />
-                    <Route path='landing' element={<LandingPage />} />
+                    <Route path='productos' element={<ListadoProductos />} />
                     <Route path='profile' element={<AdminProfile />} />
                 </Route>
 
@@ -38,15 +37,8 @@ export const Rutas = () => {
                     <Route path='logout' element={<Logout />} />
                 </Route>
 
-                <Route path='*' element={
-                    <div>
-                        <h1>Error 404</h1>
-                        <Link to='/'> Volver al incio</Link>
-                    </div>
-                }>
-
-                </Route>
+                <Route path='*' element={<Error404 />} />
             </Routes>
         </BrowserRouter>
-    )
-}
+    );
+};
