@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Global } from '../../../../helpers/Global';
 
-
 export const ListadoVendedores = () => {
     const [vendedores, setVendedores] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -46,23 +45,45 @@ export const ListadoVendedores = () => {
         fetchVendedores(page);
     }, [page]); // Agregar page como dependencia
 
+    const handleDelete = (id) => {
+        // Implementa la lógica para eliminar un vendedor
+        console.log(`Eliminar vendedor con id: ${id}`);
+    };
+
+    const handleEdit = (id) => {
+        // Implementa la lógica para editar un vendedor
+        console.log(`Editar vendedor con id: ${id}`);
+    };
+
     if (loading) return <div>Cargando vendedores...</div>;
     if (error) return <div>Error: {error}</div>;
 
     return (
         <div>
-            <h1>Listado de Vendedores</h1>
-            <ul>
+            <h1 className='card-container__title'>Vendedores</h1>
+            <div className="card-container">
                 {vendedores.length > 0 ? (
                     vendedores.map((vendedor) => (
-                        <li key={vendedor._id}>
-                            {vendedor.nombre} - {vendedor.email}
-                        </li>
+                        <div key={vendedor._id} className="card">
+                            <div>
+                                <h1>{vendedor.nombreCompleto}</h1>
+                                <h4>{vendedor.email}</h4>
+                            </div>
+
+                            <div className="card-buttons">
+                                <button className="edit-button" onClick={() => handleEdit(vendedor._id)}>
+                                    <i class="fa fa-pencil" aria-hidden="true" />
+                                </button>
+                                <button className="delete-button" onClick={() => handleDelete(vendedor._id)}>
+                                    <i class="fa fa-trash" aria-hidden="true" />
+                                </button>
+                            </div>
+                        </div>
                     ))
                 ) : (
-                    <li>No se encontraron vendedores</li>
+                    <p>No se encontraron vendedores</p>
                 )}
-            </ul>
+            </div>
         </div>
     );
 };

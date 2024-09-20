@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Global } from '../../helpers/Global';
 
-export const ListadoProductos = ({ showHeroSection = true }) => { // Prop para controlar el Hero Section
+export const ListadoProductos = ({ showHeroSection = true }) => {
     useEffect(() => {
         document.body.style.backgroundImage = "url('/src/assets/img/BackGorundVendedor.png')";
         document.body.style.backgroundSize = "cover";
@@ -70,7 +70,7 @@ export const ListadoProductos = ({ showHeroSection = true }) => { // Prop para c
                 {productos.length > 0 ? (
                     productos.map((producto) => (
                         <li key={producto._id}>
-                            {producto.nombreProducto} - ${producto.precio}
+                            {producto.nombreProducto}  ${producto.precio}
                         </li>
                     ))
                 ) : (
