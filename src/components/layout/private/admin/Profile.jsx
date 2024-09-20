@@ -12,7 +12,7 @@ export const Profile = () => {
             </div>
             <div className="profile-content">
                 <ListadoVendedores />
-                <ListadoProductos />
+                <ListadoProductos showHeroSection={false} />
             </div>
         </div>
     );

@@ -15,7 +15,7 @@ export const NavAdmin = () => {
 
                 <li className="menu-list__item">
                     <NavLink to="/admin/alta-vendedor" className="menu-list__link">
-                        <span className="menu-list__title">Vendedores</span>
+                        <span className="menu-list__title">Alta Vendedor</span>
                     </NavLink>
                 </li>
 
@@ -26,7 +26,7 @@ export const NavAdmin = () => {
                 </li>
 
                 <li className="menu-list__item">
-                    <NavLink to='admin/productos' className="menu-list__link">
+                    <NavLink to='/admin/productos' className="menu-list__link">
                         <span className="menu-list__title">Productos</span>
                     </NavLink>
                 </li>
