@@ -529,7 +529,9 @@ body,
 .alta-vendedor__form-container {
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     margin: 20px 0;
 }
 
@@ -593,3 +595,5 @@ body,
 .fa-plus {
     font-size: 1.7rem;
 }
+
+/*Profile Admin*/

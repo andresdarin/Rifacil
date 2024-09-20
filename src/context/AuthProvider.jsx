@@ -18,27 +18,27 @@ const AuthProvider = ({ children }) => {
 
     const fetchData = async (url, token) => {
         try {
+
             const response = await fetch(url, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`, // Asegúrate de que el token esté correctamente formateado
+                    "Authorization": token,
                 },
             });
 
-            // Manejar respuestas no OK
             if (!response.ok) {
                 throw new Error(`Error fetching data: ${response.status} ${response.statusText}`);
             }
 
-            // Convertir la respuesta a JSON
             const data = await response.json();
             return data;
         } catch (error) {
             console.error("Error fetching data:", error);
-            return null; // Devuelve null en caso de error
+            return null;
         }
     };
+
 
 
     const authUser = async () => {
