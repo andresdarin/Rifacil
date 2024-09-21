@@ -635,7 +635,7 @@ body,
     font-weight: 100;
     display: flex;
     justify-content: space-between;
-    border-radius: 8px;
+    border-radius: 18px 2px 18px 2px;
     padding: 16px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 100%;
@@ -686,4 +686,34 @@ h4 {
 .edit-button:hover {
     background-color: var(--colorEditarHover);
     transform: scale(1.2);
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.arrow-pagination {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.arrow-pagination:hover {
+    background-color: #0056b3;
+    /* Color de fondo al pasar el ratón */
+}
+
+.arrow-pagination:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
 }

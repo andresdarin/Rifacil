@@ -3,7 +3,7 @@ import { Global } from '../../helpers/Global';
 
 export const ListadoProductos = ({ showHeroSection = true }) => {
     useEffect(() => {
-        document.body.style.backgroundImage = "url('/src/assets/img/BackGorundVendedor.png')";
+        document.body.style.backgroundImage = "url('/src/assets/img/BackgroundLong.png')";
         document.body.style.backgroundSize = "cover";
         document.body.style.backgroundPosition = "center";
 
@@ -59,26 +59,34 @@ export const ListadoProductos = ({ showHeroSection = true }) => {
     if (error) return <div>Error: {error}</div>;
 
     return (
-        <div>
-            {showHeroSection && ( // Condicional para renderizar el Hero Section
-                <div className="container-banner__vendedor">
-                    <header className='header__vendedor'>Productos</header>
-                </div>
-            )}
-            <h1>Productos</h1>
-            <ul>
+        <div className='card-layout'>
+            <h1 className='card-title-vertical'>Productos</h1>
+            <div className="card-container">
                 {productos.length > 0 ? (
                     productos.map((producto) => (
-                        <li key={producto._id}>
-                            {producto.nombreProducto}  ${producto.precio}
-                        </li>
+                        <div key={producto._id} className="card">
+                            <div>
+                                <h1>{producto.nombreProducto}</h1>
+                                <h4>${producto.precio}</h4>
+                            </div>
+
+                            <div className="card-buttons">
+                                <button className="edit-button" onClick={() => handleEdit(producto._id)}>
+                                    <i className="fa fa-pencil" aria-hidden="true" />
+                                </button>
+                                <button className="delete-button" onClick={() => handleDelete(producto._id)}>
+                                    <i className="fa fa-trash" aria-hidden="true" />
+                                </button>
+                            </div>
+                        </div>
                     ))
                 ) : (
-                    <li>No se encontraron productos</li>
+                    <p>No se encontraron productos</p>
                 )}
-            </ul>
+            </div>
         </div>
     );
+
 };
 
 export default ListadoProductos;
