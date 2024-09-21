@@ -7,8 +7,10 @@
     --color4: #7e9693;
     --color5: #204045;
     --color6: #a4908a;
-    --colorEditar: #d0dd1c;
-    --colorEliminar: #ff4744;
+    --colorEditar: #d0dd1cd2;
+    --colorEditarHover: #d0dd1c;
+    --colorEliminar: #ff4744cc;
+    --colorEliminarHover: #ff4744;
     --colorSuccess: #09de09;
     --colorWhite: white;
     --colorBlack: black;
@@ -597,28 +599,53 @@ body,
 }
 
 /*Profile Admin*/
+.card-layout {
+    width: 90%;
+    max-width: 120rem;
+    margin: 10rem auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1.6rem;
+
+}
+
+.card-title-vertical {
+    color: var(--color1);
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 4rem;
+    font-weight: 400;
+    margin: 0;
+}
 
 .card-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     flex-wrap: wrap;
     gap: 16px;
-}
-
-.card-container__title {
-    align-self: center;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 .card {
     background-image: url('../img/HeroAltaVendedor.png');
     color: var(--color1);
+    font-weight: 100;
     display: flex;
     justify-content: space-between;
     border-radius: 8px;
     padding: 16px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 50%;
+    width: 100%;
+}
+
+.card h1,
+h2,
+h3,
+h4 {
+    font-weight: 200;
 }
 
 .card-buttons {
@@ -643,8 +670,20 @@ body,
 
 .delete-button {
     background-color: var(--colorEliminar);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.delete-button:hover {
+    background-color: var(--colorEliminarHover);
+    transform: scale(1.2);
 }
 
 .edit-button {
     background-color: var(--colorEditar);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.edit-button:hover {
+    background-color: var(--colorEditarHover);
+    transform: scale(1.2);
 }

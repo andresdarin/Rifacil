@@ -59,8 +59,8 @@ export const ListadoVendedores = () => {
     if (error) return <div>Error: {error}</div>;
 
     return (
-        <div>
-            <h1 className='card-container__title'>Vendedores</h1>
+        <div className='card-layout'>
+            <h1 className='card-title-vertical'>Vendedores</h1>
             <div className="card-container">
                 {vendedores.length > 0 ? (
                     vendedores.map((vendedor) => (
@@ -72,10 +72,10 @@ export const ListadoVendedores = () => {
 
                             <div className="card-buttons">
                                 <button className="edit-button" onClick={() => handleEdit(vendedor._id)}>
-                                    <i class="fa fa-pencil" aria-hidden="true" />
+                                    <i className="fa fa-pencil" aria-hidden="true" />
                                 </button>
                                 <button className="delete-button" onClick={() => handleDelete(vendedor._id)}>
-                                    <i class="fa fa-trash" aria-hidden="true" />
+                                    <i className="fa fa-trash" aria-hidden="true" />
                                 </button>
                             </div>
                         </div>
@@ -86,4 +86,5 @@ export const ListadoVendedores = () => {
             </div>
         </div>
     );
+
 };
