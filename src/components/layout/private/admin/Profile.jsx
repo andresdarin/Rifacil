@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ListadoVendedores } from '../vendedor/ListadoVendedores'
 import ListadoProductos from '../../../productos/ListadoProductos';
+import AltaProducto from '../../../productos/AltaProducto';
 
 
 export const Profile = () => {
@@ -12,7 +13,8 @@ export const Profile = () => {
             </div>
             <div className="profile-content">
                 <ListadoVendedores />
-                <ListadoProductos showHeroSection={false} />
+                <AltaProducto showHeroSection={false} showFormSection={false} />
+                <ListadoProductos showHeroSection={false} showFormSection={false} />
             </div>
         </div>
     );

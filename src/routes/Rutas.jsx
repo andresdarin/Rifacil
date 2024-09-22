@@ -10,7 +10,7 @@ import { Profile as AdminProfile } from '../components/layout/private/admin/Prof
 import { Profile as VendedorProfile } from '../components/layout/private/vendedor/Profile.jsx';
 import { AltaVendedor } from '../components/layout/private/admin/AltaVendedor.jsx';
 import ListadoProductos from '../components/productos/ListadoProductos.jsx';
-import Error404 from '../routes/Error404.jsx'; // Asegúrate de que la ruta y el nombre sean correctos
+import Error404 from '../routes/Error404.jsx';
 
 export const Rutas = () => {
     return (

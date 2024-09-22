@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Global } from '../../helpers/Global';
+import AltaProducto from '../../components/productos/AltaProducto.jsx';
 
-export const ListadoProductos = ({ showHeroSection = true }) => {
+export const ListadoProductos = ({ showHeroSection = true, showFormSection = true }) => {
     useEffect(() => {
         document.body.style.backgroundImage = "url('/src/assets/img/BackgroundLong.png')";
         document.body.style.backgroundSize = "cover";
@@ -53,40 +54,81 @@ export const ListadoProductos = ({ showHeroSection = true }) => {
 
     useEffect(() => {
         fetchProductos(page);
-    }, [page]); // Agregar page como dependencia
+    }, [page]);
 
     if (loading) return <div>Cargando productos...</div>;
     if (error) return <div>Error: {error}</div>;
 
+    const reloadProductos = () => {
+        setLoading(true);
+        fetchProductos(page);
+    };
+
+    const handleDelete = async (id) => {
+        const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar este producto?");
+        if (confirmDelete) {
+            try {
+                const token = localStorage.getItem('token');
+
+                const response = await fetch(`${Global.url}producto/eliminarProducto/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': token,
+                    },
+                });
+
+                if (response.ok) {
+                    reloadProductos(); // Recargar la lista de productos
+                    alert("Producto eliminado correctamente");
+                } else {
+                    const result = await response.json();
+                    alert(result.message || "Error al eliminar el producto");
+                }
+            } catch (error) {
+                alert("Error en el servidor: " + error.message);
+            }
+        }
+    };
+
+
     return (
-        <div className='card-layout'>
-            <h1 className='card-title-vertical'>Productos</h1>
-            <div className="card-container">
-                {productos.length > 0 ? (
-                    productos.map((producto) => (
-                        <div key={producto._id} className="card">
-                            <div>
-                                <h1>{producto.nombreProducto}</h1>
-                                <h4>${producto.precio}</h4>
-                            </div>
+        <>
+            {showHeroSection && (
+                <div className="container-banner__productos">
+                    <header className="header__productos">Productos</header>
+                </div>
+            )}
 
-                            <div className="card-buttons">
-                                <button className="edit-button" onClick={() => handleEdit(producto._id)}>
-                                    <i className="fa fa-pencil" aria-hidden="true" />
-                                </button>
-                                <button className="delete-button" onClick={() => handleDelete(producto._id)}>
-                                    <i className="fa fa-trash" aria-hidden="true" />
-                                </button>
+            <div className='card-layout'>
+                <h1 className='card-title-vertical'>Listado</h1>
+                <div className="card-container">
+                    {productos.length > 0 ? (
+                        productos.map((producto) => (
+                            <div key={producto._id} className="card">
+                                <div>
+                                    <h1>{producto.nombreProducto}</h1>
+                                    <h4>${producto.precio}</h4>
+                                </div>
+
+                                <div className="card-buttons">
+                                    <button className="edit-button" onClick={() => handleEdit(producto._id)}>
+                                        <i className="fa fa-pencil" aria-hidden="true" />
+                                    </button>
+                                    <button className="delete-button" onClick={() => handleDelete(producto._id)}>
+                                        <i className="fa fa-trash" aria-hidden="true" />
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    ))
-                ) : (
-                    <p>No se encontraron productos</p>
-                )}
+                        ))
+                    ) : (
+                        <p>No se encontraron productos</p>
+                    )}
+                </div>
+                <AltaProducto showHeroSection={false} showFormSection={showFormSection} reloadProductos={reloadProductos} />
             </div>
-        </div>
+        </>
     );
-
 };
 
 export default ListadoProductos;

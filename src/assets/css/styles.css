@@ -218,7 +218,7 @@ body {
 .icon {
     margin: 0 10px;
     font-size: 20px;
-    color: var(white);
+    color: var(--colorWhite);
 }
 
 .form-group {
@@ -244,7 +244,8 @@ body {
     color: var(--color5);
 }
 
-.form-group input {
+.form-group input,
+.form-group textarea {
     width: 100%;
     padding: 15px;
     padding-right: 40px;
@@ -253,12 +254,13 @@ body {
     font-size: 16px;
     box-sizing: border-box;
     border-radius: 25px;
+    resize: none;
 }
 
 .btn-success {
     background-color: var(--colorSuccess);
     border: none;
-    color: white;
+    color: var(--colorWhite);
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
@@ -371,7 +373,7 @@ body,
 .subtitle__landing {
     margin-top: 0;
     font-size: 35px;
-    color: whit;
+    color: white;
     text-align: center;
     text-shadow:
         0 0 10px var(--color1),
@@ -499,8 +501,6 @@ body,
     flex-direction: column;
     align-items: center;
     width: 100%;
-    padding: 0;
-    margin: 0;
 }
 
 /* Banner del héroe */
@@ -534,21 +534,23 @@ body,
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 20px 0;
 }
 
-.alta-vendedor__form {
+.alta-vendedor__form,
+.alta-producto__form {
     background-image: url('../img/HeroAltaVendedor.png');
-    width: 80%;
+    min-width: 87%;
+    min-height: 25vh;
     max-width: 600px;
     display: flex;
     flex-direction: column;
     gap: 15px;
     position: relative;
-    margin-top: 11rem;
+    margin-top: 5rem;
     padding: 6rem 2rem 2rem 2rem;
     border-radius: 3.5rem 0.6rem 3rem 0.6rem;
 }
+
 
 .form-group {
     display: flex;
@@ -599,16 +601,19 @@ body,
 }
 
 /*Profile Admin*/
-.card-layout {
-    width: 90%;
-    max-width: 120rem;
-    margin: 10rem auto;
+.card-layout,
+.card-layout__producto {
+    min-width: 90%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 1.6rem;
+    margin: 3rem 3rem;
+}
 
+.card-layout__producto {
+    width: 90%;
 }
 
 .card-title-vertical {
@@ -633,6 +638,7 @@ body,
     background-image: url('../img/HeroAltaVendedor.png');
     color: var(--color1);
     font-weight: 100;
+    min-width: 87%;
     display: flex;
     justify-content: space-between;
     border-radius: 18px 2px 18px 2px;
@@ -695,25 +701,51 @@ h4 {
 }
 
 .arrow-pagination {
-    background-color: #007bff;
+    background-color: transparent;
     color: white;
     border: none;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin: 0 1rem 0 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .arrow-pagination:hover {
-    background-color: #0056b3;
-    /* Color de fondo al pasar el ratón */
+    background-color: var(--color5);
+    transform: scale(1.2);
 }
 
 .arrow-pagination:disabled {
     background-color: #ccc;
     cursor: not-allowed;
+}
+
+/*Productos*/
+.container-banner__productos {
+    width: 100vw;
+    height: 20vh;
+    background-image: url('../img/HeroAltaVendedor.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    position: relative;
+    padding: 0;
+    filter: brightness(70%);
+}
+
+.header__productos {
+    font-size: 10rem;
+    font-weight: 200;
+    margin-bottom: -64px;
+    background-size: cover;
+    background-position: center;
+    color: var(--color1);
 }

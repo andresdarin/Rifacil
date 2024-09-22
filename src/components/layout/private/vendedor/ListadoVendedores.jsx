@@ -104,7 +104,7 @@ export const ListadoVendedores = () => {
                 >
                     <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
                 </button>
-                <span>Página {page} de {totalPages}</span>
+                <span>{page} de {totalPages}</span>
                 <button className='arrow-pagination'
                     onClick={() => handlePageChange(page + 1)}
                     disabled={page === totalPages}
