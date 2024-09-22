@@ -17,6 +17,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [page, setPage] = useState(1);
+    const [pages, setPages] = useState(1); // Cambiado a 'pages'
 
     const fetchProductos = async (page) => {
         try {
@@ -42,6 +43,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
 
             if (data.status === 'success' && Array.isArray(data.products)) {
                 setProductos(data.products);
+                setPages(data.pages); // Cambiado a 'pages'
             } else {
                 setError('No se pudieron obtener los productos');
             }
@@ -79,7 +81,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                 });
 
                 if (response.ok) {
-                    reloadProductos(); // Recargar la lista de productos
+                    reloadProductos();
                     alert("Producto eliminado correctamente");
                 } else {
                     const result = await response.json();
@@ -91,6 +93,12 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
         }
     };
 
+    // Función para manejar el cambio de página
+    const handlePageChange = (newPage) => {
+        if (newPage >= 1 && newPage <= pages) {
+            setPage(newPage);
+        }
+    };
 
     return (
         <>
@@ -124,7 +132,27 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                     ) : (
                         <p>No se encontraron productos</p>
                     )}
+
+                    {/* Paginado */}
+                    <div className="pagination">
+                        <button
+                            className='arrow-pagination'
+                            onClick={() => handlePageChange(page - 1)}
+                            disabled={page === 1}
+                        >
+                            <i className="fa fa-chevron-circle-left" aria-hidden="true"></i>
+                        </button>
+                        <span>{page} de {pages}</span>
+                        <button
+                            className='arrow-pagination'
+                            onClick={() => handlePageChange(page + 1)}
+                            disabled={page === pages}
+                        >
+                            <i className="fa fa-chevron-circle-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </div>
+
                 <AltaProducto showHeroSection={false} showFormSection={showFormSection} reloadProductos={reloadProductos} />
             </div>
         </>
