@@ -49,7 +49,7 @@ const AltaProducto = ({ showHeroSection = true, showFormSection = true, reloadPr
     };
 
     return (
-        <div className="alta-vendedor__container">
+        <div className="alta-producto__container">
             {/* Hero Section */}
             {showHeroSection && (
                 <div className="container-banner__vendedor">
@@ -58,39 +58,43 @@ const AltaProducto = ({ showHeroSection = true, showFormSection = true, reloadPr
             )}
             {showFormSection && (
                 <div className="card-layout__producto">
-                    <h1 className='card-title-vertical'>Agregar</h1>
                     <form className="alta-producto__form" autoComplete="off" onSubmit={saveProducto}>
-                        <div className="form-group">
-                            <input
-                                placeholder="Nombre"
-                                type="text"
-                                name="nombreProducto"
-                                value={formData.nombreProducto}
-                                onChange={handleInputChange}
-                                required
-                            />
+                        <div>
+                            <h1 className='card-title'>Agregar</h1>
                         </div>
-                        <div className="form-group">
-                            <input
-                                placeholder="Precio"
-                                type="text"
-                                name="precio"
-                                value={formData.precio}
-                                onChange={handleInputChange}
-                                required
-                            />
+                        <div>
+                            <div className="form-group">
+                                <input
+                                    placeholder="Nombre"
+                                    type="text"
+                                    name="nombreProducto"
+                                    value={formData.nombreProducto}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                            </div>
+                            <div className="form-group">
+                                <input
+                                    placeholder="Precio"
+                                    type="text"
+                                    name="precio"
+                                    value={formData.precio}
+                                    onChange={handleInputChange}
+                                    required
+                                />
+                            </div>
+                            <div className="form-group">
+                                <textarea
+                                    placeholder="Descripción"
+                                    name="descripcion"
+                                    value={formData.descripcion}
+                                    onChange={handleInputChange}
+                                ></textarea>
+                            </div>
+                            <button type="submit" className="alta-producto__submit-button">
+                                <i className="fa fa-plus" aria-hidden="true"></i>
+                            </button>
                         </div>
-                        <div className="form-group">
-                            <textarea
-                                placeholder="Descripción"
-                                name="descripcion"
-                                value={formData.descripcion}
-                                onChange={handleInputChange}
-                            ></textarea>
-                        </div>
-                        <button type="submit" className="alta-vendedor__submit-button">
-                            <i className="fa fa-plus" aria-hidden="true"></i>
-                        </button>
                     </form>
                 </div>
             )}

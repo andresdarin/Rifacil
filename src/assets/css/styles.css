@@ -282,7 +282,6 @@ body {
     padding: 20px;
     width: 600px;
     max-width: 1000px;
-    box-sizing: border-box;
 }
 
 .form-container h1 {
@@ -496,7 +495,8 @@ body,
 
 /*Alta Vendedor*/
 
-.alta-vendedor__container {
+.alta-vendedor__container,
+.alta-producto__container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -546,11 +546,29 @@ body,
     flex-direction: column;
     gap: 15px;
     position: relative;
-    margin-top: 5rem;
-    padding: 6rem 2rem 2rem 2rem;
+    padding: 2rem;
     border-radius: 3.5rem 0.6rem 3rem 0.6rem;
 }
 
+.alta-vendedor__form {
+    margin-top: 3rem;
+}
+
+.alta-producto__form {
+    display: flex;
+    flex-direction: column;
+    min-height: 50vh;
+}
+
+.alta-producto__form input,
+.alta-producto__form textarea {
+    min-width: 90%;
+}
+
+.alta-producto__form textarea {
+    height: 28vh;
+    border-radius: 0.5rem;
+}
 
 .form-group {
     display: flex;
@@ -573,7 +591,8 @@ body,
 }
 
 /* Estilos del botón redondo */
-.alta-vendedor__submit-button {
+.alta-vendedor__submit-button,
+.alta-producto__submit-button {
     background-color: var(--color5);
     color: var(--colorWhite);
     border: none;
@@ -591,10 +610,20 @@ body,
     transition: transform 0.3s ease;
 }
 
+.alta-producto__submit-button {
+    margin: 0 0 -0.4rem auto;
+}
+
+.alta-producto__submit-button:hover,
 .alta-vendedor__submit-button:hover {
     background-color: var(--color4);
     transform: scale(1.2);
 }
+
+.alta-producto__submit-button:hover {
+    align-self: flex-end;
+}
+
 
 .fa-plus {
     font-size: 1.7rem;
@@ -608,12 +637,11 @@ body,
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 1.6rem;
-    margin: 3rem 3rem;
+    margin: 2rem auto 2rem auto;
 }
 
 .card-layout__producto {
-    width: 90%;
+    display: flex;
 }
 
 .card-title-vertical {
@@ -625,13 +653,26 @@ body,
     margin: 0;
 }
 
+.card-title {
+    color: var(--color1);
+    font-size: 4rem;
+    font-weight: 400;
+    margin: 0;
+}
+
 .card-container {
     display: flex;
+    flex: 3;
     flex-wrap: wrap;
     gap: 16px;
     align-items: center;
     justify-content: center;
     width: 100%;
+}
+
+.alta-producto__container {
+    flex: 1;
+    height: 100%;
 }
 
 .card {

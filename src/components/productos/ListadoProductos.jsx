@@ -17,7 +17,8 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [page, setPage] = useState(1);
-    const [pages, setPages] = useState(1); // Cambiado a 'pages'
+    const [pages, setPages] = useState(1);
+    const [expandedId, setExpandedId] = useState(null); // Estado para controlar qué tarjeta está expandida
 
     const fetchProductos = async (page) => {
         try {
@@ -43,7 +44,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
 
             if (data.status === 'success' && Array.isArray(data.products)) {
                 setProductos(data.products);
-                setPages(data.pages); // Cambiado a 'pages'
+                setPages(data.pages);
             } else {
                 setError('No se pudieron obtener los productos');
             }
@@ -93,7 +94,10 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
         }
     };
 
-    // Función para manejar el cambio de página
+    const handleEditToggle = (id) => {
+        setExpandedId(expandedId === id ? null : id); // Expande o contrae la tarjeta
+    };
+
     const handlePageChange = (newPage) => {
         if (newPage >= 1 && newPage <= pages) {
             setPage(newPage);
@@ -120,13 +124,25 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                                 </div>
 
                                 <div className="card-buttons">
-                                    <button className="edit-button" onClick={() => handleEdit(producto._id)}>
+                                    <button className="edit-button" onClick={() => handleEditToggle(producto._id)}>
                                         <i className="fa fa-pencil" aria-hidden="true" />
                                     </button>
                                     <button className="delete-button" onClick={() => handleDelete(producto._id)}>
                                         <i className="fa fa-trash" aria-hidden="true" />
                                     </button>
                                 </div>
+
+                                {expandedId === producto._id && (
+                                    <div className="edit-form-container">
+                                        {/* Aquí puedes agregar tu formulario de edición */}
+                                        <AltaProducto
+                                            producto={producto}
+                                            showHeroSection={false}
+                                            showFormSection={true}
+                                            reloadProductos={reloadProductos}
+                                        />
+                                    </div>
+                                )}
                             </div>
                         ))
                     ) : (
