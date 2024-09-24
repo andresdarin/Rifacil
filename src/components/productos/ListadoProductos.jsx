@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Global } from '../../helpers/Global';
 import AltaProducto from '../../components/productos/AltaProducto.jsx';
+import EditarProducto from './EditarProducto.jsx';
 
 export const ListadoProductos = ({ showHeroSection = true, showFormSection = true }) => {
     useEffect(() => {
@@ -121,8 +122,17 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                                 <div>
                                     <h1>{producto.nombreProducto}</h1>
                                     <h4>${producto.precio}</h4>
+                                    {expandedId === producto._id && (
+                                        <div className="edit-form-container">
+                                            <EditarProducto
+                                                producto={producto}
+                                                showHeroSection={false}
+                                                showFormSection={true}
+                                                reloadProductos={reloadProductos}
+                                            />
+                                        </div>
+                                    )}
                                 </div>
-
                                 <div className="card-buttons">
                                     <button className="edit-button" onClick={() => handleEditToggle(producto._id)}>
                                         <i className="fa fa-pencil" aria-hidden="true" />
@@ -132,17 +142,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                                     </button>
                                 </div>
 
-                                {expandedId === producto._id && (
-                                    <div className="edit-form-container">
-                                        {/* Aquí puedes agregar tu formulario de edición */}
-                                        <AltaProducto
-                                            producto={producto}
-                                            showHeroSection={false}
-                                            showFormSection={true}
-                                            reloadProductos={reloadProductos}
-                                        />
-                                    </div>
-                                )}
+
                             </div>
                         ))
                     ) : (
