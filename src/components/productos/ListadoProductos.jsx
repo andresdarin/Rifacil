@@ -122,6 +122,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                                 <div>
                                     <h1>{producto.nombreProducto}</h1>
                                     <h4>${producto.precio}</h4>
+                                    <h4>{producto.descripcion}</h4>
                                     {expandedId === producto._id && (
                                         <div className="edit-form-container">
                                             <EditarProducto

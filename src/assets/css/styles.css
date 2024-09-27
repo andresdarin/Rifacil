@@ -537,7 +537,8 @@ body,
     filter: brightness(70%);
 }
 
-.header__vendedor {
+.header__vendedor,
+.header__contacto {
     font-size: 10rem;
     font-weight: 200;
     margin-bottom: -64px;
@@ -556,7 +557,8 @@ body,
 }
 
 .alta-vendedor__form,
-.alta-producto__form {
+.alta-producto__form,
+.contacto__form {
     background-image: url('../img/HeroAltaVendedor.png');
     min-width: 87%;
     min-height: 25vh;
@@ -567,26 +569,36 @@ body,
     position: relative;
     padding: 2rem;
     border-radius: 3.5rem 0.6rem 3rem 0.6rem;
-    box-sizing: content-box;
     gap: 1rem;
 }
+
+.alta-vendedor__form,
+.alta-producto__form {
+    box-sizing: content-box;
+}
+
+.contacto__form {}
 
 .alta-vendedor__form {
     margin-top: 3rem;
 }
 
-.alta-producto__form {
+.alta-producto__form,
+.contacto__form {
     display: flex;
     flex-direction: column;
     min-height: 50vh;
 }
 
 .alta-producto__form input,
-.alta-producto__form textarea {
+.alta-producto__form textarea,
+.contacto__form input,
+.contacto__form textarea {
     min-width: 90%;
 }
 
-.alta-producto__form textarea {
+.alta-producto__form textarea,
+.contacto__form textarea {
     height: 28vh;
     border-radius: 0.5rem;
 }
@@ -614,6 +626,7 @@ body,
 /* Estilos del botón redondo */
 .alta-vendedor__submit-button,
 .alta-producto__submit-button,
+.contacto__submit-button,
 .edit-producto__submit-button {
     background-color: var(--color5);
     color: var(--colorWhite);
@@ -633,8 +646,13 @@ body,
 }
 
 .alta-producto__submit-button,
-.edit-producto__submit-button {
+.edit-producto__submit-button,
+.contacto__submit-button {
     margin: 0 0 -0.4rem auto;
+}
+
+.contacto__submit-button {
+    margin-top: 1.5rem;
 }
 
 .edit-producto__submit-button {
@@ -648,7 +666,8 @@ body,
 
 .alta-producto__submit-button:hover,
 .alta-vendedor__submit-button:hover,
-.edit-producto__submit-button:hover {
+.edit-producto__submit-button:hover,
+.contacto__submit-button:hover {
     background-color: var(--color4);
     transform: scale(1.2);
 }
@@ -658,19 +677,14 @@ body,
     background-color: var(--colorGuardarHover);
 }
 
-
-.alta-producto__submit-button:hover {
-    align-self: flex-end;
-}
-
-
 .fa-plus {
     font-size: 1.7rem;
 }
 
 /*Profile Admin*/
 .card-layout,
-.card-layout__producto {
+.card-layout__producto,
+.card-layout__contacto {
     min-width: 90%;
     display: flex;
     flex-direction: row;
@@ -679,9 +693,6 @@ body,
     margin: 2rem auto 2rem auto;
 }
 
-.card-layout__producto {
-    display: flex;
-}
 
 .card-title-vertical {
     color: var(--color1);
@@ -709,7 +720,8 @@ body,
     width: 100%;
 }
 
-.alta-producto__container {
+.alta-producto__container,
+.contacto__container {
     flex: 1;
     height: 100%;
 }
@@ -807,7 +819,8 @@ h4 {
 }
 
 /*Productos*/
-.container-banner__productos {
+.container-banner__productos,
+.container-banner__contacto {
     width: 100vw;
     height: 20vh;
     background-image: url('../img/HeroAltaVendedor.png');
@@ -821,7 +834,8 @@ h4 {
     filter: brightness(70%);
 }
 
-.header__productos {
+.header__productos,
+.header__contacto {
     font-size: 10rem;
     font-weight: 200;
     margin-bottom: -64px;

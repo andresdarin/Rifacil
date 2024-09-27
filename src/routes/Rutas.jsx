@@ -11,6 +11,7 @@ import { Profile as VendedorProfile } from '../components/layout/private/vendedo
 import { AltaVendedor } from '../components/layout/private/admin/AltaVendedor.jsx';
 import ListadoProductos from '../components/productos/ListadoProductos.jsx';
 import Error404 from '../routes/Error404.jsx';
+import Contacto from '../components/user/Contact.jsx';
 
 export const Rutas = () => {
     return (
@@ -21,6 +22,7 @@ export const Rutas = () => {
                     <Route path='login' element={<Login />} />
                     <Route path='registro' element={<Register />} />
                     <Route path='landing' element={<LandingPage />} />
+                    <Route path='contacto' element={<Contacto />} />
                 </Route>
 
                 <Route path='/admin' element={<PrivateLayout />}>
