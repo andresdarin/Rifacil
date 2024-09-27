@@ -85,7 +85,7 @@ export const Login = () => {
                     </div>
                     <div className="remember-forgot">
                         <label><input type='checkbox' />Recuérdame</label>
-                        <a href="#">Olvidaste la contraseña?</a>
+                        <NavLink to='/recover-pass'>Olvidaste la contraseña?</NavLink>
                     </div>
                     <div className="buttons-login">
                         <button type="submit" className='btn'>Iniciar Sesion</button>

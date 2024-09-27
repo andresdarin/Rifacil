@@ -12,6 +12,8 @@ import { AltaVendedor } from '../components/layout/private/admin/AltaVendedor.js
 import ListadoProductos from '../components/productos/ListadoProductos.jsx';
 import Error404 from '../routes/Error404.jsx';
 import Contacto from '../components/user/Contact.jsx';
+import { RecoverPass } from '../components/user/RecoverPass.jsx';
+import { ResetPass } from '../components/user/ResetPass.jsx';
 
 export const Rutas = () => {
     return (
@@ -23,6 +25,8 @@ export const Rutas = () => {
                     <Route path='registro' element={<Register />} />
                     <Route path='landing' element={<LandingPage />} />
                     <Route path='contacto' element={<Contacto />} />
+                    <Route path='recover-pass' element={<RecoverPass />} />
+                    <Route path='reset-password/:token' element={<ResetPass />} />
                 </Route>
 
                 <Route path='/admin' element={<PrivateLayout />}>

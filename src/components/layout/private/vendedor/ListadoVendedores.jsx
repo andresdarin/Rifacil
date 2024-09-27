@@ -102,14 +102,14 @@ export const ListadoVendedores = () => {
                     onClick={() => handlePageChange(page - 1)}
                     disabled={page === 1}
                 >
-                    <i class="fa fa-chevron-circle-left" aria-hidden="true"></i>
+                    <i className="fa fa-chevron-circle-left" aria-hidden="true"></i>
                 </button>
                 <span>{page} de {totalPages}</span>
                 <button className='arrow-pagination'
                     onClick={() => handlePageChange(page + 1)}
                     disabled={page === totalPages}
                 >
-                    <i class="fa fa-chevron-circle-right" aria-hidden="true"></i>
+                    <i className="fa fa-chevron-circle-right" aria-hidden="true"></i>
                 </button>
             </div>
         </>

@@ -211,15 +211,18 @@ body {
     padding: 15px;
 }
 
+.buttons-login-label {
+    margin: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .remember-forgot a,
 .buttons-login-label a {
     text-decoration: none;
     color: grey;
     margin-left: 10px;
-}
-
-.buttons-login-label {
-    margin: 15px;
 }
 
 .remember-forgot {
@@ -239,12 +242,6 @@ body {
     color: white
 }
 
-.icon {
-    margin: 0 10px;
-    font-size: 20px;
-    color: var(--colorWhite);
-}
-
 .form-group {
     display: flex;
     align-items: center;
@@ -261,6 +258,8 @@ body {
 
 .form-group .icon {
     position: absolute;
+    margin-top: 3px;
+    margin-right: 3px;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);

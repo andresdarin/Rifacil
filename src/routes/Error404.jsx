@@ -11,7 +11,7 @@ const Error404 = () => {
         } else if (auth.rol === 'vendedor') {
             return '/vendedor/profile';
         } else {
-            return '/landing';
+            return '/login';
         }
     };
 
