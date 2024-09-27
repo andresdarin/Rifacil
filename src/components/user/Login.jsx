@@ -13,7 +13,7 @@ export const Login = () => {
     const { form, changed } = useForm({});
     const [loged, setLoged] = useState("not_sended");
     const { setAuth } = useAuth();
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
 
     const loginUser = async (e) => {
@@ -64,8 +64,9 @@ export const Login = () => {
     }
 
     return (
-        <>
-            <div className="form-container sign-up">
+
+        <div className="form-container sign-up">
+            <div className="login-card">
                 <header className="content_header content_header--public">
                     <h1 className="content__title">Login</h1>
                 </header>
@@ -102,7 +103,7 @@ export const Login = () => {
 
                 </form>
             </div>
-        </>
+        </div>
     );
 }
 

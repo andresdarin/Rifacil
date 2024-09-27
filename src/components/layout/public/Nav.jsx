@@ -8,9 +8,9 @@ export const Nav = () => {
 
             <ul className="container-lists__menu-list">
                 <li className="menu-list__item">
-                    <a href="#" className="menu-list__link">
+                    <NavLink to='/landing' className="menu-list__link">
                         <span className="menu-list__title">Inicio</span>
-                    </a>
+                    </NavLink>
                 </li>
 
                 <li className="menu-list__item">
