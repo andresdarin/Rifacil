@@ -538,7 +538,7 @@ body,
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: 110%;
 
 }
 
@@ -580,7 +580,7 @@ body,
 .alta-producto__form,
 .contacto__form {
     background-image: url('../img/HeroAltaVendedor.png');
-    min-width: 87%;
+    min-width: 100%;
     min-height: 25vh;
     max-width: 600px;
     display: flex;
@@ -597,8 +597,6 @@ body,
     box-sizing: content-box;
 }
 
-.contacto__form {}
-
 .alta-vendedor__form {
     margin-top: 3rem;
 }
@@ -608,6 +606,7 @@ body,
     display: flex;
     flex-direction: column;
     min-height: 50vh;
+    min-width: 80%;
 }
 
 .alta-producto__form input,
@@ -705,14 +704,12 @@ body,
 .card-layout,
 .card-layout__producto,
 .card-layout__contacto {
-    min-width: 90%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     margin: 2rem auto 2rem auto;
 }
-
 
 .card-title-vertical {
     color: var(--color1);
@@ -771,6 +768,53 @@ h4 {
     justify-content: space-between;
     margin-top: 12px;
 }
+
+.card-layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.card-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 90%;
+    margin: 2rem auto;
+}
+
+.card-list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-container {
+    flex: 1;
+    width: 60%;
+    height: 35rem;
+    margin-right: -35rem;
+}
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3rem;
+    width: 100%;
+}
+
+.arrow-pagination {
+    margin: 0 1rem;
+}
+
+.card {
+    margin-bottom: 1rem;
+}
+
 
 .edit-button,
 .delete-button {
@@ -869,4 +913,35 @@ h4 {
     width: 120%;
     max-width: 100vh;
     margin: 1rem 0 1rem 0;
+}
+
+/*Doughnut chart*/
+
+.page-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    padding: 20px;
+}
+
+.card-header {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.card-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
 }

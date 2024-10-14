@@ -50,14 +50,13 @@ const AltaProducto = ({ showHeroSection = true, showFormSection = true, reloadPr
 
     return (
         <div className="alta-producto__container">
-            {/* Hero Section */}
             {showHeroSection && (
                 <div className="container-banner__vendedor">
                     <header className='header__vendedor'>Productos</header>
                 </div>
             )}
             {showFormSection && (
-                <div className="card-layout__producto">
+                <div className="alta-vendedor__form-container"> {/* Asegúrate de tener este contenedor */}
                     <form className="alta-producto__form" autoComplete="off" onSubmit={saveProducto}>
                         <div>
                             <h1 className='card-title'>Agregar</h1>
@@ -101,6 +100,7 @@ const AltaProducto = ({ showHeroSection = true, showFormSection = true, reloadPr
 
             {mensaje && <p>{mensaje}</p>}
         </div>
+
     );
 };
 
