@@ -377,7 +377,6 @@ body,
     padding: 0;
     display: flex;
     flex-direction: column;
-    justify-content: ce;
 }
 
 .header__landing {
@@ -542,6 +541,10 @@ body,
 
 }
 
+.alta-vendedor__container {
+    width: 100%;
+}
+
 /* Banner del héroe */
 .container-banner__vendedor {
     width: 100vw;
@@ -599,6 +602,8 @@ body,
 
 .alta-vendedor__form {
     margin-top: 3rem;
+    min-width: 80%;
+    padding-top: 7rem;
 }
 
 .alta-producto__form,
@@ -646,7 +651,8 @@ body,
 .alta-vendedor__submit-button,
 .alta-producto__submit-button,
 .contacto__submit-button,
-.edit-producto__submit-button {
+.edit-producto__submit-button,
+.search-bar__submit-button {
     background-color: var(--color5);
     color: var(--colorWhite);
     border: none;
@@ -662,6 +668,18 @@ body,
     justify-content: center;
     align-items: center;
     transition: transform 0.3s ease;
+}
+
+.search-bar__submit-button {
+    margin-left: 0.5rem;
+    width: 45px;
+    height: 41px;
+    border-radius: 0 50% 50% 0;
+    padding-right: 0.7rem;
+}
+
+.search-bar__submit-button:hover {
+    background-color: var(--color4);
 }
 
 .alta-producto__submit-button,
@@ -711,13 +729,20 @@ body,
     margin: 2rem auto 2rem auto;
 }
 
+.card-layout__vendedores {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5rem;
+}
+
 .card-title-vertical {
     color: var(--color1);
     writing-mode: vertical-rl;
     transform: rotate(180deg);
     font-size: 4rem;
     font-weight: 400;
-    margin: 0;
 }
 
 .card-title {
@@ -729,11 +754,9 @@ body,
 
 .card-container {
     display: flex;
-    flex: 3;
     flex-wrap: wrap;
     gap: 16px;
     align-items: center;
-    justify-content: center;
     width: 100%;
 }
 
@@ -747,7 +770,7 @@ body,
     background-image: url('../img/HeroAltaVendedor.png');
     color: var(--color1);
     font-weight: 100;
-    min-width: 87%;
+    min-width: 96%;
     display: flex;
     justify-content: space-between;
     border-radius: 18px 2px 18px 2px;
@@ -780,7 +803,7 @@ h4 {
 .card-content {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     width: 90%;
     margin: 2rem auto;
 }
@@ -792,10 +815,11 @@ h4 {
 }
 
 .chart-container {
-    flex: 1;
-    width: 60%;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    width: 35%;
     height: 35rem;
-    margin-right: -35rem;
 }
 
 
@@ -944,4 +968,20 @@ h4 {
     justify-content: center;
     align-items: center;
     height: 300px;
+}
+
+.search-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 4rem auto 2rem auto;
+}
+
+.search-bar input {
+    border-radius: 2rem 0 0 2rem;
+    border: none;
+    width: 40%;
+    padding: 0.5rem 0.9rem 0.5rem 0.9rem;
+    height: 2.515rem;
 }

@@ -26,14 +26,18 @@ export const ListadoVendedores = () => {
             });
 
             if (!response.ok) {
-                throw new Error('Error al obtener los vendedores');
+                const errorData = await response.json(); // Captura la respuesta de error
+                throw new Error(`Error al obtener los vendedores: ${errorData.message || response.statusText}`);
             }
 
             const data = await response.json();
 
             if (data.status === 'success' && Array.isArray(data.users)) {
                 setVendedores(data.users);
-                setTotalPages(data.pages); // Asegúrate de usar `data.pages`
+
+                const totalUsers = data.totalUsers;
+                const usersPerPage = 5;
+                setTotalPages(Math.ceil(totalUsers / usersPerPage));
             } else {
                 setError('No se pudieron obtener los vendedores');
             }
@@ -43,6 +47,8 @@ export const ListadoVendedores = () => {
             setLoading(false);
         }
     };
+
+
 
     // Cargar vendedores al montar el componente o cuando cambie la página
     useEffect(() => {
@@ -69,7 +75,7 @@ export const ListadoVendedores = () => {
 
     return (
         <>
-            <div className='card-layout'>
+            <div className='card-layout__vendedores'>
                 <h1 className='card-title-vertical'>Vendedores</h1>
                 <div className="card-container">
                     {vendedores.length > 0 ? (
@@ -104,7 +110,7 @@ export const ListadoVendedores = () => {
                 >
                     <i className="fa fa-chevron-circle-left" aria-hidden="true"></i>
                 </button>
-                <span>{page} de {totalPages}</span>
+                <span>{page}</span>
                 <button className='arrow-pagination'
                     onClick={() => handlePageChange(page + 1)}
                     disabled={page === totalPages}

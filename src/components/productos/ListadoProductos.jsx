@@ -25,6 +25,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
     const [page, setPage] = useState(1);
     const [pages, setPages] = useState(1);
     const [expandedId, setExpandedId] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
 
     const fetchProductos = async (page) => {
         try {
@@ -60,6 +61,48 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
             setLoading(false);
         }
     };
+
+    const fetchProductosByName = async () => {
+        setLoading(true);
+        try {
+            const token = localStorage.getItem('token');
+
+            if (!token) {
+                throw new Error('No se encontró un token de autorización.');
+            }
+
+            if (!searchTerm) {
+                fetchProductos(page);
+                return;
+            }
+
+            const response = await fetch(`${Global.url}producto/filtrarProducto/${searchTerm}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': token
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al buscar productos');
+            }
+
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                setProductos(data.productos);
+                setPages(1); // Si es una búsqueda, asumir que solo tenemos una página de resultados
+            } else {
+                setError('No se encontraron productos con ese nombre');
+            }
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
 
     useEffect(() => {
         fetchProductos(page);
@@ -145,6 +188,18 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                     <header className="header__productos">Productos</header>
                 </div>
             )}
+            {/* Campo de búsqueda */}
+            <div className="search-bar">
+                <input
+                    type="text"
+                    placeholder="Buscar"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <button onClick={fetchProductosByName} className='search-bar__submit-button'>
+                    <i class="fa-solid fa-magnifying-glass" />
+                </button>
+            </div>
 
             <div className="card-layout">
                 <div className="card-content">
