@@ -1012,3 +1012,29 @@ canvas {
 .hidden {
     display: none;
 }
+
+.tendencias-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.tendencias-container h2 {
+    font-size: 4rem;
+    font-weight: 200;
+    margin: 2rem;
+}
+
+.chart-bar-container {
+    display: flex;
+    gap: 2rem;
+}
+
+.legend-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5rem;
+    margin-top: auto;
+    justify-content: left;
+}
