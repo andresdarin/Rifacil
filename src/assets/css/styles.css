@@ -168,7 +168,6 @@ body {
     height: 100vh;
 }
 
-.login-card {}
 
 .login-header {
     margin-bottom: 20px;
@@ -1037,4 +1036,39 @@ canvas {
     margin-bottom: 5rem;
     margin-top: auto;
     justify-content: left;
+}
+
+/*Error 404*/
+.error-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.error-page img {
+    width: 50rem;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.error-page-text h2 {
+    font-size: 2.4rem;
+    color: var(--color5);
+    margin-bottom: 10px;
+}
+
+.error-page-text a {
+    font-size: 1.8rem;
+    color: #97afba;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.error-page-text a:hover {
+    transform: scale(1.2);
+    text-decoration: none;
+    color: var(--color5);
 }
