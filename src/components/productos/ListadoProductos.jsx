@@ -26,6 +26,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
     const [pages, setPages] = useState(1);
     const [expandedId, setExpandedId] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
+    const [emptyMessage, setEmptyMessage] = useState('');
 
     const fetchProductos = async (page) => {
         try {
@@ -43,8 +44,15 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                 },
             });
 
+            // Si es 404, mostrar un mensaje personalizado
+            if (response.status === 404) {
+                setProductos([]); // Asegurarse de limpiar productos
+                setEmptyMessage('No hay productos disponibles en esta página.');
+                return;
+            }
+
             if (!response.ok) {
-                throw new Error('Error fetching productos');
+                throw new Error('Error al obtener los productos.');
             }
 
             const data = await response.json();
@@ -53,14 +61,16 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                 setProductos(data.products);
                 setPages(data.pages);
             } else {
-                setError('No se pudieron obtener los productos');
+                setError('No se pudieron obtener los productos.');
             }
         } catch (error) {
-            setError(error.message);
+            setError(error.message || 'Ocurrió un error al obtener los productos.');
         } finally {
             setLoading(false);
         }
     };
+
+
 
     const fetchProductosByName = async () => {
         setLoading(true);
@@ -155,11 +165,11 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
 
     // Data para el gráfico de Doughnut
     const data = {
-        labels: productos.map(producto => producto.nombreProducto), // Nombres de los productos
+        labels: productos.map(producto => producto.nombreProducto),
         datasets: [
             {
-                label: 'Precio de Productos',
-                data: productos.map(producto => producto.precio), // Precios de los productos
+                label: 'Vendidos',
+                data: productos.map(producto => producto.cantidadVendidos),
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.75)',
                     'rgba(54, 162, 235, 0.75)',
@@ -197,7 +207,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
                 <button onClick={fetchProductosByName} className='search-bar__submit-button'>
-                    <i class="fa-solid fa-magnifying-glass" />
+                    <i className="fa-solid fa-magnifying-glass" />
                 </button>
             </div>
 
@@ -211,6 +221,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                                         <h1>{producto.nombreProducto}</h1>
                                         <h4>${producto.precio}</h4>
                                         <h4>{producto.descripcion}</h4>
+                                        <h4>Llevas vendidos {producto.cantidadVendidos} de este producto.</h4>
                                         {expandedId === producto._id && (
                                             <div className="edit-form-container">
                                                 <EditarProducto
@@ -233,16 +244,19 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                                 </div>
                             ))
                         ) : (
-                            <p>No se encontraron productos</p>
+                            <p className='emptyMessage'>No hay productos disponibles en esta página.</p>
                         )}
                     </div>
 
-                    {/* Gráfico de Doughnut */}
-                    <div className="chart-container">
-                        <h2>Distribución de Precios de Productos</h2>
-                        <Doughnut data={data} />
+                    {/* Gráfico de Doughnut - Manteniendo la estructura */}
+                    <div className="chart-title-container">
+                        <h2 className='emptyMessage'>Estadísticas de venta</h2>
+                        <div className={`chart-container ${productos.length === 0 ? 'hidden' : ''}`}>
+                            <Doughnut data={data} />
+                        </div>
                     </div>
                 </div>
+
                 {/* Paginado */}
                 <div className="pagination">
                     <button
@@ -266,6 +280,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
             </div>
         </>
     );
+
 
 };
 
