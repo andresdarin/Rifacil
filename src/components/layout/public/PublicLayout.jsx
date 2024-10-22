@@ -6,10 +6,13 @@ export const PublicLayout = () => {
     const location = useLocation();
 
     // Define las rutas donde el Header no debería mostrarse
-    const hideHeaderPaths = ['/login', '/registro', '/recover-pass', '/reset-password'];
+    const hideHeaderPaths = ['/login', '/registro', '/recover-pass'];
+
+    // Verifica si la ruta actual es '/reset-password/' seguido de cualquier token
+    const isResetPasswordPath = location.pathname.startsWith('/reset-password/');
 
     // Verifica si la ruta actual está en la lista de rutas donde el Header debería ocultarse
-    const shouldHideHeader = hideHeaderPaths.includes(location.pathname);
+    const shouldHideHeader = hideHeaderPaths.includes(location.pathname) || isResetPasswordPath;
 
     return (
         <>

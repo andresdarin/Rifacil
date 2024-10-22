@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from '../../hooks/useForm';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, NavLink } from 'react-router-dom';
 import { Global } from '../../helpers/Global';
 import { FaLock } from 'react-icons/fa';
 
@@ -61,7 +61,7 @@ export const ResetPass = () => {
         <div className="form-container sign-up">
             <div className="login-card">
                 <header className="content_header content_header--public">
-                    <h2 className="content__title">Recuperación de Contraseña</h2>
+                    <h2 className="content__title reset_pass">Recuperación de Contraseña</h2>
                 </header>
                 {status === 'success' && (
                     <strong className='alert alert-success'>
@@ -96,6 +96,13 @@ export const ResetPass = () => {
                         />
                         <FaLock className='icon' />
                     </div>
+                    <div className="recover-pass__text">
+                        Recordaste tu contraseña?
+                        <NavLink to="/login" className="back-to-login">
+                            Volvamos al inicio
+                        </NavLink>
+                    </div>
+
                     <div className="buttons-login">
                         <button type="submit" className='btn'>Cambiar Contraseña</button>
                     </div>

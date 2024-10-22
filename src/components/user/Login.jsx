@@ -68,7 +68,7 @@ export const Login = () => {
         <div className="form-container sign-up">
             <div className="login-card">
                 <header className="content_header content_header--public">
-                    <h1 className="content__title">Login</h1>
+                    <h1 className="content__title"><span className='content__title__span'>Log</span>in</h1>
                 </header>
                 {loged === 'loged' && <strong className='alert alert-success'>Usuario Identificado Correctamente</strong>}
                 {loged === 'error' && <strong className='alert alert-danger'>Usuario no Identificado</strong>}

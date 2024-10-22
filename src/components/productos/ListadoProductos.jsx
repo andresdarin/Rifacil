@@ -164,31 +164,50 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
     };
 
     // Data para el gráfico de Doughnut
+
+    // Función para generar un color aleatorio en formato RGB
+    const getRandomColor = () => {
+        const r = Math.floor(Math.random() * 256);
+        const g = Math.floor(Math.random() * 256);
+        const b = Math.floor(Math.random() * 256);
+        return `rgba(${r}, ${g}, ${b}, 0.75)`; // Color con transparencia
+    };
+
+    // Función para generar un array de colores aleatorios según la cantidad de productos
+    const generateRandomColors = (numColors) => {
+        const colors = [];
+        for (let i = 0; i < numColors; i++) {
+            colors.push(getRandomColor());
+        }
+        return colors;
+    };
+    const randomBackgroundColors = generateRandomColors(productos.length);
+    const randomBorderColors = randomBackgroundColors.map(color => color.replace('0.75', '1'));
+
     const data = {
         labels: productos.map(producto => producto.nombreProducto),
         datasets: [
             {
                 label: 'Vendidos',
                 data: productos.map(producto => producto.cantidadVendidos),
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.75)',
-                    'rgba(54, 162, 235, 0.75)',
-                    'rgba(255, 206, 86, 0.75)',
-                    'rgba(75, 192, 192, 0.75)',
-                    'rgba(153, 102, 255, 0.75)',
-                    'rgba(255, 159, 64, 0.75)',
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)',
-                ],
+                backgroundColor: randomBackgroundColors, // Colores de fondo aleatorios
+                borderColor: randomBorderColors, // Colores de borde más sólidos
                 borderWidth: 1,
             },
         ],
+    };
+
+    const options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'bottom', // La leyenda se muestra abajo del gráfico
+                labels: {
+                    color: '#FFF', // Cambia el color del texto de las referencias (leyenda)
+                },
+            },
+        },
     };
 
     return (
@@ -252,7 +271,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                     <div className="chart-title-container">
                         <h2 className='emptyMessage'>Estadísticas de venta</h2>
                         <div className={`chart-container ${productos.length === 0 ? 'hidden' : ''}`}>
-                            <Doughnut data={data} />
+                            <Doughnut data={data} options={options} />
                         </div>
                     </div>
                 </div>

@@ -83,6 +83,9 @@ const Tendencias = () => {
                 grid: {
                     display: false, // Desactiva la cuadrícula del eje X
                 },
+                ticks: {
+                    display: false, // Desactiva las etiquetas (nombres de productos) en el eje X
+                },
             },
             y: {
                 title: {
@@ -109,7 +112,7 @@ const Tendencias = () => {
                                 backgroundColor: data.datasets[0].backgroundColor[index],
                                 marginRight: '8px'
                             }}></div>
-                            <span>{producto.nombreProducto}</span>
+                            <span className='tendencias-container__span'>{producto.nombreProducto}</span>
                         </div>
                     ))}
                 </div>
