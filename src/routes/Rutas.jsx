@@ -26,7 +26,7 @@ export const Rutas = () => {
                     <Route path='landing' element={<LandingPage />} />
                     <Route path='contacto' element={<Contacto />} />
                     <Route path='recover-pass' element={<RecoverPass />} />
-                    <Route path='reset-password/:token' element={<ResetPass />} />
+                    <Route path='/reset-password/:token' element={<ResetPass />} />
                 </Route>
 
                 <Route path='/admin' element={<PrivateLayout />}>

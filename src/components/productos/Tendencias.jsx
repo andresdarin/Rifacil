@@ -102,7 +102,7 @@ const Tendencias = () => {
                 <Bar data={data} options={options} />
                 <div className="legend-container">
                     {productos.map((producto, index) => (
-                        <div key={producto.id} className="legend-item" style={{ display: 'flex', alignItems: 'center' }}>
+                        <div key={producto._id || index} className="legend-item" style={{ display: 'flex', alignItems: 'center' }}>
                             <div style={{
                                 width: '15px',
                                 height: '15px',
@@ -113,6 +113,7 @@ const Tendencias = () => {
                         </div>
                     ))}
                 </div>
+
             </div>
 
         </div>

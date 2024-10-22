@@ -6,21 +6,29 @@ import { FaLock } from 'react-icons/fa';
 
 export const ResetPass = () => {
     const { token } = useParams(); // Obtener el token de la URL
-    const { form, changed } = useForm({});
+    const { form, changed } = useForm({ password: '', confirmPassword: '' });
     const [status, setStatus] = useState("not_sended");
     const navigate = useNavigate();
 
     const resetPassword = async (e) => {
         e.preventDefault();
 
+        const { password, confirmPassword } = form;
+
+        // Validar que las contraseñas coincidan
+        if (password !== confirmPassword) {
+            setStatus('error');
+            console.error('Las contraseñas no coinciden');
+            return; // Salir si no coinciden
+        }
+
         const newPasswordData = {
-            token, // Enviar el token que obtuvimos de la URL
-            newPassword: form.password // Nueva contraseña ingresada por el usuario
+            newPassword: password // Enviar solo la nueva contraseña
         };
 
         try {
             // Enviar nueva contraseña al backend
-            const request = await fetch(Global.url + 'usuario/reset-password', {
+            const request = await fetch(`${Global.url}usuario/reset-password/${token}`, {
                 method: 'POST',
                 body: JSON.stringify(newPasswordData),
                 headers: {
@@ -30,6 +38,9 @@ export const ResetPass = () => {
 
             const data = await request.json();
 
+            // Imprimir el estado de la respuesta para depuración
+            console.log('Respuesta del servidor:', data);
+
             if (data.status === 'success') {
                 setStatus('success');
                 // Redirigir al login tras éxito
@@ -38,6 +49,7 @@ export const ResetPass = () => {
                 }, 3000);
             } else {
                 setStatus('error');
+                console.error('Error al cambiar la contraseña:', data.message);
             }
         } catch (error) {
             console.error('Error en la solicitud:', error);
@@ -49,7 +61,7 @@ export const ResetPass = () => {
         <div className="form-container sign-up">
             <div className="login-card">
                 <header className="content_header content_header--public">
-                    <h1 className="content__title">Cambiar Contraseña</h1>
+                    <h2 className="content__title">Recuperación de Contraseña</h2>
                 </header>
                 {status === 'success' && (
                     <strong className='alert alert-success'>

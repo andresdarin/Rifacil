@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { useForm } from '../../hooks/useForm';
 import { Global } from '../../helpers/Global';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { FaEnvelope } from 'react-icons/fa';
 
 export const RecoverPass = () => {
     const { form, changed } = useForm({});
     const [recoveryStatus, setRecoveryStatus] = useState("not_sended");
-    const navigate = useNavigate();
 
     const recoverPassword = async (e) => {
         e.preventDefault();
@@ -29,14 +28,6 @@ export const RecoverPass = () => {
 
             if (data.status === 'success') {
                 setRecoveryStatus('success');
-
-                // Aquí supongamos que tu backend te devuelve el token
-                const resetToken = data.resetToken; // Asegúrate de que tu backend envíe esto
-
-                // Redirigir al formulario de cambio de contraseña con el token
-                setTimeout(() => {
-                    navigate(`/reset-password/${resetToken}`);
-                }, 3000); // Redirigir después de 3 segundos
             } else {
                 setRecoveryStatus('error');
             }
@@ -45,7 +36,7 @@ export const RecoverPass = () => {
             console.error('Error en la solicitud:', error);
             setRecoveryStatus('error');
         }
-    }
+    };
 
     return (
         <div className="form-container sign-up">
@@ -53,19 +44,33 @@ export const RecoverPass = () => {
                 <header className="content_header content_header--public">
                     <h1 className="content__title">Recuperar Contraseña</h1>
                 </header>
-                {recoveryStatus === 'success' && <strong className='alert alert-success'>Correo enviado. Redirigiendo a login...</strong>}
-                {recoveryStatus === 'error' && <strong className='alert alert-danger'>Error al enviar el correo</strong>}
+                {recoveryStatus === 'success' && (
+                    <strong className='alert alert-success'>
+                        Correo enviado. Revisa tu bandeja de entrada para continuar con el restablecimiento de la contraseña.
+                    </strong>
+                )}
+                {recoveryStatus === 'error' && (
+                    <strong className='alert alert-danger'>
+                        Error al enviar el correo. Inténtalo de nuevo.
+                    </strong>
+                )}
                 <form className='form-login' onSubmit={recoverPassword}>
                     <div className="form-group">
                         <label htmlFor='email' />
-                        <input type='email' name='email' placeholder='Introduce tu eMail' onChange={changed} />
+                        <input
+                            type='email'
+                            name='email'
+                            placeholder='Introduce tu eMail'
+                            onChange={changed}
+                            required
+                        />
                         <FaEnvelope className='icon' />
                     </div>
                     <div className="buttons-login">
                         <button type="submit" className='btn'>Recuperar Contraseña</button>
                     </div>
                     <div className="buttons-login-label">
-                        <span>O recordaste tu contraseña?</span>
+                        <span>¿Recordaste tu contraseña?</span>
                         <NavLink to='/login'>Inicia Sesión</NavLink>
                     </div>
                 </form>
