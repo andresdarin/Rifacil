@@ -26,18 +26,18 @@ export const ListadoVendedores = () => {
             });
 
             if (!response.ok) {
-                const errorData = await response.json(); // Captura la respuesta de error
-                throw new Error(`Error al obtener los vendedores: ${errorData.message || response.statusText}`);
+                throw new Error(`No quedan más vendedores que mostrar`);
             }
 
             const data = await response.json();
+            console.log(data); // Verificar la respuesta del backend en la consola
 
             if (data.status === 'success' && Array.isArray(data.users)) {
                 setVendedores(data.users);
 
-                const totalUsers = data.totalUsers;
-                const usersPerPage = 5;
-                setTotalPages(Math.ceil(totalUsers / usersPerPage));
+                // Usa los datos que devuelve el backend
+                setPage(data.page);  // Número de página actual
+                setTotalPages(data.pages);  // Número total de páginas
             } else {
                 setError('No se pudieron obtener los vendedores');
             }
@@ -48,30 +48,58 @@ export const ListadoVendedores = () => {
         }
     };
 
-
-
     // Cargar vendedores al montar el componente o cuando cambie la página
     useEffect(() => {
         fetchVendedores(page);
     }, [page]);
 
-    const handleDelete = (id) => {
-        console.log(`Eliminar vendedor con id: ${id}`);
+    const reloadUsuarios = () => {
+        setLoading(true);
+        fetchVendedores(page);
     };
 
-    const handleEdit = (id) => {
-        console.log(`Editar vendedor con id: ${id}`);
+    const handleDeleteUser = async (id) => {
+        const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar este usuario?");
+        if (confirmDelete) {
+            try {
+                const token = localStorage.getItem('token');
+
+                const response = await fetch(`${Global.url}usuario/remove/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': token,
+                    },
+                });
+
+                if (response.ok) {
+                    reloadUsuarios();
+                } else {
+                    const result = await response.json();
+                    alert(result.message || "Error al eliminar el usuario");
+                }
+            } catch (error) {
+                alert("Error en el servidor: " + error.message);
+            }
+        }
     };
 
     // Función para cambiar de página
     const handlePageChange = (newPage) => {
+        console.log('Cambiando a la página:', newPage); // Verifica el valor
         if (newPage >= 1 && newPage <= totalPages) {
             setPage(newPage);
         }
     };
 
-    if (loading) return <div>Cargando vendedores...</div>;
-    if (error) return <div>Error: {error}</div>;
+    if (loading) return <div className='center'>Cargando vendedores...</div>;
+    if (error) return (
+        <div className='error_vendedor'>
+            <p>{error}</p>
+            <button onClick={() => handlePageChange(1)}>Ir a página 1</button>
+        </div>
+    );
+
 
     return (
         <>
@@ -87,10 +115,7 @@ export const ListadoVendedores = () => {
                                 </div>
 
                                 <div className="card-buttons">
-                                    <button className="edit-button" onClick={() => handleEdit(vendedor._id)}>
-                                        <i className="fa fa-pencil" aria-hidden="true" />
-                                    </button>
-                                    <button className="delete-button" onClick={() => handleDelete(vendedor._id)}>
+                                    <button className="delete-button" onClick={() => handleDeleteUser(vendedor._id)}>
                                         <i className="fa fa-trash" aria-hidden="true" />
                                     </button>
                                 </div>
@@ -104,16 +129,18 @@ export const ListadoVendedores = () => {
 
             {/* Paginación */}
             <div className="pagination">
-                <button className='arrow-pagination'
+                <button
+                    className="arrow-pagination"
                     onClick={() => handlePageChange(page - 1)}
-                    disabled={page === 1}
+                    disabled={page === 1} // Desactiva el botón si estamos en la primera página
                 >
                     <i className="fa fa-chevron-circle-left" aria-hidden="true"></i>
                 </button>
-                <span>{page}</span>
-                <button className='arrow-pagination'
+                <span>{page} de {totalPages}</span>
+                <button
+                    className="arrow-pagination"
                     onClick={() => handlePageChange(page + 1)}
-                    disabled={page === totalPages}
+                    disabled={page === totalPages} // Desactiva el botón si estamos en la última página
                 >
                     <i className="fa fa-chevron-circle-right" aria-hidden="true"></i>
                 </button>

@@ -70,8 +70,6 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
         }
     };
 
-
-
     const fetchProductosByName = async () => {
         setLoading(true);
         try {
@@ -142,7 +140,6 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
 
                 if (response.ok) {
                     reloadProductos();
-                    alert("Producto eliminado correctamente");
                 } else {
                     const result = await response.json();
                     alert(result.message || "Error al eliminar el producto");
@@ -162,8 +159,6 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
             setPage(newPage);
         }
     };
-
-    // Data para el gráfico de Doughnut
 
     // Función para generar un color aleatorio en formato RGB
     const getRandomColor = () => {
@@ -221,7 +216,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
             <div className="search-bar">
                 <input
                     type="text"
-                    placeholder="Buscar"
+                    placeholder="Buscar Productos"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
