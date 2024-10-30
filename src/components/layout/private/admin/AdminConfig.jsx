@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Global } from '../../../../helpers/Global';
 
 export const AdminConfig = () => {
 
@@ -12,6 +13,7 @@ export const AdminConfig = () => {
 
     const [avatarPreview, setAvatarPreview] = useState(adminData.avatar); // Preview del avatar
     const fileInputRef = useRef(null); // Referencia al input de archivo
+    const [saved, setSaved] = useState('not_sended')
 
     useEffect(() => {
         // Cambia el fondo de la página
@@ -32,18 +34,51 @@ export const AdminConfig = () => {
         });
     };
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
 
-        // Validación de contraseñas
         if (adminData.password !== adminData.confirmarPassword) {
             alert("Las contraseñas no coinciden");
             return;
         }
 
-        // Aquí puedes hacer la llamada a la API para actualizar los datos del admin
-        console.log("Datos enviados:", adminData);
+        const token = localStorage.getItem('token');
+        const data = {
+            nombre: adminData.nombre,
+            email: adminData.email,
+            password: adminData.password
+        };
+
+        try {
+            const response = await fetch(`${Global.url}usuario/update`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': token,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            const contentType = response.headers.get("content-type");
+            if (contentType && contentType.includes("application/json")) {
+                const result = await response.json();
+                if (response.ok) {
+                    setSaved('saved');
+                    alert(result.message || "Perfil actualizado correctamente");
+                } else {
+                    setSaved('error');
+                    alert(result.message || 'Error al actualizar el perfil');
+                }
+            } else {
+                setSaved('error');
+                alert("Error inesperado en el servidor. Verifica la URL o el token.");
+            }
+        } catch (error) {
+            setSaved('error');
+            alert('Error en el servidor: ' + error.message);
+        }
     };
+
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -128,9 +163,13 @@ export const AdminConfig = () => {
                             />
                         </div>
 
+                        {saved == 'saved' ? <strong className='alert alert_edit alert-success'>Perfil actualizado correctamente correctamente</strong> : ''}
+                        {saved == 'error' ? <strong className='alert alert_edit alert-danger'>Error al actualizar el perfil </strong> : ''}
+
                         <button type="submit" className="admin-config__submit-button">
                             <i className="fa fa-save" aria-hidden="true"></i>
                         </button>
+
                     </form>
                 </div>
 

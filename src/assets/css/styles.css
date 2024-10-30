@@ -388,6 +388,16 @@ body {
     color: #721c24;
 }
 
+.alert_edit {
+    display: flex;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: auto;
+    margin-bottom: 1rem;
+}
+
 .navbar__container-lists {
     display: flex;
     flex-direction: row;
