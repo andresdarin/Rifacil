@@ -14,6 +14,7 @@ import Error404 from '../routes/Error404.jsx';
 import Contacto from '../components/user/Contact.jsx';
 import { RecoverPass } from '../components/user/RecoverPass.jsx';
 import { ResetPass } from '../components/user/ResetPass.jsx';
+import { AdminConfig } from '../components/layout/private/admin/AdminConfig.jsx';
 
 export const Rutas = () => {
     return (
@@ -36,6 +37,7 @@ export const Rutas = () => {
                     <Route path='alta-vendedor' element={<AltaVendedor />} />
                     <Route path='productos' element={<ListadoProductos />} />
                     <Route path='profile' element={<AdminProfile />} />
+                    <Route path='admin-config' element={<AdminConfig />} />
                 </Route>
 
                 <Route path='/vendedor' element={<PrivateLayout />}>

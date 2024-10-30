@@ -32,7 +32,7 @@ export const NavAdmin = () => {
                 </li>
 
                 <li className="menu-list__item">
-                    <NavLink to='/admin/productos' className="menu-list__link">
+                    <NavLink to='/admin/admin-config' className="menu-list__link">
                         <span className="menu-list__title">Configuración</span>
                     </NavLink>
                 </li>

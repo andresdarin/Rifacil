@@ -27,6 +27,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
     const [expandedId, setExpandedId] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [emptyMessage, setEmptyMessage] = useState('');
+    const [expandedDescriptions, setExpandedDescriptions] = useState({}); // Para controlar qué descripciones están expandidas
 
     const fetchProductos = async (page) => {
         try {
@@ -205,6 +206,17 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
         },
     };
 
+    // Define el límite de caracteres
+    const CHAR_LIMIT = 250;
+
+    // Función para alternar la expansión de la descripción
+    const toggleDescription = (id) => {
+        setExpandedDescriptions((prev) => ({
+            ...prev,
+            [id]: !prev[id], // Cambia el estado de expansión para este ID
+        }));
+    };
+
     return (
         <>
             {showHeroSection && (
@@ -234,7 +246,17 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                                     <div>
                                         <h1>{producto.nombreProducto}</h1>
                                         <h4>${producto.precio}</h4>
-                                        <h4>{producto.descripcion}</h4>
+                                        <h4>
+                                            {expandedDescriptions[producto._id]
+                                                ? producto.descripcion
+                                                : `${producto.descripcion.substring(0, CHAR_LIMIT)}${producto.descripcion.length > CHAR_LIMIT ? '...' : ''}`}
+                                            {/* Botón "Ver más" */}
+                                            {producto.descripcion.length > CHAR_LIMIT && (
+                                                <button onClick={() => toggleDescription(producto._id)} className="btn-ver-mas">
+                                                    {expandedDescriptions[producto._id] ? 'Ver menos' : 'Ver más'}
+                                                </button>
+                                            )}
+                                        </h4>
                                         <h4>Llevas vendidos {producto.cantidadVendidos} de este producto.</h4>
                                         {expandedId === producto._id && (
                                             <div className="edit-form-container">

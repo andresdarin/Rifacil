@@ -279,6 +279,10 @@ body {
     position: relative;
 }
 
+.form-group__config {
+    width: 100%;
+}
+
 .form-group label {
     display: block;
     font-weight: bold;
@@ -574,12 +578,37 @@ body,
 /*Alta Vendedor*/
 
 .alta-vendedor__container,
-.alta-producto__container {
+.alta-producto__container,
+.form__admin-config {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 110%;
+}
 
+.form__admin-config {
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.form__admin-config input {
+    width: 100%;
+}
+
+.config-admin-w-avatar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5rem;
+    gap: 1rem;
+}
+
+.avatar-img {
+    display: flex;
+    justify-content: flex-start;
+    width: 30rem;
+    height: 100%;
+    cursor: pointer;
 }
 
 .alta-vendedor__container {
@@ -647,6 +676,10 @@ body,
     padding-top: 7rem;
 }
 
+.alta-producto__form {
+    margin-top: 4rem;
+}
+
 .alta-producto__form,
 .contacto__form {
     display: flex;
@@ -693,7 +726,8 @@ body,
 .alta-producto__submit-button,
 .contacto__submit-button,
 .edit-producto__submit-button,
-.search-bar__submit-button {
+.search-bar__submit-button,
+.admin-config__submit-button {
     background-color: var(--color5);
     color: var(--colorWhite);
     border: none;
@@ -709,6 +743,15 @@ body,
     justify-content: center;
     align-items: center;
     transition: transform 0.3s ease;
+}
+
+
+.admin-config__submit-button {
+    background-color: var(--color5);
+    color: var(--colorWhite);
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
 }
 
 .search-bar__submit-button {
@@ -837,6 +880,23 @@ h4 {
     display: flex;
     justify-content: space-between;
     margin-top: 12px;
+}
+
+.btn-ver-mas {
+    margin: 0;
+    padding: 0 5px;
+    font-weight: 400;
+    background: none;
+    border: none;
+    color: var(--color1);
+    transition: transform 0.3s ease;
+}
+
+.btn-ver-mas:hover {
+    color: var(--color5);
+    cursor: pointer;
+    transform: scale(1.1);
+    font-weight: bold;
 }
 
 .card-layout {
