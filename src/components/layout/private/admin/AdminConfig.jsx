@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Global } from '../../../../helpers/Global';
 
 export const AdminConfig = () => {
-
     const [adminData, setAdminData] = useState({
         nombre: '',
         email: '',
@@ -13,7 +12,8 @@ export const AdminConfig = () => {
 
     const [avatarPreview, setAvatarPreview] = useState(adminData.avatar); // Preview del avatar
     const fileInputRef = useRef(null); // Referencia al input de archivo
-    const [saved, setSaved] = useState('not_sended')
+    const [saved, setSaved] = useState('not_sended');
+    const [errorMessage, setErrorMessage] = useState(''); // Estado para almacenar mensajes de error
 
     useEffect(() => {
         // Cambia el fondo de la página
@@ -38,7 +38,8 @@ export const AdminConfig = () => {
         e.preventDefault();
 
         if (adminData.password !== adminData.confirmarPassword) {
-            alert("Las contraseñas no coinciden");
+            setErrorMessage("Las contraseñas no coinciden");
+            setSaved('error');
             return;
         }
 
@@ -64,21 +65,20 @@ export const AdminConfig = () => {
                 const result = await response.json();
                 if (response.ok) {
                     setSaved('saved');
-                    alert(result.message || "Perfil actualizado correctamente");
+                    setErrorMessage('');
                 } else {
                     setSaved('error');
-                    alert(result.message || 'Error al actualizar el perfil');
+                    setErrorMessage(result.message || 'Error al actualizar el perfil');
                 }
             } else {
                 setSaved('error');
-                alert("Error inesperado en el servidor. Verifica la URL o el token.");
+                setErrorMessage("Error inesperado en el servidor. Verifica la URL o el token.");
             }
         } catch (error) {
             setSaved('error');
-            alert('Error en el servidor: ' + error.message);
+            setErrorMessage('Error en el servidor: ' + error.message);
         }
     };
-
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -163,8 +163,13 @@ export const AdminConfig = () => {
                             />
                         </div>
 
-                        {saved == 'saved' ? <strong className='alert alert_edit alert-success'>Perfil actualizado correctamente correctamente</strong> : ''}
-                        {saved == 'error' ? <strong className='alert alert_edit alert-danger'>Error al actualizar el perfil </strong> : ''}
+                        {/* Mensajes de estado */}
+                        {saved === 'saved' && (
+                            <strong className='alert alert_edit alert-success'>Perfil actualizado correctamente</strong>
+                        )}
+                        {saved === 'error' && errorMessage && (
+                            <strong className='alert alert_edit alert-danger'>{errorMessage}</strong>
+                        )}
 
                         <button type="submit" className="admin-config__submit-button">
                             <i className="fa fa-save" aria-hidden="true"></i>
@@ -172,7 +177,6 @@ export const AdminConfig = () => {
 
                     </form>
                 </div>
-
             </div>
         </div>
     );
