@@ -1,11 +1,16 @@
-import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
-import { AltaVendedor } from './AltaVendedor'
+import React, { useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 
 export const NavAdmin = () => {
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    // Controla el estado del menú desplegable
+    const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+    };
+
     return (
         <nav className="navbar__container-lists">
-
             <ul className="container-lists__menu-list">
                 <li className="menu-list__item">
                     <NavLink to='/admin/profile' className="menu-list__link">
@@ -20,9 +25,29 @@ export const NavAdmin = () => {
                 </li>
 
                 <li className="menu-list__item">
-                    <a href="#" className="menu-list__link">
+                    {/* Añade el evento onClick para mostrar/ocultar el menú desplegable */}
+                    <span
+                        className={`menu-list__link menu-list__link--dropdown ${isDropdownOpen ? 'selected' : ''}`}
+                        onClick={toggleDropdown}
+                    >
                         <span className="menu-list__title">Rifas</span>
-                    </a>
+                    </span>
+
+
+                    {/* Menú desplegable que se muestra solo si isDropdownOpen es true */}
+                    {isDropdownOpen && (
+                        <ul className="dropdown-menu">
+                            <li className="dropdown-menu__item">
+                                <NavLink to="/admin/rifas/crear" className="dropdown-menu__link">Generación</NavLink>
+                            </li>
+                            <li className="dropdown-menu__item">
+                                <NavLink to="/admin/rifas/gestion" className="dropdown-menu__link">Gestionar</NavLink>
+                            </li>
+                            <li className="dropdown-menu__item">
+                                <NavLink to="/admin/rifas/historial" className="dropdown-menu__link">Historial</NavLink>
+                            </li>
+                        </ul>
+                    )}
                 </li>
 
                 <li className="menu-list__item">
@@ -43,7 +68,6 @@ export const NavAdmin = () => {
                     </NavLink>
                 </li>
             </ul>
-
         </nav>
-    )
-}
+    );
+};

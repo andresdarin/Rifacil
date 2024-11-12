@@ -15,6 +15,9 @@ import Contacto from '../components/user/Contact.jsx';
 import { RecoverPass } from '../components/user/RecoverPass.jsx';
 import { ResetPass } from '../components/user/ResetPass.jsx';
 import { AdminConfig } from '../components/layout/private/admin/AdminConfig.jsx';
+import { Rifas } from '../components/layout/private/rifas/Rifas.jsx';
+import { CrearRifa } from '../components/layout/private/rifas/CrearRifa.jsx';
+import { Historial } from '../components/layout/private/rifas/Historial.jsx';
 
 export const Rutas = () => {
     return (
@@ -35,6 +38,9 @@ export const Rutas = () => {
                     <Route path='logout' element={<Logout />} />
                     <Route path='perfil' element={<AdminProfile />} />
                     <Route path='alta-vendedor' element={<AltaVendedor />} />
+                    <Route path='rifas/gestion' element={<Rifas />} />
+                    <Route path='rifas/crear' element={<CrearRifa />} />
+                    <Route path='rifas/historial' element={<Historial />} />
                     <Route path='productos' element={<ListadoProductos />} />
                     <Route path='profile' element={<AdminProfile />} />
                     <Route path='admin-config' element={<AdminConfig />} />
