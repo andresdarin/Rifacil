@@ -94,6 +94,9 @@ const Tendencias = () => {
                 grid: {
                     display: false, // Desactiva la cuadrícula del eje X
                 },
+                ticks: {
+                    display: false, // Desactiva las etiquetas (nombres de productos) en el eje X
+                },
             },
         },
     };

@@ -644,7 +644,7 @@ body,
     align-items: flex-end;
     position: relative;
     padding: 0;
-    filter: brightness(70%);
+    filter: brightness(50%);
 }
 
 .header__vendedor,
@@ -1249,7 +1249,6 @@ canvas {
 
 .card_rifa {
     background-image: url('../img/HeroAltaVendedor.png');
-    border-radius: 10px;
     padding: 3rem;
 }
 
@@ -1323,7 +1322,6 @@ input[type="number"]::-webkit-inner-spin-button {
     align-items: center;
     justify-content: center;
     text-align: center;
-    margin: 4rem;
     gap: 2rem;
 }
 
@@ -1408,4 +1406,54 @@ input[type="number"]::-webkit-inner-spin-button {
     border-radius: 5px;
     border: 1px solid var(--colorWhite);
     padding: 10px;
+}
+
+/* Estilo base para dispositivos grandes (5 columnas) */
+.grid-rifas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid-rifas h2 {
+    color: white;
+    padding: 3rem;
+    font-size: 60px;
+    font-weight: 200;
+}
+
+.grid-rifas span {
+    display: flex;
+    flex-direction: column;
+    font-weight: 200;
+    justify-content: center;
+    align-items: center;
+    margin: 3px;
+}
+
+.nro_rifa {
+    font-size: 34px;
+    font-weight: 500;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+    min-width: 93%;
+}
+
+.grid-card {
+    background-image: url('../img/HeroAltaVendedor.png');
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    border-radius: 10px;
+    color: var(--colorWhite);
+    width: 15rem;
+    height: 20rem;
+    margin: 0 0 2rem 0;
 }

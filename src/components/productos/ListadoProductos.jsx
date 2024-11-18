@@ -198,13 +198,22 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                position: 'bottom', // La leyenda se muestra abajo del gráfico
+                position: 'bottom', // Posiciona la leyenda abajo
+                align: 'start', // Alinea la leyenda a la izquierda
                 labels: {
-                    color: '#FFF', // Cambia el color del texto de las referencias (leyenda)
+                    color: '#FFF',
+                    boxWidth: 10,
+                    padding: 15,
                 },
             },
         },
+        layout: {
+            padding: {
+                bottom: 20, // Añade un margen inferior al gráfico
+            },
+        },
     };
+
 
     // Define el límite de caracteres
     const CHAR_LIMIT = 250;

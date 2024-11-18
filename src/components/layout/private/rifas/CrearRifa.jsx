@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ListadoRifas } from './ListadoRifas';
+import ListadoRifas from './ListadoRifas';
 import DatePicker from "react-datepicker"; // Importar el componente DatePicker
 import "react-datepicker/dist/react-datepicker.css"; // Importar los estilos de react-datepicker
 import { Global } from '../../../../helpers/Global';
@@ -89,7 +89,7 @@ export const CrearRifa = () => {
     return (
         <div>
             <div className="container-banner__vendedor">
-                <header className="header__vendedor">Generación</header>
+                <header className="header__vendedor">Alta</header>
             </div>
 
             <div className="contador__controls card_rifa">
