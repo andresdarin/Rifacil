@@ -1,6 +1,7 @@
 import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Header } from './Header';
+import { ListadoSorteos } from './ListadoSorteos';
 
 export const PublicLayout = () => {
     const location = useLocation();
@@ -22,6 +23,7 @@ export const PublicLayout = () => {
             {/* Contenido Principal */}
             <section className='layout__content'>
                 <Outlet />
+                <ListadoSorteos />
             </section>
         </>
     );

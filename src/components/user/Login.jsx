@@ -73,12 +73,12 @@ export const Login = () => {
                 {loged === 'loged' && <strong className='alert alert-success'>Usuario Identificado Correctamente</strong>}
                 {loged === 'error' && <strong className='alert alert-danger'>Usuario no Identificado</strong>}
                 <form className='form-login' onSubmit={loginUser}>
-                    <div className="form-group">
+                    <div className="form-group form-group_login">
                         <label htmlFor='email' />
                         <input type='email' name='email' placeholder='eMail' onChange={changed} />
                         <FaUser className='icon' />
                     </div>
-                    <div className="form-group">
+                    <div className="form-group form-group_login">
                         <label htmlFor='password' />
                         <input type='password' name='password' placeholder='Contraseña' onChange={changed} />
                         <FaLock className='icon' />

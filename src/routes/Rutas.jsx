@@ -18,6 +18,9 @@ import { AdminConfig } from '../components/layout/private/admin/AdminConfig.jsx'
 import { Rifas } from '../components/layout/private/rifas/Rifas.jsx';
 import { CrearRifa } from '../components/layout/private/rifas/CrearRifa.jsx';
 import { Historial } from '../components/layout/private/rifas/Historial.jsx';
+import { Sorteo } from '../components/layout/private/rifas/Sorteo.jsx';
+import { Premios } from '../components/layout/private/rifas/Premios.jsx';
+import { Asignar } from '../components/layout/private/rifas/Asignar.jsx';
 
 export const Rutas = () => {
     return (
@@ -38,9 +41,11 @@ export const Rutas = () => {
                     <Route path='logout' element={<Logout />} />
                     <Route path='perfil' element={<AdminProfile />} />
                     <Route path='alta-vendedor' element={<AltaVendedor />} />
-                    <Route path='rifas/gestion' element={<Rifas />} />
+                    <Route path='rifas/asignar' element={<Asignar />} />
                     <Route path='rifas/crear' element={<CrearRifa />} />
                     <Route path='rifas/historial' element={<Historial />} />
+                    <Route path='rifas/sorteo' element={<Sorteo />} />
+                    <Route path='rifas/premios' element={<Premios />} />
                     <Route path='productos' element={<ListadoProductos />} />
                     <Route path='profile' element={<AdminProfile />} />
                     <Route path='admin-config' element={<AdminConfig />} />

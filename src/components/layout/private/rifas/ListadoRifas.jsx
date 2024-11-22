@@ -40,10 +40,9 @@ const ListadoRifas = () => {
                 {rifas.map((rifa) => (
                     <div
                         key={rifa._id}
-                        className="grid-card"
+                        className="grid-card card-rifa"
                     >
-                        <h1 className='nro_rifa'> {rifa.NumeroRifa}</h1>
-                        <span> {rifa.nombreParticipante}</span>
+                        <h1 className='nro_rifa img-container'> {rifa.NumeroRifa}</h1>
                         <span> {new Date(rifa.FechaSorteo).toLocaleDateString()}</span>
                         <span>
                             <span>
@@ -54,7 +53,12 @@ const ListadoRifas = () => {
                                 )}
                             </span>
                             {rifa.pagoRealizado ? ' Pagada' : ' No Pagada'}
+
                         </span>
+                        <h4 className="description">
+                            {rifa.nombreParticipante ? rifa.nombreParticipante : '-'}
+                        </h4>
+
                     </div>
                 ))}
             </div>
