@@ -14,9 +14,9 @@ export const Nav = () => {
                 </li>
 
                 <li className="menu-list__item">
-                    <a href="#" className="menu-list__link">
+                    <NavLink to='/beneficios' className="menu-list__link">
                         <span className="menu-list__title">Beneficios</span>
-                    </a>
+                    </NavLink>
                 </li>
 
                 <li className="menu-list__item">
@@ -26,9 +26,9 @@ export const Nav = () => {
                 </li>
 
                 <li className="menu-list__item">
-                    <a href="#" className="menu-list__link">
+                    <NavLink to='/resultado' className="menu-list__link">
                         <span className="menu-list__title">Resultado</span>
-                    </a>
+                    </NavLink>
                 </li>
 
                 <li className="menu-list__item">

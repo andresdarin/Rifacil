@@ -84,7 +84,10 @@ export const Login = () => {
                         <FaLock className='icon' />
                     </div>
                     <div className="remember-forgot">
-                        <label><input type='checkbox' />Recuérdame</label>
+                        <div className="recuerdame">
+                            <input type='checkbox' />
+                            <label>Recuérdame</label>
+                        </div>
                         <NavLink to='/recover-pass'>Olvidaste la contraseña?</NavLink>
                     </div>
                     <div className="buttons-login">

@@ -21,6 +21,8 @@ import { Historial } from '../components/layout/private/rifas/Historial.jsx';
 import { Sorteo } from '../components/layout/private/rifas/Sorteo.jsx';
 import { Premios } from '../components/layout/private/rifas/Premios.jsx';
 import { Asignar } from '../components/layout/private/rifas/Asignar.jsx';
+import { Resultado } from '../components/layout/public/sorteos/Resultado.jsx';
+import { Beneficios } from '../components/layout/public/rifas/Beneficios.jsx';
 
 export const Rutas = () => {
     return (
@@ -34,6 +36,8 @@ export const Rutas = () => {
                     <Route path='contacto' element={<Contacto />} />
                     <Route path='recover-pass' element={<RecoverPass />} />
                     <Route path='/reset-password/:token' element={<ResetPass />} />
+                    <Route path='/resultado' element={<Resultado />} />
+                    <Route path='/beneficios' element={<Beneficios />} />
                 </Route>
 
                 <Route path='/admin' element={<PrivateLayout />}>

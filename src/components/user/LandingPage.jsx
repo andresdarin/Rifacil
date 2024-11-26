@@ -1,4 +1,5 @@
 import React from 'react';
+import { ListadoSorteos } from '../layout/public/ListadoSorteos';
 
 
 export const LandingPage = () => {
@@ -48,6 +49,7 @@ export const LandingPage = () => {
                     </span>
                 </div>
             </div>
+            <ListadoSorteos />
         </>
     );
 }
