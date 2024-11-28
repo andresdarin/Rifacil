@@ -20,12 +20,6 @@ export const Nav = () => {
                 </li>
 
                 <li className="menu-list__item">
-                    <a href="#" className="menu-list__link">
-                        <span className="menu-list__title">Pedi tu Rifa</span>
-                    </a>
-                </li>
-
-                <li className="menu-list__item">
                     <NavLink to='/resultado' className="menu-list__link">
                         <span className="menu-list__title">Resultado</span>
                     </NavLink>
