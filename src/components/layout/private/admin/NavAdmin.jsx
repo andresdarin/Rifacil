@@ -47,10 +47,13 @@ export const NavAdmin = () => {
                                 <NavLink to="/admin/rifas/historial" className="dropdown-menu__link">Historial</NavLink>
                             </li>
                             <li className="dropdown-menu__item">
-                                <NavLink to="/admin/rifas/sorteo" className="dropdown-menu__link">Sorteo</NavLink>
+                                <NavLink to="/admin/rifas/premios" className="dropdown-menu__link">Premios</NavLink>
                             </li>
                             <li className="dropdown-menu__item">
-                                <NavLink to="/admin/rifas/premios" className="dropdown-menu__link">Premios</NavLink>
+                                <NavLink to="/admin/rifas/sorteo" className="dropdown-menu__link">Agendar Sorteo</NavLink>
+                            </li>
+                            <li className="dropdown-menu__item">
+                                <NavLink to="/admin/rifas/sortear" className="dropdown-menu__link">SORTEAR</NavLink>
                             </li>
                         </ul>
                     )}

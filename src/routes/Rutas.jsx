@@ -23,6 +23,7 @@ import { Premios } from '../components/layout/private/rifas/Premios.jsx';
 import { Asignar } from '../components/layout/private/rifas/Asignar.jsx';
 import { Resultado } from '../components/layout/public/sorteos/Resultado.jsx';
 import { Beneficios } from '../components/layout/public/rifas/Beneficios.jsx';
+import { Sortear } from '../components/layout/private/rifas/Sortear.jsx';
 
 export const Rutas = () => {
     return (
@@ -49,6 +50,7 @@ export const Rutas = () => {
                     <Route path='rifas/crear' element={<CrearRifa />} />
                     <Route path='rifas/historial' element={<Historial />} />
                     <Route path='rifas/sorteo' element={<Sorteo />} />
+                    <Route path='rifas/sortear' element={<Sortear />} />
                     <Route path='rifas/premios' element={<Premios />} />
                     <Route path='productos' element={<ListadoProductos />} />
                     <Route path='profile' element={<AdminProfile />} />

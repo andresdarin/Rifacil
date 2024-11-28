@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
-import ListadoPremios from './ListadoPremios';
-import AgregarPremio from './AgregarPremio';
 
-export const Premios = () => {
+export const Sortear = () => {
     useEffect(() => {
         document.body.style.backgroundImage = "url('/src/assets/img/BackgroundLong.png')";
         document.body.style.backgroundSize = "cover";
@@ -13,11 +11,10 @@ export const Premios = () => {
         };
     }, []);
     return (
-        <div className="premios-container">
+        <div className='sorteo-container'>
             <div className="container-banner__vendedor">
-                <header className='header__vendedor'>Premios</header>
+                <header className="header__vendedor">Sortear</header>
             </div>
         </div>
-
     )
 }

@@ -1175,6 +1175,120 @@ canvas {
     font-size: 18px;
 }
 
+.calendar_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 4rem 0 4rem 0;
+}
+
+.date-picker_sorteo {
+    display: flex;
+    align-self: center;
+    margin: 0 auto;
+}
+
+.react-datepicker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: scale(1.3);
+    margin: 4rem 0 4rem 0;
+    text-transform: uppercase;
+    width: 90%;
+    border: 2px solid var(--color5);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.react-datepicker__header {
+    color: white;
+    font-weight: lighter;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.react-datepicker__day {
+    width: 4rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.react-datepicker__month-container {
+    width: 100%;
+}
+
+.react-datepicker__day--selected {
+    background-color: var(--color4);
+    color: var(--colorWhite);
+}
+
+.react-datepicker__day:hover {
+    background-color: var(--color4);
+    color: var(--colorWhite);
+}
+
+.react-datepicker__day-names {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin: 0.3rem 2rem 0 2.4rem;
+    gap: 6px;
+    text-align: space;
+    margin-bottom: 10px;
+}
+
+.agendar__button {
+    background-color: var(--color5);
+    width: 100%;
+    transition: all .3s;
+    position: relative;
+    border-radius: .5rem 2rem;
+    box-shadow: 0px 5px 20px -5px rgba(0, 0, 0, 0.5);
+}
+
+.agendar__button:hover {
+    transform: perspective(500px) translateX(7px) rotateX(3deg) rotateY(3deg) scale(1);
+    box-shadow: none;
+}
+
+.card_sorteo-agendado {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url('../img/HeroAltaVendedor.png');
+    border-radius: 10px;
+    box-shadow: 0px 15px 20px -5px rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+    margin-top: 3rem;
+    transition: all .3s;
+}
+
+.card_sorteo-agendado h3 {
+    font-size: 26px;
+}
+
+.card_sorteo-agendado h4 {
+    font-size: 26px;
+    font-weight: 500;
+}
+
+.card_sorteo-agendado:hover {
+    transform: perspective(500px) scale(1.1);
+    box-shadow: none;
+}
+
+.csa_p {
+    color: red;
+    font-size: 18px;
+    text-shadow:
+        0 0 10px var(--color1),
+        0 0 10px var(--colorBlack),
+        0 0 20px var(--colorBlack),
+        0 0 40px var(--colorBlack);
+}
+
+
 /*Editar*/
 .edit-producto__form {
     width: 120%;
@@ -1649,6 +1763,7 @@ input[type="number"]::-webkit-inner-spin-button {
     align-items: center;
     justify-content: center;
 }
+
 
 .form-container {
     display: flex;
