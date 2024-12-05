@@ -7,7 +7,7 @@ import PublicLayout from "../components/layout/public/PublicLayout.jsx";
 import { LandingPage } from '../components/user/LandingPage.jsx';
 import { Logout } from '../components/user/Logout.jsx';
 import { Profile as AdminProfile } from '../components/layout/private/admin/Profile.jsx';
-import { Profile as VendedorProfile } from '../components/layout/private/vendedor/Profile.jsx';
+import { Profile, Profile as VendedorProfile } from '../components/layout/private/vendedor/Profile.jsx';
 import { AltaVendedor } from '../components/layout/private/admin/AltaVendedor.jsx';
 import ListadoProductos from '../components/productos/ListadoProductos.jsx';
 import Error404 from '../routes/Error404.jsx';
@@ -58,7 +58,7 @@ export const Rutas = () => {
                 </Route>
 
                 <Route path='/vendedor' element={<PrivateLayout />}>
-                    <Route path='profile' element={<VendedorProfile />} />
+                    <Route path='profile' element={<Profile />} />
                     <Route path='logout' element={<Logout />} />
                 </Route>
 

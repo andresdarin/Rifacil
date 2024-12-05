@@ -30,15 +30,15 @@ export const CrearRifa = () => {
         }
     };
 
-    // Manejar el cambio en el input de precio, asegurando que no sea negativo
+    // Función para manejar el cambio en el input de precio, asegurando que no sea negativo
     const handlePrecioChange = (e) => {
         const value = e.target.value;
-        if (value >= 0) {
+        if (value >= 0 || value === '') {  // Asegurar que no se ingresen valores negativos
             setPrecio(value);
         }
     };
 
-    // Manejar el cambio en el DatePicker, asegurando que no sea menor a la fecha actual
+    // Función para manejar el cambio en el DatePicker, asegurando que no sea menor a la fecha actual
     const handleFechaChange = (date) => {
         const today = new Date(); // Obtener la fecha actual
         if (date >= today) {
@@ -63,7 +63,7 @@ export const CrearRifa = () => {
                     body: JSON.stringify({
                         cantidad: contador,
                         precioRifa: precio,
-                        FechaSorteo: fecha ? fecha.toLocaleDateString('es-ES') : null,
+                        fecha: fecha ? fecha.toLocaleDateString('es-ES') : null,
                     }),
                 });
 
@@ -71,7 +71,6 @@ export const CrearRifa = () => {
 
                 if (response.ok) {
                     // Maneja la respuesta exitosa
-                    alert(data.message); // O actualiza el estado según los datos de la respuesta
                     console.log(data.rifas); // Aquí puedes mostrar las rifas generadas
                 } else {
                     // Maneja los errores del servidor
@@ -85,6 +84,13 @@ export const CrearRifa = () => {
         }
     };
 
+    // Función para manejar el cambio en el input de contador
+    const handleChange = (e) => {
+        const value = e.target.value;
+        if (/^\d*$/.test(value)) {  // Asegurarse de que solo se ingresen números
+            setContador(value === '' ? '' : parseInt(value, 10));
+        }
+    };
 
     return (
         <div>
@@ -98,7 +104,12 @@ export const CrearRifa = () => {
                     <button className="counter_icon_minus" onClick={decrementar}>
                         <i className="fa fa-minus" aria-hidden="true"></i>
                     </button>
-                    <h3 className="counter_number">{contador}</h3>
+                    <input
+                        type="text"
+                        value={contador}
+                        onChange={handleChange}
+                        className="counter_number"
+                    />
                     <button className="counter_icon_plus" onClick={incrementar}>
                         <i className="fa fa-plus" aria-hidden="true"></i>
                     </button>
@@ -122,7 +133,7 @@ export const CrearRifa = () => {
                         onChange={handleFechaChange}
                         minDate={new Date()}
                         dateFormat="dd-MM-yyyy"
-                        className="input_fecha"
+                        className="input_fecha-crear"
                     />
                 </div>
                 <button className="generar__button" onClick={handleGenerarClick}>

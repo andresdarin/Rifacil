@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react'
+import { RifasAsignadas } from './RifasAsignadas';
+import { Clientes } from './Clientes';
 
 export const Profile = () => {
 
@@ -16,6 +18,8 @@ export const Profile = () => {
             <div className="container-banner__vendedor">
                 <header className='header__vendedor'>Vendedor</header>
             </div>
+            <RifasAsignadas />
+            <Clientes />
         </div>
     )
 }
