@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Global } from '../../../../helpers/Global'; // Asegúrate de que la ruta sea correcta
+import { Global } from '../../../../helpers/Global'; // Ajusta la ruta según tu proyecto
 
 export const Asignar = () => {
-    const [rifas, setRifas] = useState([]);
     const [vendedores, setVendedores] = useState([]);
-    const [rifaSeleccionada, setRifaSeleccionada] = useState("");
-    const [vendedorSeleccionado, setVendedorSeleccionado] = useState("");
-    const [cantidad, setCantidad] = useState(0);
+    const [rifas, setRifas] = useState([]);
+    const [vendedorSeleccionado, setVendedorSeleccionado] = useState(null);
+    const [rifaSeleccionada, setRifaSeleccionada] = useState(null);
+    const token = localStorage.getItem('token')
 
     useEffect(() => {
         document.body.style.backgroundImage = "url('/src/assets/img/BackgroundLong.png')";
@@ -19,160 +19,139 @@ export const Asignar = () => {
     }, []);
 
     useEffect(() => {
-        const fetchRifasYVendedores = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                if (!token) {
-                    alert('No se encontró el token de autenticación.');
-                    return;
-                }
-
-                // Obtener rifas
-                const responseRifas = await fetch(`${Global.url}rifa/listarRifas`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': token,
-                    },
-                });
-
-                if (responseRifas.ok) {
-                    const dataRifas = await responseRifas.json();
-                    console.log(dataRifas)
-                    if (dataRifas.status === 'success') {
-                        setRifas(dataRifas.rifas);
-                    } else {
-                        alert(dataRifas.message || 'Error al cargar las rifas');
-                    }
-                } else {
-                    console.error('Error al cargar las rifas');
-                }
-
-                // Obtener vendedores
-                const responseVendedores = await fetch(`${Global.url}usuario/list`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': token
-                    },
-                });
-
-                if (responseVendedores.ok) {
-                    const dataVendedores = await responseVendedores.json();
-                    if (dataVendedores.status === 'success') {
-                        setVendedores(dataVendedores.users);
-                    } else {
-                        alert(dataVendedores.message || 'Error al cargar los vendedores');
-                    }
-                } else {
-                    console.error('Error al cargar los vendedores');
-                }
-            } catch (error) {
-                console.error('Error al obtener rifas o vendedores:', error);
-                alert('Hubo un problema al cargar los datos. Intenta más tarde.');
-            }
-        };
-
-        fetchRifasYVendedores();
-    }, []);
-
-    const handleAsignar = async () => {
-        if (!rifaSeleccionada || !vendedorSeleccionado || cantidad <= 0) {
-            alert('Por favor, selecciona una rifa, un vendedor y una cantidad válida.');
-            return;
-        }
-
-        try {
+        const fetchData = async () => {
             const token = localStorage.getItem('token');
             if (!token) {
                 alert('No se encontró el token de autenticación.');
                 return;
             }
 
-            const response = await fetch(`${Global.url}asignarRifa`, {
+            try {
+                // Obtener vendedores
+                const responseVendedores = await fetch(`${Global.url}usuario/list`, {
+                    headers: { Authorization: token },
+                });
+                const dataVendedores = await responseVendedores.json();
+                if (dataVendedores.status === 'success') {
+                    setVendedores(dataVendedores.users);
+                } else {
+                    console.error('Error al cargar los vendedores');
+                }
+
+                // Obtener rifas
+                const responseRifas = await fetch(Global.url + 'rifa/listarRifas', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': token,
+                    },
+                });
+                const dataRifas = await responseRifas.json();
+                console.log('Respuesta de rifas:', dataRifas);
+
+                if (dataRifas.status === 'success') {
+                    setRifas(dataRifas.rifas);
+                } else {
+                    console.error('Error al cargar las rifas', dataRifas.message);
+                }
+
+            } catch (error) {
+                console.error('Error al cargar datos:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const asignarRifa = async () => {
+        if (!vendedorSeleccionado || !rifaSeleccionada) {
+            alert('Por favor, selecciona un vendedor y un número de rifa.');
+            return;
+        }
+
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('No se encontró el token de autenticación.');
+            return;
+        }
+
+        try {
+            const response = await fetch(`${Global.url}rifa/asignarRifaAVendedor`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': token,
+                    Authorization: token,
                 },
                 body: JSON.stringify({
-                    rifaId: rifaSeleccionada,
-                    vendedorId: vendedorSeleccionado,
-                    cantidad,
+                    ciVendedor: vendedorSeleccionado.ci,
+                    numeroRifa: rifaSeleccionada.NumeroRifa,
                 }),
             });
 
             const result = await response.json();
             if (response.ok) {
-                alert('Rifas asignadas correctamente.');
-                setCantidad(0);
-                setRifaSeleccionada("");
-                setVendedorSeleccionado("");
+                alert('Rifa asignada con éxito.');
+                setRifaSeleccionada(null);
+                setVendedorSeleccionado(null);
             } else {
-                alert(result.message || 'Error al asignar las rifas');
+                alert(result.message || 'Error al asignar la rifa.');
             }
         } catch (error) {
-            console.error('Error al asignar rifas:', error);
-            alert('Hubo un error al asignar las rifas. Intenta más tarde.');
+            console.error('Error al asignar la rifa:', error);
+            alert('Error al asignar la rifa. Intenta más tarde.');
         }
     };
 
     return (
-        <div className="asignar_container">
+        <div className="container-asignar">
             <div className="container-banner__vendedor">
-                <header className="header__vendedor">Asignar</header>
+                <header className="header__vendedor">Asignar Números</header>
             </div>
-            <h1>Asignar Rifas a Vendedores</h1>
-
-            <div className="listados">
-                <div>
-                    <label>Selecciona una Rifa:</label>
-                    <select
-                        value={rifaSeleccionada}
-                        onChange={(e) => setRifaSeleccionada(e.target.value)}
-                    >
-                        <option value="">Selecciona una rifa</option>
-                        {rifas.map((rifa) => (
-                            <option key={rifa._id} value={rifa._id}>
-                                {rifa.NumeroRifa}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-
-                <div>
-                    <label>Selecciona un Vendedor:</label>
-                    <select
-                        value={vendedorSeleccionado}
-                        onChange={(e) => setVendedorSeleccionado(e.target.value)}
-                    >
-                        <option value="">Selecciona un vendedor</option>
+            <div className="asignar-rifas-container">
+                <aside className="vendedores-list">
+                    <h3>Vendedores</h3>
+                    <ul>
                         {vendedores.map((vendedor) => (
-                            <option key={vendedor._id} value={vendedor._id}>
-                                {vendedor.nombreCompleto}
-                            </option>
+                            <li
+                                key={vendedor._id}
+                                className='vendedor-item'
+                                onClick={() => setVendedorSeleccionado(vendedor)}
+                                style={{
+                                    background: vendedorSeleccionado?._id === vendedor._id ? '#ddd' : 'transparent',
+                                }}
+                            >
+                                {vendedor.nombreCompleto} (CI: {vendedor.ci})
+                            </li>
                         ))}
-                    </select>
+                    </ul>
+                </aside>
+
+                <div className="rifas-list">
+                    <h3>Números de Rifa</h3>
+                    <ul className="rifa-list">
+                        {rifas.map((rifa) => (
+                            <li
+                                key={rifa._id}
+                                className={`rifa-item ${rifaSeleccionada?._id === rifa._id ? 'seleccionado' : ''
+                                    }`}
+                                onClick={() => setRifaSeleccionada(rifa)}
+                            >
+                                {rifa.NumeroRifa}
+                            </li>
+                        ))}
+                    </ul>
                 </div>
-            </div>
 
-            <div className="formulario-asignar">
-                <label>
-                    Cantidad de Rifas:
-                    <input
-                        type="number"
-                        value={cantidad}
-                        onChange={(e) => setCantidad(Number(e.target.value))}
-                        min="1"
-                    />
-                </label>
-                <button onClick={handleAsignar}>Asignar Rifas</button>
-            </div>
 
-            <div>
-                <p>Rifa seleccionada: {rifaSeleccionada || 'Ninguna'}</p>
-                <p>Vendedor seleccionado: {vendedorSeleccionado || 'Ninguno'}</p>
+
+
+                <div className="asignar-button">
+                    <button onClick={asignarRifa} disabled={!vendedorSeleccionado || !rifaSeleccionada}>
+                        Asignar Rifa
+                    </button>
+                </div>
             </div>
         </div>
+
     );
 };

@@ -6,6 +6,7 @@ export const Premios = () => {
     const [premios, setPremios] = useState([]);
     const [selectedSorteo, setSelectedSorteo] = useState(null);
     const [selectedPremios, setSelectedPremios] = useState([]);
+    const [nuevoPremio, setNuevoPremio] = useState({ nombre: '', descripcion: '' });
     const token = localStorage.getItem('token');
 
     // Cambiar el fondo de la página
@@ -133,7 +134,49 @@ export const Premios = () => {
         console.log('selectedSorteo actualizado:', selectedSorteo);
     }, [selectedSorteo]);
 
-    console.log('selectedPremios', selectedPremios)
+    const handleCrearPremio = async (e) => {
+        e.preventDefault();
+        if (!nuevoPremio.nombre || !nuevoPremio.descripcion) {
+            alert('Todos los campos son obligatorios.');
+            return;
+        }
+
+        try {
+            const response = await fetch(Global.url + 'premio/crearPremio', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: token
+                },
+                body: JSON.stringify(nuevoPremio)
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                alert('Premio creado exitosamente.');
+                setPremios([...premios, data.premio]); // Actualiza la lista de premios
+                setNuevoPremio({ nombre: '', descripcion: '' }); // Limpia el formulario
+            } else {
+                console.error('Error al crear el premio:', data.message);
+                alert(data.message);
+            }
+        } catch (error) {
+            console.error('Error de red:', error);
+            alert('Hubo un problema al crear el premio.');
+        }
+    };
+
+    const handleToggleDescription = (premioId) => {
+        setPremios((prevPremios) =>
+            prevPremios.map((premio) =>
+                premio._id === premioId
+                    ? { ...premio, showFullDescription: !premio.showFullDescription }
+                    : premio
+            )
+        );
+    };
+
 
     return (
         <div className="premios-container">
@@ -148,10 +191,10 @@ export const Premios = () => {
                         sorteos.map((sorteo) => (
                             <div
                                 key={sorteo.id}
-                                className={`card sorteo-item ${selectedSorteo === sorteo.id ? 'selected' : ''}`}
+                                className={`sorteo-item ${selectedSorteo === sorteo.id ? 'selected' : ''}`}
                                 onClick={() => handleSorteoToggle(sorteo.id)}
                             >
-                                <h3>Fecha del sorteo: {new Date(sorteo.fechaSorteo).toLocaleDateString('es-ES')}</h3>
+                                <h3>{new Date(sorteo.fechaSorteo).toLocaleDateString('es-ES')}</h3>
                                 <p>
                                     Premios asignados:{' '}
                                     {sorteo.premios.length > 0
@@ -174,10 +217,15 @@ export const Premios = () => {
                         premios.map((premio) => (
                             <div
                                 key={premio._id}
-                                className={`card premio-item ${selectedPremios.includes(premio._id) ? 'selected' : ''}`}
+                                className={`premio-item ${selectedPremios.includes(premio._id) ? 'selected' : ''}`}
                                 onClick={() => handlePremioToggle(premio._id)}
                             >
                                 <p>{premio.nombre}</p>
+                                {/* Descripción con efecto hover */}
+                                <div className="descripcion-hover">
+                                    {premio.descripcion}
+                                </div>
+
                                 <button className="select-button">
                                     {selectedPremios.includes(premio._id) ? 'Premio seleccionado' : 'Seleccionar'}
                                 </button>
@@ -187,9 +235,31 @@ export const Premios = () => {
                         <p>No hay premios disponibles.</p>
                     )}
                 </div>
+
+
             </div>
 
-            <div className="asignar-premio">
+            <div className="crear-premio-container">
+                <h3>Crear un nuevo premio</h3>
+                <form className='form-group form-group_crear-premio' onSubmit={handleCrearPremio}>
+                    <input
+                        type="text"
+                        placeholder="Nombre del premio"
+                        value={nuevoPremio.nombre}
+                        onChange={(e) => setNuevoPremio({ ...nuevoPremio, nombre: e.target.value })}
+                        required
+                    />
+                    <textarea
+                        placeholder="Descripción del premio"
+                        value={nuevoPremio.descripcion}
+                        onChange={(e) => setNuevoPremio({ ...nuevoPremio, descripcion: e.target.value })}
+                        required
+                    ></textarea>
+                    <button className='crear-premio_button' type="submit">Crear Premio</button>
+                </form>
+            </div>
+
+            <div className="asignar-premio_button">
                 <button onClick={handleAsignarPremio}>Asignar Premios</button>
             </div>
         </div>

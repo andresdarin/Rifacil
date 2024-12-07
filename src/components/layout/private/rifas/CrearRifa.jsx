@@ -63,7 +63,7 @@ export const CrearRifa = () => {
                     body: JSON.stringify({
                         cantidad: contador,
                         precioRifa: precio,
-                        fecha: fecha ? fecha.toLocaleDateString('es-ES') : null,
+                        fecha: fecha ? fecha.toISOString().split('T')[0] : null, // Formato yyyy-mm-dd
                     }),
                 });
 
@@ -83,6 +83,7 @@ export const CrearRifa = () => {
             }
         }
     };
+
 
     // Función para manejar el cambio en el input de contador
     const handleChange = (e) => {
