@@ -108,7 +108,7 @@ export const ListadoVendedores = () => {
                 <div className="card-container">
                     {vendedores.length > 0 ? (
                         vendedores.map((vendedor) => (
-                            <div key={vendedor._id} className="card">
+                            <div key={vendedor._id} className="card card-vendedores">
                                 <div>
                                     <h1>{vendedor.nombreCompleto}</h1>
                                     <h4>{vendedor.email}</h4>

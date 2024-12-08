@@ -194,7 +194,7 @@ export const Premios = () => {
                                 className={`sorteo-item ${selectedSorteo === sorteo.id ? 'selected' : ''}`}
                                 onClick={() => handleSorteoToggle(sorteo.id)}
                             >
-                                <h3>{new Date(sorteo.fechaSorteo).toLocaleDateString('es-ES')}</h3>
+                                <h>{new Date(sorteo.fechaSorteo).toLocaleDateString('es-ES')}</h>
                                 <p>
                                     Premios asignados:{' '}
                                     {sorteo.premios.length > 0
