@@ -3,7 +3,7 @@ import { Global } from '../../../../helpers/Global';
 
 export const Resultado = () => {
     useEffect(() => {
-        document.body.style.backgroundImage = "url('/src/assets/img/clover_bg.png')";
+        document.body.style.backgroundImage = "url('/src/assets/img/BackgroundLong.png')";
         document.body.style.backgroundSize = "cover";
         document.body.style.backgroundPosition = "center";
 
@@ -57,9 +57,9 @@ export const Resultado = () => {
         <div className="resultado_container">
             <header className="header__resultado">Ganadores</header>
             <div className="card_res-container">
-                {/* Primer ganador - ocupa 3 columnas */}
+                {/* Primer ganador - ocupa 4 columnas */}
                 <div className="card_res first-winner">
-                    <h2>Primer Premio</h2>
+                    <h1>Primer Premio</h1>
                     <h1>{sorteo.ganadores[0]?.numeroRifa}</h1>
                     <p>{sorteo.ganadores[0]?.nombreParticipante || 'Desconocido'}</p>
                     <p>{sorteo.ganadores[0]?.premio.nombre}</p>
@@ -84,21 +84,18 @@ export const Resultado = () => {
                     <p>{sorteo.ganadores[2]?.premio.descripcion}</p>
                 </div>
 
-                {/* Otros ganadores - ocupa 1 columna cada uno */}
-                <div className="remaining-winners">
-                    {sorteo.ganadores.slice(3).map((ganador, index) => (
-                        <div className="card_res" key={index}>
-                            <h2>Ganador {index + 4}</h2>
-                            <h2>{ganador.numeroRifa}</h2>
-                            <p>{ganador.nombreParticipante || 'Desconocido'}</p>
-                            <p>{ganador.premio.nombre}</p>
-                            <p>{ganador.premio.descripcion}</p>
-                        </div>
-                    ))}
-                </div>
+                {/* Otros ganadores - ocupan 1 columna cada uno */}
+                {sorteo.ganadores.slice(3).map((ganador, index) => (
+                    <div className="card_res remaining-winner" key={index}>
+                        <h2>Ganador {index + 4}</h2>
+                        <h2>{ganador.numeroRifa}</h2>
+                        <p>{ganador.nombreParticipante || 'Desconocido'}</p>
+                        <p>{ganador.premio.nombre}</p>
+                        <p>{ganador.premio.descripcion}</p>
+                    </div>
+                ))}
             </div>
         </div>
-
-
     );
+
 };

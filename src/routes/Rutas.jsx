@@ -24,6 +24,8 @@ import { Asignar } from '../components/layout/private/rifas/Asignar.jsx';
 import { Resultado } from '../components/layout/public/sorteos/Resultado.jsx';
 import { Beneficios } from '../components/layout/public/rifas/Beneficios.jsx';
 import { Sortear } from '../components/layout/private/rifas/Sortear.jsx';
+import { Tienda } from '../components/layout/public/tienda/Tienda.jsx';
+import { Carrito } from '../components/layout/public/tienda/Carrito.jsx';
 
 export const Rutas = () => {
     return (
@@ -39,6 +41,8 @@ export const Rutas = () => {
                     <Route path='/reset-password/:token' element={<ResetPass />} />
                     <Route path='/resultado' element={<Resultado />} />
                     <Route path='/beneficios' element={<Beneficios />} />
+                    <Route path='/tienda' element={<Tienda />} />
+                    <Route path='/tienda/carrito' element={<Carrito />} />
                 </Route>
 
                 <Route path='/admin' element={<PrivateLayout />}>

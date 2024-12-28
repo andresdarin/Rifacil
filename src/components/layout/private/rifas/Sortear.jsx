@@ -21,13 +21,16 @@ export const Sortear = () => {
 
     const realizarSorteo = async () => {
         try {
+            // Formatear la fecha a "YYYY-MM-DD"
+            const fechaFormateada = fechaSorteo.toISOString().split('T')[0];
+
             const response = await fetch(Global.url + 'sorteo/realizarSorteo', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: token
+                    Authorization: token,
                 },
-                body: JSON.stringify({ fechaSorteo: fechaSorteo.toISOString() }),
+                body: JSON.stringify({ fechaSorteo: fechaFormateada }),
             });
 
             const data = await response.json();

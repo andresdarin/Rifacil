@@ -32,9 +32,9 @@ export const Nav = () => {
                 </li>
 
                 <li className="menu-list__item">
-                    <a href="#" className="menu-list__link">
+                    <NavLink to='/tienda' className="menu-list__link">
                         <span className="menu-list__title">Tienda</span>
-                    </a>
+                    </NavLink>
                 </li>
 
                 <li className="menu-list__item">
