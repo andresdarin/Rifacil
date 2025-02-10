@@ -26,6 +26,7 @@ import { Beneficios } from '../components/layout/public/rifas/Beneficios.jsx';
 import { Sortear } from '../components/layout/private/rifas/Sortear.jsx';
 import { Tienda } from '../components/layout/public/tienda/Tienda.jsx';
 import { Carrito } from '../components/layout/public/tienda/Carrito.jsx';
+import Checkout from '../components/layout/public/tienda/Checkout.jsx';
 
 export const Rutas = () => {
     return (
@@ -43,6 +44,7 @@ export const Rutas = () => {
                     <Route path='/beneficios' element={<Beneficios />} />
                     <Route path='/tienda' element={<Tienda />} />
                     <Route path='/tienda/carrito' element={<Carrito />} />
+                    <Route path='/tienda/checkout' element={<Checkout />} />
                 </Route>
 
                 <Route path='/admin' element={<PrivateLayout />}>

@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 
 import { Doughnut } from 'react-chartjs-2';
 import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Global } from '../../../../helpers/Global';
 import { useNavigate } from 'react-router-dom';
+import { CartContext } from '../../../../context/CartProvider';
 
 
 // Registra los componentes que vas a usar
@@ -19,12 +20,11 @@ export const Tienda = () => {
             document.body.style.backgroundImage = '';
         };
     }, []);
-
+    const { addItem } = useContext(CartContext);
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
-    const [cart, setCart] = useState([]);
     const [expandedDescriptions, setExpandedDescriptions] = useState({});
     const navigate = useNavigate();
 
@@ -110,8 +110,8 @@ export const Tienda = () => {
     if (error) return <div>Error: {error}</div>;
 
     const handleAddToCart = (producto) => {
-        setCart([...cart, producto]);
-        alert(`${producto.nombreProducto} ha sido agregado al carrito.`);
+        console.log("Producto agregado al carrito:", producto); // Depuración
+        addItem(producto);
     };
 
     // Define el límite de caracteres

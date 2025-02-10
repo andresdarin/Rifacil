@@ -2537,3 +2537,148 @@ button:disabled {
 .float-cart-button:hover {
     opacity: calc(1);
 }
+
+/*Carrito*/
+
+/* Contenedor general */
+.cart-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.cart-container__banner {
+    background-color: #f8f8f8;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.cart-header {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Lista de elementos en el carrito */
+.cart-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.cart-item {
+    background-image: url('../img/HeroAltaVendedor.png');
+    display: flex;
+    align-items: center;
+    margin: 2rem 0;
+    padding: 10px;
+    border-radius: .5rem 2rem;
+}
+
+.cart-item-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.cart-item-details {
+    flex-grow: 1;
+}
+
+.cart-item-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--color5);
+}
+
+.cart-item-price {
+    font-size: 1rem;
+    color: var(--colorWhite);
+}
+
+.cart-remove-item-button {
+    background-color: var(--colorEliminar);
+    color: var(--colorWhite);
+    height: 55px;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.cart-remove-item-button:hover {
+    background-color: var(--colorEliminarHover);
+}
+
+.cart-item-quantity-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.cart-item-quantity-container h2 {
+    font-size: 2rem;
+    font-weight: 200;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color5);
+    border: solid 1px var(--colorWhite);
+    border-radius: .5rem 1rem;
+    width: 3rem;
+    height: 3rem;
+}
+
+.cart-item-quantity-container button {
+    background-color: var(--color5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--colorWhite);
+    border: none;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.cart-plus {
+    background-color: var(--color3);
+}
+
+/* Resumen del carrito */
+.cart-summary {
+    margin-top: 30px;
+    text-align: right;
+}
+
+.cart-total {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color5);
+}
+
+.cart-clear-button {
+    background-color: var(--color5);
+    font-size: 26px;
+    font-weight: 100;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.cart-clear-button:hover {
+    background-color: var(--colorEliminar);
+}
+
+/* Mensaje de carrito vacío */
+.cart-empty-message {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #888;
+    padding: 20px;
+}
