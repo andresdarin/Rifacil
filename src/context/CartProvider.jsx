@@ -54,7 +54,7 @@ const CartProvider = ({ children }) => {
         );
     };
 
-    // ✅ Función agregada para calcular el total
+    // Función para calcular el total
     const calculateTotal = () => {
         return cartItems.reduce((total, item) => total + item.precio * item.quantity, 0);
     };

@@ -27,6 +27,9 @@ import { Sortear } from '../components/layout/private/rifas/Sortear.jsx';
 import { Tienda } from '../components/layout/public/tienda/Tienda.jsx';
 import { Carrito } from '../components/layout/public/tienda/Carrito.jsx';
 import Checkout from '../components/layout/public/tienda/Checkout.jsx';
+import PagoSuccess from '../components/layout/public/tienda/PagoSuccess.jsx';
+import { PagoFailure } from '../components/layout/public/tienda/PagoFailure.jsx';
+import { PagoPending } from '../components/layout/public/tienda/PagoPending.jsx';
 
 export const Rutas = () => {
     return (
@@ -45,6 +48,9 @@ export const Rutas = () => {
                     <Route path='/tienda' element={<Tienda />} />
                     <Route path='/tienda/carrito' element={<Carrito />} />
                     <Route path='/tienda/checkout' element={<Checkout />} />
+                    <Route path='/tienda/success' element={<PagoSuccess />} />
+                    <Route path='/tienda/failure' element={<PagoFailure />} />
+                    <Route path='/tienda/pending' element={<PagoPending />} />
                 </Route>
 
                 <Route path='/admin' element={<PrivateLayout />}>
