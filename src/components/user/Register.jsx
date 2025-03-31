@@ -10,13 +10,15 @@ const Register = () => {
     const [saved, setSaved] = useState('not_sended')
     const navigate = useNavigate();
     const LoginRedirect = () => {
-        navigate('/login');  // Cambia '/login' a la ruta correcta de tu página de inicio de sesión
+        navigate('/login');
     };
     const saveUser = async (e) => {
         e.preventDefault();
 
         try {
             let newUser = form;
+            console.log("Global.url:", Global.url);
+            console.log("Nuevo usuario:", newUser);
 
             const request = await fetch(Global.url + 'usuario/register', {
                 method: 'POST',
