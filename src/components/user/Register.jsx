@@ -13,30 +13,38 @@ const Register = () => {
         navigate('/login');  // Cambia '/login' a la ruta correcta de tu página de inicio de sesión
     };
     const saveUser = async (e) => {
-        //prevenir actualizacin de pantalla
         e.preventDefault();
 
-        //recoger datos del formulario
-        let newUser = form;
+        try {
+            let newUser = form;
 
-        //guardar usuario en el backend
-        const request = await fetch(Global.url + 'usuario/register', {
-            method: 'POST',
-            body: JSON.stringify(newUser),
-            headers: {
-                'Content-Type': 'application/json'
+            const request = await fetch(Global.url + 'usuario/register', {
+                method: 'POST',
+                body: JSON.stringify(newUser),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!request.ok) {
+                throw new Error(`HTTP error! Status: ${request.status}`);
             }
-        });
 
-        const data = await request.json();
+            const data = await request.json();
+            console.log("Respuesta del servidor:", data);
 
-        if (data.status == 'success') {
-            setSaved('saved');
-            navigate('/landing');
-        } else {
-            setSaved('error')
+            if (data.status === 'success') {
+                setSaved('saved');
+                navigate('/landing');
+            } else {
+                setSaved('error');
+            }
+        } catch (error) {
+            console.error("Error en fetch:", error);
+            setSaved('error');
         }
-    }
+    };
+
     return (
 
         <div className="form-container sign-up">
