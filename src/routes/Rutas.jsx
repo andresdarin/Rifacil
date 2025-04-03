@@ -70,9 +70,10 @@ export const Rutas = () => {
                 </Route>
 
                 <Route path='/vendedor' element={<PrivateLayout />}>
-                    <Route path='profile' element={<Profile />} />
+                    <Route path='profile/:id' element={<Profile />} />
                     <Route path='logout' element={<Logout />} />
                 </Route>
+
 
                 <Route path='*' element={<Error404 />} />
             </Routes>

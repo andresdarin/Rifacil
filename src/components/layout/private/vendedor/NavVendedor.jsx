@@ -1,11 +1,12 @@
-
 import React from 'react';
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom';
 
 const NavVendedor = () => {
+    const vendedorId = localStorage.getItem("id"); // Obtiene el ID del vendedor
+
     return (
         <li className="menu-list__item">
-            <NavLink to='/vendedor/profile' className="menu-list__link">
+            <NavLink to={`/vendedor/profile/${vendedorId}`} className="menu-list__link">
                 <span className="menu-list__title">Perfil</span>
             </NavLink>
             <NavLink to='' className="menu-list__link">

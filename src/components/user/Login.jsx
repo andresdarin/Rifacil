@@ -33,26 +33,35 @@ export const Login = () => {
             });
 
             const data = await request.json();
+            console.log('data', data)
 
             if (data.status === 'success') {
                 // Persistir los datos en el navegador
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify(data.user));
-                localStorage.setItem('rol', JSON.stringify(data.user.rol));
+                localStorage.setItem('rol', data.user.rol);
+
+
 
                 // Actualizar el estado de autenticación
                 setAuth(data.user);
 
                 setLoged('loged');
 
-                // Redirigir a la landing page según el rol del usuario
-                if (data.user.rol === 'admin') {
+                const userRol = data.user?.rol; // Evita errores si 'user' es undefined
+                const userId = data.user?.id || localStorage.getItem("id");
+
+                if (userRol === 'admin') {
+                    console.log("📌 Redirigiendo a perfil de admin...");
                     navigate('/admin/profile');
-                } else if (data.user.rol === 'vendedor') {
-                    navigate('/vendedor/profile');
+                } else if (userRol === 'vendedor') {
+                    console.log("📌 Redirigiendo a perfil de vendedor...");
+                    navigate(`/vendedor/profile/${userId}`);
                 } else {
+                    console.log("📌 Redirigiendo a landing...");
                     navigate('/landing');
                 }
+
             } else {
                 setLoged('error');
             }
