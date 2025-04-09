@@ -30,6 +30,7 @@ import Checkout from '../components/layout/public/tienda/Checkout.jsx';
 import PagoSuccess from '../components/layout/public/tienda/PagoSuccess.jsx';
 import { PagoFailure } from '../components/layout/public/tienda/PagoFailure.jsx';
 import { PagoPending } from '../components/layout/public/tienda/PagoPending.jsx';
+import MetaProgreso from '../components/layout/private/vendedor/MetaProgreso.jsx';
 
 export const Rutas = () => {
     return (
@@ -72,6 +73,7 @@ export const Rutas = () => {
                 <Route path='/vendedor' element={<PrivateLayout />}>
                     <Route path='profile/:id' element={<Profile />} />
                     <Route path='logout' element={<Logout />} />
+                    <Route path='meta-anual/obtener-progreso' element={<MetaProgreso />} />
                 </Route>
 
 

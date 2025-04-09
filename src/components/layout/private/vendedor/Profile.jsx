@@ -3,16 +3,18 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Global } from '../../../../helpers/Global';
 import { RifasAsignadas } from './RifasAsignadas';
 import { Clientes } from './Clientes';
+import MetaProgreso from './MetaProgreso';
+
 
 export const Profile = () => {
-    const { id } = useParams(); // ID de la URL
+    const { id } = useParams(); // ID desde la URL
     const navigate = useNavigate();
     const [vendedor, setVendedor] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [redirected, setRedirected] = useState(false); // Bandera para controlar la redirección
+    const año = 2025;
 
-    // UseEffect para manejar el fondo de pantalla
+    // Manejar el fondo de pantalla
     useEffect(() => {
         document.body.style.backgroundImage = "url('/src/assets/img/BackgroundLong.png')";
         document.body.style.backgroundSize = "cover";
@@ -24,19 +26,8 @@ export const Profile = () => {
     }, []);
 
     useEffect(() => {
-        // Obtener el userId del parámetro o del localStorage, parseando el objeto "user" si es necesario
         const storedUser = localStorage.getItem("user");
         const userId = id || (storedUser ? JSON.parse(storedUser).id : null);
-
-        // Agregamos log para verificar los valores
-        console.log("id desde useParams:", id);
-        console.log("userId final:", userId);
-
-        if (!userId && !redirected) {
-            setRedirected(true);
-            navigate('/vendedor/profile'); // Redirige si no hay ID
-            return;
-        }
 
         if (!userId) {
             setError('No se encontró un ID de usuario válido.');
@@ -47,19 +38,27 @@ export const Profile = () => {
         const fetchVendedor = async () => {
             try {
                 const token = localStorage.getItem('token');
-                if (!token) throw new Error('No se encontró un token de autenticación.');
+                if (!token) {
+                    throw new Error('No se encontró un token de autenticación.');
+                }
 
-                const response = await fetch(`${Global.url}usuario/${userId}`, {
+                const response = await fetch(`${Global.url}usuario/profile/${userId}`, {
+
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`,
+                        'Authorization': token,
                     },
                 });
 
-                if (!response.ok) throw new Error('Error al obtener el vendedor.');
+                console.log("Respuesta completa del servidor:", response);
+
+                if (!response.ok) {
+                    throw new Error(`Error al obtener el vendedor: ${response.statusText}`);
+                }
 
                 const data = await response.json();
+                console.log("Datos obtenidos:", data);
 
                 if (data.status === 'success') {
                     setVendedor(data.user);
@@ -67,6 +66,7 @@ export const Profile = () => {
                     throw new Error('El servidor no devolvió datos válidos.');
                 }
             } catch (error) {
+                console.error("Error en fetchVendedor:", error);
                 setError(error.message);
             } finally {
                 setLoading(false);
@@ -74,7 +74,7 @@ export const Profile = () => {
         };
 
         fetchVendedor();
-    }, [id, navigate, redirected]);
+    }, [id]);
 
     if (loading) return <div className='center'>Cargando vendedor...</div>;
     if (error) return <div className='error_vendedor'><p>{error}</p></div>;
@@ -83,14 +83,17 @@ export const Profile = () => {
     return (
         <div>
             <div className="container-banner__vendedor">
-                <header className='header__vendedor'>Vendedor</header>
+                <header className='header__vendedor'>{vendedor.nombreUsu}</header>
             </div>
 
             <section>
-                <h2>Rifas Asignadas</h2>
-                <RifasAsignadas vendedorId={id} />
+                <h2>Metas Anuales</h2>
+                <MetaProgreso userId={id} año={2025} />
             </section>
-
+            <section>
+                <h2>Rifas Asignadas</h2>
+                <RifasAsignadas vendedorId={id} año={año} />
+            </section>
             <section>
                 <h2>Clientes</h2>
                 <Clientes vendedorId={id} />
