@@ -31,6 +31,10 @@ import PagoSuccess from '../components/layout/public/tienda/PagoSuccess.jsx';
 import { PagoFailure } from '../components/layout/public/tienda/PagoFailure.jsx';
 import { PagoPending } from '../components/layout/public/tienda/PagoPending.jsx';
 import MetaProgreso from '../components/layout/private/vendedor/MetaProgreso.jsx';
+import { Estadisticas } from '../components/layout/private/vendedor/Estadisticas.jsx';
+import { VenderRifa } from '../components/layout/private/vendedor/VenderRifa.jsx';
+import { HistorialVendedor } from '../components/layout/private/vendedor/HistorialVendedor.jsx';
+
 
 export const Rutas = () => {
     return (
@@ -72,6 +76,9 @@ export const Rutas = () => {
 
                 <Route path='/vendedor' element={<PrivateLayout />}>
                     <Route path='profile/:id' element={<Profile />} />
+                    <Route path='estadisticas/:id' element={<Estadisticas />} />
+                    <Route path='historial-vendedor/:id' element={<HistorialVendedor />} />
+                    <Route path='vender-rifa/:id' element={<VenderRifa />} />
                     <Route path='logout' element={<Logout />} />
                     <Route path='meta-anual/obtener-progreso' element={<MetaProgreso />} />
                 </Route>

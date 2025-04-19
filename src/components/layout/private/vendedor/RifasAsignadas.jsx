@@ -64,17 +64,26 @@ export const RifasAsignadas = ({ vendedorId, año }) => {
     if (error) return <div>{error}</div>;
 
     return (
-        <div>
-            <h3>Rifas Asignadas</h3>
-            {rifas.length === 0 ? (
-                <p>No hay rifas asignadas.</p>
-            ) : (
-                <ul>
-                    {rifas.map((rifa, index) => (
-                        <li key={index}>Rifa Nº: {rifa}</li>
-                    ))}
-                </ul>
-            )}
+        <div className="container-asignar">
+            <h1> Rifas Asignadas </h1>
+
+            <div className="rifas-list rifas-list-vendedor-profile">
+                {loading ? (
+                    <p className="rifa-loading">Cargando rifas...</p>
+                ) : error ? (
+                    <p className="rifa-error">{error}</p>
+                ) : rifas.length === 0 ? (
+                    <p className="rifa-vacio">No hay rifas asignadas para este vendedor.</p>
+                ) : (
+                    <ul className="rifa-list rifa-list-vendedor-profile ">
+                        {rifas.map((numero, index) => (
+                            <li key={index} className="rifa-item rifa-item-vendedor-profile">
+                                {numero}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
         </div>
     );
 };

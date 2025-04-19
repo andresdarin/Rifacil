@@ -87,15 +87,12 @@ export const Profile = () => {
             </div>
 
             <section>
-                <h2>Metas Anuales</h2>
                 <MetaProgreso userId={id} año={2025} />
             </section>
             <section>
-                <h2>Rifas Asignadas</h2>
                 <RifasAsignadas vendedorId={id} año={año} />
             </section>
             <section>
-                <h2>Clientes</h2>
                 <Clientes vendedorId={id} />
             </section>
         </div>

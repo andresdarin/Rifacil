@@ -1915,11 +1915,17 @@ button:disabled {
     box-shadow: none;
 }
 
-.asignar_container {
+.container-asignar {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.container-asignar h1 {
+    font-size: 2rem;
+    font-weight: 200;
+    color: var(--colorWhite);
 }
 
 /*Resultado*/
@@ -2236,6 +2242,15 @@ button:disabled {
     max-width: 98%;
 }
 
+.rifa-list-vendedor-profile {
+    box-shadow: none;
+}
+
+.rifas-list-vendedor-profile {
+    margin: 0 2rem 0 2rem;
+    width: 90%;
+}
+
 .rifas-list h3,
 .vendedores-list h3 {
     grid-column: span 5;
@@ -2264,6 +2279,10 @@ button:disabled {
     border-radius: .5rem 2rem;
     box-shadow: 0px 15px 20px -5px rgba(0, 0, 0, 0.5);
     cursor: pointer;
+}
+
+.rifa-item-vendedor-profile {
+    margin: 0.7rem 0.7rem;
 }
 
 .rifa-item.seleccionado {
@@ -2757,7 +2776,7 @@ button:disabled {
 
 .checkout-total {
     background-color: var(--color5);
-    margin: 40px 0  0;
+    margin: 40px 0 0;
     padding: 10px;
     font-size: 30px;
     font-weight: bold;
@@ -2806,4 +2825,174 @@ button:disabled {
 
 .btn-continue-shopping:hover {
     background-color: #ddd;
+}
+
+/*Estadisticas Vendedor */
+.clientes-container {
+    color: var(--colorWhite);
+    font-size: 20px;
+    width: 90%;
+    margin: 0 auto;
+    padding: 2rem;
+    margin-bottom: 3rem;
+
+}
+
+.clientes-container h1 {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 200;
+    color: var(--colorWhite);
+    margin-bottom: 2rem;
+}
+
+.clientes-container h2 {
+    color: var(--colorWhite);
+    margin-bottom: 1rem;
+    font-size: 20px;
+    font-weight: 200;
+}
+
+.sin-clientes {
+    text-align: center;
+    font-style: italic;
+    color: #666;
+}
+
+.clientes-lista {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.cliente-item {
+    background-image: url(/src/assets/img/HeroAltaVendedor.png);
+    padding: 1rem;
+    border-radius: 0.6rem 2rem 0.6rem 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.cliente-item strong {
+    font-size: 36px;
+    font-weight: 200;
+    text-transform: uppercase;
+}
+
+/* Animación de aparición suave desde abajo */
+/* Animación de aparición suave desde abajo */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animación de pulso verde */
+@keyframes pulsoVerde {
+    0% {
+        box-shadow: 0 0 0 1px #09de09b2;
+        /* Verde */
+    }
+
+    50% {
+        box-shadow: 0 0 40px 10px #09de09b2;
+    }
+
+    100% {
+        box-shadow: 0 0 0 1px #09de09b2;
+    }
+}
+
+/* Animación de pulso rojo */
+@keyframes pulsoRojo {
+    0% {
+        box-shadow: 0 0 0 1px #ff3b3b;
+        /* Rojo */
+    }
+
+    50% {
+        box-shadow: 0 0 40px 10px #ff3b3b;
+    }
+
+    100% {
+        box-shadow: 0 0 0 1px #ff3b3b;
+    }
+}
+
+/* Animación de pulso amarillo */
+@keyframes pulsoAmarillo {
+    0% {
+        box-shadow: 0 0 0 1px #ffc107;
+        /* Amarillo */
+    }
+
+    50% {
+        box-shadow: 0 0 40px 15px #ffc107;
+    }
+
+    100% {
+        box-shadow: 0 0 0 1px #ffc107;
+    }
+}
+
+/* Contenedor de la tarjeta de progreso */
+.progreso-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.progreso-container h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--colorWhite);
+    margin-top: 2rem;
+}
+
+/* Estilos del progreso card */
+.progreso-card {
+    width: 250px;
+    height: 250px;
+    padding: 2rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeInUp 1s ease forwards;
+    transition: transform 0.3s ease;
+}
+
+.progreso-card.green {
+    animation: fadeInUp 2s ease forwards, pulsoVerde 5s infinite ease-in-out;
+}
+
+.progreso-card.yellow {
+    animation: fadeInUp 2s ease forwards, pulsoAmarillo 5s infinite ease-in-out;
+}
+
+.progreso-card.red {
+    animation: fadeInUp 2s ease forwards, pulsoRojo 5s infinite ease-in-out;
+}
+
+.progreso-card:hover {
+    transform: scale(1.07);
+}
+
+.emoji-label {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
 }
