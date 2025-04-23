@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Global } from '../../../../helpers/Global';
-import { RifasAsignadas } from './RifasAsignadas';
-import { Clientes } from './Clientes';
-import MetaProgreso from './MetaProgreso';
+import MetaProgreso from './Profile/MetaProgreso';
+import { RifasAsignadas } from './Profile/RifasAsignadas';
+import { Clientes } from './Profile/Clientes';
+
 
 
 export const Profile = () => {

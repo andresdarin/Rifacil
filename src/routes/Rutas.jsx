@@ -30,7 +30,7 @@ import Checkout from '../components/layout/public/tienda/Checkout.jsx';
 import PagoSuccess from '../components/layout/public/tienda/PagoSuccess.jsx';
 import { PagoFailure } from '../components/layout/public/tienda/PagoFailure.jsx';
 import { PagoPending } from '../components/layout/public/tienda/PagoPending.jsx';
-import MetaProgreso from '../components/layout/private/vendedor/MetaProgreso.jsx';
+import MetaProgreso from '../components/layout/private/vendedor/Profile/MetaProgreso.jsx';
 import { Estadisticas } from '../components/layout/private/vendedor/Estadisticas.jsx';
 import { VenderRifa } from '../components/layout/private/vendedor/VenderRifa.jsx';
 import { HistorialVendedor } from '../components/layout/private/vendedor/HistorialVendedor.jsx';

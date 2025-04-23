@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Global } from '../../../../helpers/Global';
+import { Global } from '../../../../../helpers/Global';
 
 export const RifasAsignadas = ({ vendedorId, año }) => {
     const [rifas, setRifas] = useState([]);

@@ -2996,3 +2996,156 @@ button:disabled {
     transform: translateX(-50%);
     font-size: 2rem;
 }
+
+/*Estadisticas vendedor*/
+
+.meta-chart-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.meta-chart-emoji {
+    text-align: center;
+    font-size: 5rem;
+}
+
+.estadisticas-ventas,
+.estadisticas-grafica {
+    align-items: center;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    min-height: 100%;
+    color: var(--colorWhite);
+    font-weight: 300;
+}
+
+.estadisticas-ventas {
+    margin: 3rem 1rem 3rem auto;
+    border-radius: 0.6rem 2rem 0.6rem 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    font-size: 32px;
+}
+
+.estadisticas-grafica {
+    margin: 3rem auto 3rem 1rem;
+    border-radius: 2rem 0.6rem 2rem 0.6rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.chart-text {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.topproducto-item {
+    background-image: url('../img/HeroAltaVendedor.png');
+    padding: 1rem;
+    border-radius: 0.6rem 2rem 0.6rem 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    display: flex;
+    margin: 1rem 0;
+    align-items: space-between;
+    justify-content: space-between;
+}
+
+
+.estadisticas__resumen {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-around;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.rifas-container {
+    background-image: url('../img/HeroAltaVendedor.png');
+    padding: 20px;
+    border-radius: 0.6rem 2rem 0.6rem 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    max-width: 350px;
+    min-width: 8rem;
+    margin: auto auto 2rem auto;
+    color: var(--colorWhite);
+}
+
+.rifas-icon {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.rifas-title {
+    font-size: 32px;
+    font-weight: 200;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.rifas-number {
+    font-size: 60px;
+    font-weight: 700;
+    color: var(--colorWhite);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    animation: countUp 2s ease-out;
+}
+
+/* Animación para el contador */
+@keyframes countUp {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.ingresos-container {
+    background-image: url('../img/HeroAltaVendedor.png');
+    padding: 20px;
+    border-radius: 0.6rem 2rem 0.6rem 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    max-width: 350px;
+    margin: 0 auto;
+    color: var(--colorWhite);
+}
+
+.ingresos-icon {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.ingresos-title {
+    font-size: 32px;
+    font-weight: 200;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.ingresos-amount {
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--colorWhite);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    animation: countUp 2s ease-out;
+}
+
+/* Animación para el contador */
+@keyframes countUp {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

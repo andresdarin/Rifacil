@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { Global } from "../../../../helpers/Global";
+import { Global } from "../../../../../helpers/Global";
 
 const MetaProgreso = ({ userId, año }) => {
     const [progreso, setProgreso] = useState(null);
