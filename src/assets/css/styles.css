@@ -3149,3 +3149,257 @@ button:disabled {
         opacity: 1;
     }
 }
+
+/*Historial de ventas*/
+.ventas__listado {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 2rem;
+    max-width: 800px;
+    margin: 2.5rem auto;
+}
+
+.venta__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-image: url('../img/HeroAltaVendedor.png');
+    padding: 20px;
+    border-radius: 0.6rem 2rem 0.6rem 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    color: var(--colorWhite);
+    min-width: 100%;
+    margin: 0 auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.venta__card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.card_sin_expand {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.expanded__details {
+    background-image: url('../img/HeroAltaVendedor.png');
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
+    justify-content: space-between;
+    border-radius: 0.6rem 2rem 0.6rem 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    min-width: 100%;
+    margin: 2rem auto auto auto;
+    padding: 1rem 0;
+}
+
+.detail__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 0.5rem 2rem;
+}
+
+.detail__row::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 5%;
+    width: 90%;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+
+.detail__row h1 {
+    font-size: 1rem;
+    color: var(--colorWhite);
+    font-weight: 300;
+}
+
+.detail__row h2 {
+    font-size: 1.1rem;
+    color: var(--colorWhite);
+    font-weight: bold;
+    margin-left: 2rem;
+    text-align: right;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .ventas__listado {
+        padding: 1rem;
+    }
+
+    .venta__card {
+        padding: 1rem;
+    }
+
+    .header__vendedor {
+        font-size: 2rem;
+    }
+}
+
+.section_card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    min-width: 150px;
+    margin: 0.5rem;
+}
+
+.section_card h1 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.section_card h3 {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+
+.expanded__details p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+}
+
+.expanded__details strong {
+    font-weight: bold;
+}
+
+/* Card Style for Each Rifa */
+/* Card Style for Each Rifa */
+.rifas__manuales {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+    position: relative;
+}
+
+.rifa-card {
+    background-image: url('../img/HeroAltaVendedor.png');
+    background-size: cover;
+    background-position: center;
+    border-radius: 0.6rem 2rem 0.6rem 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    width: 18%;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    color: var(--colorWhite);
+    font-size: 1.5rem;
+}
+
+.rifa-card.expanded {
+    background-image: url('../img/HeroAltaVendedor.png');
+    padding: 2rem;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 90%;
+    max-width: 500px;
+    transform: translate(-50%, -50%) scale(1.05);
+    z-index: 10;
+    border-radius: 0.6rem 2rem 0.6rem 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    animation: fadeInScale 0.3s ease;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(6px);
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 5;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.85);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.05);
+    }
+}
+
+.rifa-form input,
+.rifa-form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.rifa-form button {
+    margin-top: 15px;
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: var(--colorWhite);
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.rifa-card input[type="text"],
+.rifa-card input[type="email"],
+.rifa-card input[type="tel"],
+.rifa-card select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333;
+    text-align: center;
+    /* Centrado del texto */
+}
+
+
+.rifa-form button:hover {
+    background-color: #45a049;
+}
+
+.rifa-form button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .rifas__manuales {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .rifa-card {
+        width: 90%;
+    }
+}
