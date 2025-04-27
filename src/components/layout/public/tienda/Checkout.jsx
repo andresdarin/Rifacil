@@ -93,7 +93,7 @@ const Checkout = () => {
     return (
         <div>
             <div className="container-banner__productos">
-                <header className="header__productos">Checkout</header>
+                <header className="header__productos header__checkout">Checkout</header>
             </div>
 
             <div className="checkout-container">

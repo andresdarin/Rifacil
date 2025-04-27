@@ -59,8 +59,9 @@ export const Resultado = () => {
             <div className="card_res-container">
                 {/* Primer ganador - ocupa 4 columnas */}
                 <div className="card_res first-winner">
+                    <h1 className='emoji-troph'>🏆</h1>
                     <h1>Primer Premio</h1>
-                    <h1>{sorteo.ganadores[0]?.numeroRifa}</h1>
+                    <h2>{sorteo.ganadores[0]?.numeroRifa}</h2>
                     <p>{sorteo.ganadores[0]?.nombreParticipante || 'Desconocido'}</p>
                     <p>{sorteo.ganadores[0]?.premio.nombre}</p>
                     <p>{sorteo.ganadores[0]?.premio.descripcion}</p>
@@ -68,7 +69,8 @@ export const Resultado = () => {
 
                 {/* Segundo ganador - ocupa 2 columnas */}
                 <div className="card_res second-winner">
-                    <h2>Segundo Premio</h2>
+                    <h1>🥈</h1>
+                    <h1>Segundo Premio</h1>
                     <h2>{sorteo.ganadores[1]?.numeroRifa}</h2>
                     <p>{sorteo.ganadores[1]?.nombreParticipante || 'Desconocido'}</p>
                     <p>{sorteo.ganadores[1]?.premio.nombre}</p>
@@ -77,7 +79,8 @@ export const Resultado = () => {
 
                 {/* Tercer ganador - ocupa 2 columnas */}
                 <div className="card_res second-winner">
-                    <h2>Tercer Premio</h2>
+                    <h1>🥉</h1>
+                    <h1>Tercer Premio</h1>
                     <h2>{sorteo.ganadores[2]?.numeroRifa}</h2>
                     <p>{sorteo.ganadores[2]?.nombreParticipante || 'Desconocido'}</p>
                     <p>{sorteo.ganadores[2]?.premio.nombre}</p>
@@ -87,7 +90,7 @@ export const Resultado = () => {
                 {/* Otros ganadores - ocupan 1 columna cada uno */}
                 {sorteo.ganadores.slice(3).map((ganador, index) => (
                     <div className="card_res remaining-winner" key={index}>
-                        <h2>Ganador {index + 4}</h2>
+                        <h1>Ganador {index + 4}</h1>
                         <h2>{ganador.numeroRifa}</h2>
                         <p>{ganador.nombreParticipante || 'Desconocido'}</p>
                         <p>{ganador.premio.nombre}</p>

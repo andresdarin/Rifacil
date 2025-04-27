@@ -30,7 +30,7 @@ export const Carrito = () => {
     return (
         <div>
             <div className="container-banner__productos">
-                <header className="header__productos">Carrito de Compras</header>
+                <header className="header__productos header__carrito">Carrito de Compras</header>
             </div>
 
             <div className="cart-container">

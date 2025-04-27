@@ -10,47 +10,52 @@ export const Nav = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
+    // Función para cerrar el menú al hacer clic en una opción
+    const closeMenu = () => {
+        setIsMenuOpen(false);
+    };
+
     return (
         <nav className="navbar__container-lists">
-            {/* Botón hamburguesa */}
+            {/* Botón de flecha */}
             <button className="hamburger-btn" onClick={toggleMenu}>
-                &#9776;
+                <div className={`arrow-down ${isMenuOpen ? 'open' : ''}`}></div>
             </button>
 
             {/* Menú */}
             <ul className={`container-lists__menu-list ${isMenuOpen ? 'open' : ''}`}>
                 <li className="menu-list__item">
-                    <NavLink to='/landing' className="menu-list__link">
+                    <NavLink to='/landing' className="menu-list__link" onClick={closeMenu}>
                         <span className="menu-list__title">Inicio</span>
                     </NavLink>
                 </li>
 
                 <li className="menu-list__item">
-                    <NavLink to='/beneficios' className="menu-list__link">
+                    <NavLink to='/beneficios' className="menu-list__link" onClick={closeMenu}>
                         <span className="menu-list__title">Beneficios</span>
                     </NavLink>
                 </li>
 
                 <li className="menu-list__item">
-                    <NavLink to='/resultado' className="menu-list__link">
+                    <NavLink to='/resultado' className="menu-list__link" onClick={closeMenu}>
                         <span className="menu-list__title">Resultado</span>
                     </NavLink>
                 </li>
 
                 <li className="menu-list__item">
-                    <NavLink to='/contacto' className="menu-list__link">
+                    <NavLink to='/contacto' className="menu-list__link" onClick={closeMenu}>
                         <span className="menu-list__title">Contacto</span>
                     </NavLink>
                 </li>
 
                 <li className="menu-list__item">
-                    <NavLink to='/tienda' className="menu-list__link">
+                    <NavLink to='/tienda' className="menu-list__link" onClick={closeMenu}>
                         <span className="menu-list__title">Tienda</span>
                     </NavLink>
                 </li>
 
                 <li className="menu-list__item">
-                    <NavLink to='/admin/logout' className="menu-list__link">
+                    <NavLink to='/admin/logout' className="menu-list__link" onClick={closeMenu}>
                         <span className="menu-list__title">Cerrar Sesión</span>
                     </NavLink>
                 </li>

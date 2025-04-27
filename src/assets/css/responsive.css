@@ -42,7 +42,6 @@
     }
 }
 
-
 @media (max-width: 690px) {
     .layout {
         grid-template-rows: auto auto auto;
@@ -92,7 +91,6 @@
         padding: 0.5rem 1rem;
     }
 }
-
 
 @media (max-width: 447px) {
     .profile-info__stats {
@@ -229,8 +227,17 @@
 
     /* Mostrar solo el botón de hamburguesa en pantallas pequeñas */
     .hamburger-btn {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        z-index: 3;
     }
+
 
     /* Ocultar el menú en pantallas pequeñas hasta que se active */
     .container-lists__menu-list {
@@ -240,6 +247,519 @@
     /* Estilo del menú cuando se abre */
     .container-lists__menu-list.open {
         display: flex;
+    }
+
+    /* Estilo de los enlaces en el menú */
+    .menu-list__link {
+        color: var(--colorWhite);
+        background-color: transparent;
+    }
+
+    /* Estilo cuando el enlace está activo */
+    .menu-list__link.active {
+        color: var(--color5);
+        border: none;
+        background-color: transparent;
+    }
+
+    /* Estilo de los enlaces cuando se pasan por encima (hover) */
+    .menu-list__link:hover {
+        background-color: transparent;
+    }
+
+
+    .navbar__header {
+        display: none;
+        /* Oculta el logo en pantallas pequeñas */
+    }
+
+    /*Landing Page*/
+    /* Ajuste del container-banner */
+    .container-banner {
+        height: 45vh;
+        background-size: cover;
+        background-position: center;
+    }
+
+    /* Ajustar el tamaño del texto de las clases .header__landing y .year__landing */
+    .header__landing {
+        font-size: 100px;
+        margin-top: -40px;
+        margin-bottom: -20px;
+    }
+
+    .year__landing {
+        font-size: 30px;
+        /* Reducir tamaño */
+        margin-left: 5px;
+        margin-bottom: -20px;
+    }
+
+    .subtitle__landing {
+        font-size: 20px;
+        /* Reducir tamaño */
+        margin-top: 10px;
+    }
+
+    /* Ajustar las columnas */
+    .columns {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        /* Asegura que las columnas ocupen todo el ancho */
+        justify-content: flex-start;
+        gap: 0;
+        /* Elimina el espacio entre las columnas */
+        margin: 0;
+        padding: 0;
+    }
+
+    .column {
+        max-width: 100%;
+        height: 100%;
+        padding: 10px;
+    }
+
+    /* Ajustar el tamaño de las imágenes */
+    .column1,
+    .column2,
+    .column3,
+    .column4,
+    .column5,
+    .column6 {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        min-height: 200px;
+        /* Asegura una altura mínima */
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .columns {
+        flex-direction: column;
+    }
+
+    .column1 {
+        order: 1;
+        /* Primer elemento */
+    }
+
+    .column2 {
+        order: 2;
+        /* Segundo elemento */
+    }
+
+    .column4 {
+        order: 3;
+        /* Cuarto elemento */
+    }
+
+    .column3 {
+        order: 4;
+        /* Tercer elemento */
+    }
+
+    .column5 {
+        order: 5;
+        /* Quinto elemento */
+    }
+
+    .column6 {
+        order: 6;
+        /* Sexto elemento */
+    }
+
+    .article_title {
+        font-size: 30px;
+        /* Reducir tamaño */
+        text-align: center;
+        /* Centra el título */
+    }
+
+    .article_subtitle {
+        font-size: 20px;
+        text-align: center;
+        /* Centra el subtítulo */
+    }
+
+    .article_under-title {
+        font-size: 15px;
+        text-align: center;
+        /* Centra el subtítulo */
+    }
+
+    .article_paragraph {
+        font-size: 10px;
+        text-align: justify;
+        /* Justifica el párrafo */
+        text-align-last: center;
+        /* Centra la última línea del párrafo */
+        /* Centrar el texto si es necesario */
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+
+    /*proximo sorteo*/
+    .header__prox {
+        font-size: 1.5rem;
+        /* Ajustar el tamaño del texto en pantallas pequeñas */
+    }
+
+    .article_subtitle {
+        font-size: 1rem;
+        /* Ajustar el tamaño de la fecha */
+    }
+
+    .premios-list li {
+        font-size: 0.9rem;
+        /* Reducir el tamaño del texto de los premios */
+    }
+
+    .premio-descripcion {
+        font-size: 0.9rem;
+        /* Reducir tamaño de la descripción */
+    }
+
+    /*Beneficios*/
+    .beneficios_header {
+        font-size: 5rem;
+        margin-bottom: -20px;
+    }
+
+    .beneficios_cards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .beneficio_imagen {
+        width: 200px;
+        height: 200px;
+    }
+
+    /* Resultados */
+    .header__resultado {
+        font-size: 3.5rem;
+        margin: 1rem 2rem 2rem 2rem;
+    }
+
+    .card_res-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .first-winner {
+        grid-column: span 2;
+        background-color: goldenrod;
+        font-size: 20px;
+    }
+
+    .second-winner {
+        grid-column: span 2;
+        background-color: var(--color4);
+    }
+
+    .remaining-winner {
+        grid-column: span 1;
+        background-color: var(--color5);
+    }
+
+    .card_res {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        /* Agregá esta línea */
+        padding-top: 1rem;
+        /* Si querés que no esté pegadísimo al borde */
+    }
+
+    .card_res h2 {
+        font-size: 15px;
+        padding: .5rem;
+        margin: .5rem;
+        border-radius: 0.3rem 1rem 0.3rem 1rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        align-self: center;
+        margin-top: 0;
+        /* quitamos separación arriba */
+    }
+
+    .card_res p {
+        font-size: 12px;
+        text-align: justify;
+    }
+
+    /*Contacto*/
+    /* .container-banner__contacto */
+    .container-banner__contacto,
+    .container-banner__productos {
+        height: 20vh;
+        background-size: cover;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        background-color: var(--color5);
+    }
+
+    /* .header__contacto */
+    .header__contacto,
+    .header__productos {
+        font-size: 5rem;
+        margin: 0 0 -30px 8px;
+    }
+
+    /* .card-layout__contacto */
+    .card-layout__contacto {
+        flex-direction: column;
+    }
+
+    /* .contacto__form */
+    .contacto__form {
+        width: 93%;
+        min-height: 30vh;
+        padding: 1rem;
+        border-radius: 1rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 1rem;
+        padding: 1rem;
+        margin: 0;
+    }
+
+    .edit-producto__submit-button {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+
+    .contacto__submit-button {
+        margin-top: 0;
+        margin-bottom: .1em;
+    }
+
+    /*Tienda*/
+    .header__productos {
+        margin: 0 0 -30px 60px;
+    }
+
+    .search-bar {
+        flex-direction: row;
+        align-items: center;
+        margin: 1rem 0 0 0;
+    }
+
+    .search-bar input {
+        width: 35vh;
+        padding: 0.5rem 1rem;
+        margin: 1rem 0 1rem 0;
+    }
+
+    .search-bar__submit-button {
+        width: 50px;
+        height: 40px;
+        margin-top: 1.2rem;
+    }
+
+    .card-tienda-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card-tienda-item {
+        width: 95%;
+        padding: 10px;
+        margin: 0 0 1rem 0;
+        background-color: var(--color5);
+    }
+
+    .card-tienda-item h1 {
+        font-size: 1rem;
+    }
+
+    .card-tienda-item h3 {
+        font-size: 0.8rem;
+    }
+
+    .card-tienda-item h4 {
+        font-size: 0.8rem;
+    }
+
+    .add-to-cart-button {
+        display: flex;
+        width: 50px;
+        border-radius: 0.3rem 1rem 0.3rem 1rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        align-items: center;
+        justify-content: center;
+    }
+
+    .float-cart-button {
+        bottom: 20px;
+        left: 20px;
+        font-size: 20px;
+        padding: 12px;
+        width: 4rem;
+        height: 4rem;
+    }
+
+    .emptyMessage {
+        font-size: 0.8rem;
+        margin: 1rem;
+    }
+
+    /*carrito*/
+    /* Estilo para la lista de elementos en el carrito */
+    .header__carrito {
+        font-size: 3rem;
+        margin: 0 0 0 4.9rem;
+
+    }
+
+    .cart-item {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        margin: .8rem 0;
+    }
+
+    .cart-item-image {
+        width: 80px;
+        height: 80px;
+        margin: 0 10px 0 0;
+        margin-bottom: 10px;
+    }
+
+    .cart-item-details {
+        text-align: left;
+        margin-bottom: 10px;
+    }
+
+    .cart-item-title {
+        font-size: .8rem;
+    }
+
+    .cart-item-price {
+        font-size: 0.6rem;
+    }
+
+    .cart-item-quantity-container {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+    }
+
+    .cart-item-quantity-container h2 {
+        font-size: 2rem;
+        width: 2rem;
+        height: 2rem;
+        border: none;
+        margin: .5rem 0 0 0;
+    }
+
+    .cart-remove-item-button {
+        display: none;
+    }
+
+    .cart-quantity-button {
+        width: 20px;
+        height: 20px;
+        font-size: 1rem;
+    }
+
+    .cart-summary {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .cart-total {
+        font-size: 1.2rem;
+    }
+
+    .cart-clear-button {
+        font-size: 18px;
+        padding: 8px 15px;
+    }
+
+    .proceed-to-checkout-button {
+        width: 100%;
+        padding: 15px;
+        font-size: 1.2rem;
+        border-radius: 0.3rem 1rem 0.3rem 1rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        background-color: var(--color5);
+    }
+
+    .cart-empty-message {
+        font-size: 1rem;
+        padding: 10px;
+    }
+
+    /*Checkout*/
+    .header__checkout {
+        font-size: 3.5rem;
+        margin: 0 0 -1.2rem 4.0rem;
+    }
+
+    .checkout-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 0 20px 20px 20px;
+        margin: 0;
+    }
+
+    .checkout-box {
+        width: 100%;
+        /* Ocupa todo el ancho disponible */
+        margin-bottom: 20px;
+    }
+
+    .btn-mercado-pago-container {
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        /* Asegura que los botones ocupen todo el ancho */
+    }
+
+    .btn-mercado-pago img {
+        width: 120px;
+        /* Ajusta el tamaño de las imágenes en móviles */
+        height: auto;
+        margin: 10px 0;
+    }
+
+    .checkout-title h1 {
+        font-size: 1.2rem;
+        /* Reduce el tamaño de la fuente para pantallas pequeñas */
+    }
+
+    .checkout-item {
+        flex-direction: column;
+        /* Estilo más apropiado para móviles */
+        padding: 10px;
+        align-items: flex-start;
+    }
+
+    .checkout-item span {
+        font-size: 1rem;
+        /* Ajusta tamaño de la fuente */
+    }
+
+    .checkout-total {
+        font-size: 1.2rem;
+        margin: 1rem 0 3rem 0;
+        /* Ajusta el tamaño del total */
+    }
+
+    .checkout-list {
+        width: 100%;
+        padding: 0;
     }
 
 }
