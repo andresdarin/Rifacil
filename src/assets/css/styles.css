@@ -19,8 +19,8 @@
 }
 
 body {
-    background-color: var(--color3);
-    background-image: url('../img/FondoLogin.png');
+    background-color: var(--color5);
+    background-image: url('../img/HeroAltaVendedor.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
