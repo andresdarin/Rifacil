@@ -4,22 +4,18 @@ import { Global } from '../../../../helpers/Global';
 export const VenderRifa = () => {
     const [rifas, setRifas] = useState([]);
     const [selectedRifa, setSelectedRifa] = useState(null);
-    const token = localStorage.getItem("token");
+    const [inputQuery, setInputQuery] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
         document.body.style.backgroundImage = "url('/src/assets/img/BackgroundLong.png')";
-        document.body.style.backgroundSize = "cover";
-        document.body.style.backgroundPosition = "center";
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundPosition = 'center';
 
-        const userRaw = localStorage.getItem("user");
+        const userRaw = localStorage.getItem('user');
         const userId = userRaw ? JSON.parse(userRaw).id : null;
-
-        if (!userId) {
-            console.error("No se encontró el userId en localStorage");
-            return;
-        }
-
-        obtenerRifasAsignadas(userId);
+        if (userId) obtenerRifasAsignadas(userId);
 
         return () => {
             document.body.style.backgroundImage = '';
@@ -29,88 +25,84 @@ export const VenderRifa = () => {
     const obtenerRifasAsignadas = async (userId) => {
         try {
             const res = await fetch(Global.url + 'rifa/rifas-por-vendedor', {
-                method: "POST",
+                method: 'POST',
                 headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": token
+                    'Content-Type': 'application/json',
+                    'Authorization': token
                 },
                 body: JSON.stringify({ userId })
             });
-
             const data = await res.json();
-
-            if (data.status === "success") {
-                setRifas(data.data.numerosRifa.map(num => ({
-                    NumeroRifa: num,
-                    nombreParticipante: '',
-                    ciParticipante: '',
-                    emailParticipante: '',
-                    telefonoParticipante: '',
-                    metodoPago: '',
-                    vendida: false,
-                })));
+            if (data.status === 'success') {
+                setRifas(
+                    data.data.numerosRifa.map(({ _id, numero }) => ({
+                        NumeroRifa: { _id, numero },
+                        nombreParticipante: '',
+                        ciParticipante: '',
+                        emailParticipante: '',
+                        telefonoParticipante: '',
+                        metodoPago: '',
+                        vendida: false
+                    }))
+                );
             }
         } catch (error) {
-            console.error("Error al obtener rifas:", error);
+            console.error('Error al obtener rifas:', error);
         }
     };
+
+    const handleSearch = () => setSearchTerm(inputQuery);
 
     const venderRifa = async (numeroRifa) => {
-        const rifaSeleccionada = rifas.find(r => r.NumeroRifa === numeroRifa);
-        const { nombreParticipante, ciParticipante, metodoPago } = rifaSeleccionada;
-
-        if (!nombreParticipante || !ciParticipante || !metodoPago) {
-            return alert("Debes completar nombre, cédula y seleccionar el método de pago.");
+        const rifa = rifas.find(r => r.NumeroRifa._id === numeroRifa);
+        if (!rifa) {
+            console.error('Rifa no encontrada en el estado');
+            return;
         }
+
+        const { nombreParticipante, ciParticipante, emailParticipante, telefonoParticipante, metodoPago } = rifa;
+        if (!nombreParticipante || !ciParticipante || !emailParticipante || !telefonoParticipante || !metodoPago) {
+            console.error('Debes completar todos los campos antes de vender.');
+            return;
+        }
+
+        const bodyData = {
+            rifaId: numeroRifa,
+            metodoPago,
+            numeroCuotas: 1,
+            datosClienteFisico: {
+                nombre: nombreParticipante,
+                correo: emailParticipante,
+                cedula: ciParticipante,
+                telefono: telefonoParticipante
+            }
+        };
+        console.log('🔔 Body request:', bodyData);
 
         try {
-            const res = await fetch(Global.url + `rifa/vender/${numeroRifa}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": token
-                },
-                body: JSON.stringify({
-                    nombreParticipante,
-                    ciParticipante,
-                    pagoRealizado: true,
-                    metodoPago,
-                })
+            const res = await fetch(Global.url + 'compra/realizarCompraFisica', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': token },
+                body: JSON.stringify(bodyData)
             });
-
             const data = await res.json();
-
-            if (data.status === "success") {
-                alert("Rifa vendida correctamente");
+            console.log('🔔 Respuesta venta:', data);
+            if (res.ok && data.status === 'success') {
+                console.log('Compra realizada correctamente');
                 setRifas(prev => prev.map(r =>
-                    r.NumeroRifa === numeroRifa
-                        ? { ...r, vendida: true }
-                        : r
+                    r.NumeroRifa._id === numeroRifa ? { ...r, vendida: true } : r
                 ));
-                setSelectedRifa(null); // Cierra la card
+                setSelectedRifa(null);
             } else {
-                alert("Error al vender la rifa.");
+                console.error('Error al realizar la compra:', data.message || data);
             }
         } catch (error) {
-            console.error("Error al vender rifa:", error);
+            console.error('Error de red al realizar la compra:', error);
         }
     };
 
-    const handleInputChange = (numeroRifa, campo, valor) => {
-        setRifas(prev => prev.map(r =>
-            r.NumeroRifa === numeroRifa ? { ...r, [campo]: valor } : r
-        ));
-    };
-
-    const handleMetodoPagoChange = (numeroRifa, valor) => {
-        setRifas(prev => prev.map(r =>
-            r.NumeroRifa === numeroRifa ? { ...r, metodoPago: valor } : r
-        ));
-    };
-
-    const toggleCard = (numeroRifa) => {
-        setSelectedRifa((prev) => prev === numeroRifa ? null : numeroRifa);
-    };
+    // Filtrar rifas según searchTerm
+    const filteredRifas = rifas.filter(r => r.NumeroRifa.numero.toString().includes(searchTerm));
 
     return (
         <>
@@ -118,64 +110,88 @@ export const VenderRifa = () => {
                 <header className='header__vendedor'>Vender</header>
             </div>
 
-            {selectedRifa && <div className="overlay" onClick={() => setSelectedRifa(null)}></div>}
+            {/* Buscador con botón */}
+            <div className="search-bar search-bar_asign search-bar__rifas">
+                <input
+                    type="text"
+                    placeholder="Buscar por número de rifa..."
+                    value={inputQuery}
+                    onChange={e => setInputQuery(e.target.value)}
+                />
+                <button className="search-bar__submit-button" onClick={handleSearch}>🔍</button>
+            </div>
+
+            {selectedRifa && <div className="overlay" onClick={() => setSelectedRifa(null)} />}
 
             <div className="rifas__manuales">
-                {rifas.map((rifa) => (
-                    <div
-                        key={rifa.NumeroRifa}
-                        className={`rifa-card ${selectedRifa === rifa.NumeroRifa ? 'expanded' : ''}`}
-                        onClick={(e) => {
-                            e.stopPropagation(); // para evitar que se cierre inmediatamente
-                            toggleCard(rifa.NumeroRifa);
-                        }}
-                    >
-                        <h3>{rifa.NumeroRifa}</h3>
+                {/* Si se buscó y no hay resultados */}
+                {searchTerm && filteredRifas.length === 0 && (
+                    <p className="rifa-no-encontrada">No se encontró ninguna rifa. Intenta otro número.</p>
+                )}
 
-                        {selectedRifa === rifa.NumeroRifa && (
-                            <div className="rifa-form" onClick={(e) => e.stopPropagation()}>
+                {/* Mostrar rifas filtradas */}
+                {filteredRifas.map(rifa => (
+                    <div
+                        key={rifa.NumeroRifa._id}
+                        className={`rifa-card ${selectedRifa === rifa.NumeroRifa._id ? 'expanded' : ''}`}
+                        onClick={e => { e.stopPropagation(); setSelectedRifa(rifa.NumeroRifa._id); }}
+                    >
+                        <h3>{rifa.NumeroRifa.numero}</h3>
+
+                        {selectedRifa === rifa.NumeroRifa._id && (
+                            <div className="rifa-form" onClick={e => e.stopPropagation()}>
                                 <input
                                     type="text"
                                     placeholder="Nombre del comprador"
                                     value={rifa.nombreParticipante}
-                                    onChange={(e) =>
-                                        handleInputChange(rifa.NumeroRifa, "nombreParticipante", e.target.value)
-                                    }
+                                    onChange={e => setRifas(prev => prev.map(r =>
+                                        r.NumeroRifa._id === rifa.NumeroRifa._id
+                                            ? { ...r, nombreParticipante: e.target.value }
+                                            : r
+                                    ))}
                                     disabled={rifa.vendida}
                                 />
                                 <input
                                     type="text"
                                     placeholder="Cédula del comprador"
                                     value={rifa.ciParticipante}
-                                    onChange={(e) =>
-                                        handleInputChange(rifa.NumeroRifa, "ciParticipante", e.target.value)
-                                    }
+                                    onChange={e => setRifas(prev => prev.map(r =>
+                                        r.NumeroRifa._id === rifa.NumeroRifa._id
+                                            ? { ...r, ciParticipante: e.target.value }
+                                            : r
+                                    ))}
                                     disabled={rifa.vendida}
                                 />
                                 <input
                                     type="email"
                                     placeholder="Email del comprador"
                                     value={rifa.emailParticipante}
-                                    onChange={(e) =>
-                                        handleInputChange(rifa.NumeroRifa, "emailParticipante", e.target.value)
-                                    }
+                                    onChange={e => setRifas(prev => prev.map(r =>
+                                        r.NumeroRifa._id === rifa.NumeroRifa._id
+                                            ? { ...r, emailParticipante: e.target.value }
+                                            : r
+                                    ))}
                                     disabled={rifa.vendida}
                                 />
                                 <input
                                     type="tel"
                                     placeholder="Teléfono del comprador"
                                     value={rifa.telefonoParticipante}
-                                    onChange={(e) =>
-                                        handleInputChange(rifa.NumeroRifa, "telefonoParticipante", e.target.value)
-                                    }
+                                    onChange={e => setRifas(prev => prev.map(r =>
+                                        r.NumeroRifa._id === rifa.NumeroRifa._id
+                                            ? { ...r, telefonoParticipante: e.target.value }
+                                            : r
+                                    ))}
                                     disabled={rifa.vendida}
                                 />
                                 <label>Método de pago:</label>
                                 <select
                                     value={rifa.metodoPago}
-                                    onChange={(e) =>
-                                        handleMetodoPagoChange(rifa.NumeroRifa, e.target.value)
-                                    }
+                                    onChange={e => setRifas(prev => prev.map(r =>
+                                        r.NumeroRifa._id === rifa.NumeroRifa._id
+                                            ? { ...r, metodoPago: e.target.value }
+                                            : r
+                                    ))}
                                     disabled={rifa.vendida}
                                 >
                                     <option value="">Seleccionar</option>
@@ -184,10 +200,10 @@ export const VenderRifa = () => {
                                     <option value="transferencia">Transferencia</option>
                                 </select>
                                 <button
-                                    onClick={() => venderRifa(rifa.NumeroRifa)}
+                                    onClick={() => venderRifa(rifa.NumeroRifa._id)}
                                     disabled={rifa.vendida}
                                 >
-                                    {rifa.vendida ? "Vendida" : "Vender"}
+                                    {rifa.vendida ? 'Vendida' : 'Vender'}
                                 </button>
                             </div>
                         )}

@@ -1358,6 +1358,7 @@ canvas {
     width: 40%;
     padding: 0.5rem 0.9rem 0.5rem 0.9rem;
     height: 2.515rem;
+    z-index: 3;
 }
 
 .search-bar_asign {
@@ -1368,6 +1369,12 @@ canvas {
 .search-bar_asign input {
     width: 70%;
 }
+
+.search-bar__rifas {
+    margin: 2rem;
+}
+
+
 
 .emptyMessage {
     display: flex;
@@ -2283,6 +2290,11 @@ button:disabled {
 
 .rifa-item-vendedor-profile {
     margin: 0.7rem 0.7rem;
+}
+
+.rifa-item_profile {
+    padding: 2rem;
+    min-width: 100%;
 }
 
 .rifa-item.seleccionado {
@@ -3391,6 +3403,26 @@ button:disabled {
 .rifa-form button:disabled {
     background-color: #aaa;
     cursor: not-allowed;
+}
+
+.rifa-no-encontrada {
+    background-image: url('../img/HeroAltaVendedor.png');
+    background-color: var(--color5);
+    padding: 1rem;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 200;
+    color: var(--colorWhite);
+    margin-top: 20px;
+    border-radius: 0.6rem 2rem 0.6rem 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    transition: 1s ease;
+}
+
+.rifa-no-encontrada:hover {
+    background-color: var(--colorEliminar);
+    cursor: pointer;
+    transform: scale(1.05);
 }
 
 @media (max-width: 768px) {
