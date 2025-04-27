@@ -19,7 +19,6 @@
 }
 
 body {
-    background-color: var(--color5);
     background-image: url('../img/HeroAltaVendedor.png');
     background-size: cover;
     background-repeat: no-repeat;
@@ -237,6 +236,7 @@ body {
 .remember-forgot {
     display: flex;
     flex-direction: row;
+
 }
 
 .recuerdame {
@@ -256,7 +256,7 @@ body {
 .remember-forgot a,
 .buttons-login-label a {
     text-decoration: none;
-    color: grey;
+    color: var(--color5);
     margin-left: 10px;
 }
 
@@ -301,8 +301,6 @@ body {
 
 .form-group .icon {
     position: absolute;
-    margin-top: 3px;
-    margin-right: 3px;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
@@ -438,14 +436,17 @@ body {
 }
 
 .btn {
+    background-image: url('../img/HeroAltaVendedor.png');
+    background-color: var(--colorSuccess);
     padding: 10px;
-    margin: 10px 0 10px 0;
+    margin: 15px 0 15px 0;
     border-radius: 10px;
     border: none;
     outline: none;
-    background-color: #00701a;
-    color: white;
+    color: var(--colorWhite);
     width: 100%;
+    border-radius: 0.6rem 2rem 0.6rem 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
     font-size: 20px;
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
@@ -1857,7 +1858,6 @@ button {
     padding: 10px 20px;
     font-size: 18px;
     cursor: pointer;
-    background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 5px;
@@ -3434,4 +3434,35 @@ button:disabled {
     .rifa-card {
         width: 90%;
     }
+}
+
+/* Mostrar el botón de hamburguesa solo en pantallas pequeñas */
+.hamburger-btn {
+    display: none;
+    /* Oculto por defecto */
+    font-size: 30px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+/* Menú en resolución estándar (grande) */
+.container-lists__menu-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Estilo para mostrar el menú abierto en móviles */
+.container-lists__menu-list.open {
+    display: flex;
+    flex-direction: column;
+    background-color: #333;
+    width: 100%;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    padding: 20px;
 }

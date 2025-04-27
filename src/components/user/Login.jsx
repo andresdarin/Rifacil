@@ -4,12 +4,13 @@ import { Global } from '../../helpers/Global';
 import useAuth from '../../hooks/useAuth';
 import { NavLink, useNavigate } from 'react-router-dom'; // Importa useNavigate
 
+
 // Iconos
 import { FaUser } from 'react-icons/fa';
 import { FaLock } from 'react-icons/fa';
-import Register from './Register';
 
 export const Login = () => {
+
     const { form, changed } = useForm({});
     const [loged, setLoged] = useState("not_sended");
     const { setAuth } = useAuth();
@@ -93,10 +94,6 @@ export const Login = () => {
                         <FaLock className='icon' />
                     </div>
                     <div className="remember-forgot">
-                        <div className="recuerdame">
-                            <input type='checkbox' />
-                            <label>Recuérdame</label>
-                        </div>
                         <NavLink to='/recover-pass'>Olvidaste la contraseña?</NavLink>
                     </div>
                     <div className="buttons-login">

@@ -1,12 +1,24 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 export const Nav = () => {
+    // Estado para controlar la visibilidad del menú en pantallas pequeñas
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    // Función para alternar el estado del menú
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
     return (
         <nav className="navbar__container-lists">
+            {/* Botón hamburguesa */}
+            <button className="hamburger-btn" onClick={toggleMenu}>
+                &#9776;
+            </button>
 
-            <ul className="container-lists__menu-list">
+            {/* Menú */}
+            <ul className={`container-lists__menu-list ${isMenuOpen ? 'open' : ''}`}>
                 <li className="menu-list__item">
                     <NavLink to='/landing' className="menu-list__link">
                         <span className="menu-list__title">Inicio</span>
@@ -43,7 +55,6 @@ export const Nav = () => {
                     </NavLink>
                 </li>
             </ul>
-
         </nav>
-    )
-}
+    );
+};

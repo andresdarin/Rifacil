@@ -8,104 +8,238 @@
         grid-template-columns: 50% 50%;
     }
 
-    .aside__container{
+    .aside__container {
         display: flex;
         flex-direction: row;
     }
 
-    .layout__aside{
+    .layout__aside {
         margin-left: 2rem;
         padding-bottom: 2rem;
     }
 
-    .aside__profile-info{
+    .aside__profile-info {
         margin-right: 2rem;
     }
 
 }
 
 @media (max-width: 845px) {
-    .aside__profile-info{
+    .aside__profile-info {
         width: 100%;
     }
 
-    .profile-info__general-info{
+    .profile-info__general-info {
         justify-content: center;
     }
 
-    .profile-info__stats{
+    .profile-info__stats {
         justify-content: center;
     }
 
-    .aside__container{
+    .aside__container {
         flex-direction: column;
     }
 }
 
 
-@media (max-width: 690px){
-    .layout{
+@media (max-width: 690px) {
+    .layout {
         grid-template-rows: auto auto auto;
     }
 
-    .layout__navbar{
+    .layout__navbar {
         flex-direction: column;
         align-items: normal;
         min-height: auto;
         padding: 1rem 1rem;
     }
 
-    .navbar__title{
+    .navbar__title {
         display: block;
     }
 
-    .navbar__container-lists{
+    .navbar__container-lists {
         width: 100%;
         flex-direction: column;
         padding: 0;
     }
 
-    .container-lists__menu-list{
+    .container-lists__menu-list {
         flex-direction: column;
     }
 
-    .container-lists__list-end{
+    .container-lists__list-end {
         flex-direction: column;
         align-items: normal;
         margin-top: 5rem;
     }
 
-    .menu-list__item{
+    .menu-list__item {
         width: 100%;
     }
 
-    .menu-list__link{
+    .menu-list__link {
         display: block;
     }
 
-    .list-end__link, .list-end__link-image{
+    .list-end__link,
+    .list-end__link-image {
         display: block;
     }
 
-    .list-end__link-image{
+    .list-end__link-image {
         padding: 0.5rem 1rem;
     }
 }
 
 
 @media (max-width: 447px) {
-    .profile-info__stats{
+    .profile-info__stats {
         flex-direction: column;
         align-items: normal;
     }
 
-    .stats__following:first-child{
-        padding: 0; 
+    .stats__following:first-child {
+        padding: 0;
     }
-    
-    .stats__following{
+
+    .stats__following {
         padding: 0;
         border-right: none;
     }
 }
 
+@media screen and (max-width: 768px) {
+
+    .layout__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .form-container {
+        display: flex;
+        align-self: center;
+        justify-content: center;
+        width: 90%;
+        padding: 10px;
+    }
+
+    /* Login */
+
+    .content__title h1 {
+        font-size: 2rem;
+        margin: 0;
+        text-align: center;
+        color: var(--colorWhite);
+    }
+
+    .login-card {
+        display: flex;
+        align-self: center;
+        justify-content: center;
+        width: 100%;
+        margin: 0px;
+        width: 20rem;
+    }
+
+    .form-login {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-width: 100%;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 16px;
+        padding: 8px 10px;
+        margin: 10px;
+    }
+
+    .social-icons {
+        display: none;
+    }
+
+    .buttons-login {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .buttons-login-label {
+        flex-direction: column;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .remember-forgot {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .buttons-login-label a {
+        margin: 0px;
+    }
+
+    .form-group .icon {
+        padding: 0px;
+        margin: 0px;
+        overflow: hidden;
+    }
+
+    .form-group_login {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .form-login input {
+        padding: 10px 7px;
+        border-radius: 5px;
+        font-size: 14px;
+        color: var(--color5);
+    }
+
+    /* Registro */
+    .content__title-register {
+        font-size: 2rem;
+        font-weight: 200;
+        margin: 0;
+        text-align: center;
+        color: var(--colorWhite);
+    }
+
+    .buttons-register {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    /* Mostrar solo el botón de hamburguesa en pantallas pequeñas */
+    .hamburger-btn {
+        display: block;
+    }
+
+    /* Ocultar el menú en pantallas pequeñas hasta que se active */
+    .container-lists__menu-list {
+        display: none;
+    }
+
+    /* Estilo del menú cuando se abre */
+    .container-lists__menu-list.open {
+        display: flex;
+    }
+
+}
