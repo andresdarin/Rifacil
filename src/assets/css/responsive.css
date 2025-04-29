@@ -1,4 +1,16 @@
-@media (max-width: 1365px) {
+@keyframes fadeSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/*@media (max-width: 1365px) {
     .layout {
         grid-template-areas:
             "nav nav"
@@ -48,10 +60,14 @@
     }
 
     .layout__navbar {
+        background-image: url('../img/HeroAltaVendedor.png');
+        background-color: var(--color5);
+        opacity: 0.8;
         flex-direction: column;
         align-items: normal;
         min-height: auto;
-        padding: 1rem 1rem;
+        width: 100%;
+        padding: 0;
     }
 
     .navbar__title {
@@ -106,7 +122,7 @@
         padding: 0;
         border-right: none;
     }
-}
+}*/
 
 @media screen and (max-width: 768px) {
 
@@ -125,6 +141,10 @@
         width: 90%;
         padding: 10px;
     }
+
+
+
+
 
     /* Login */
 
@@ -225,34 +245,26 @@
         padding: 0px;
     }
 
-    /* Mostrar solo el botón de hamburguesa en pantallas pequeñas */
-    .hamburger-btn {
+    /* Estilo general para los items del menú */
+    .menu-toggle {
+        display: flex;
+        align-items: flex-start;
+        background-color: transparent;
+        color: var(--colorWhite);
+    }
+
+    .menu-list__item {
+        position: relative;
         display: flex;
         align-items: center;
-        justify-content: flex-end;
-        width: 100%;
-        height: 100%;
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        z-index: 3;
     }
 
-
-    /* Ocultar el menú en pantallas pequeñas hasta que se active */
-    .container-lists__menu-list {
-        display: none;
-    }
-
-    /* Estilo del menú cuando se abre */
-    .container-lists__menu-list.open {
-        display: flex;
-    }
-
-    /* Estilo de los enlaces en el menú */
+    /* Estilo para los enlaces del menú principal */
     .menu-list__link {
-        color: var(--colorWhite);
+        margin: 0;
+        text-align: center;
         background-color: transparent;
+        color: var(--colorWhite);
     }
 
     /* Estilo cuando el enlace está activo */
@@ -262,15 +274,137 @@
         background-color: transparent;
     }
 
-    /* Estilo de los enlaces cuando se pasan por encima (hover) */
+    /* Estilo para los enlaces cuando se pasan por encima (hover) */
     .menu-list__link:hover {
         background-color: transparent;
+    }
+
+    /* Estilo cuando el menú principal está abierto */
+    .container-lists__menu-list {
+        background-image: url('../img/HeroAltaVendedor.png');
+        background-color: var(--color5);
+        color: var(--colorWhite);
+        position: absolute;
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        top: 0;
+        left: 0;
+        padding: 20px;
+        opacity: 1;
+        z-index: 999;
+    }
+
+    /* Estado abierto */
+    .container-lists__menu-list.open {
+        display: block;
+    }
+
+    /* Estilo para el submenú */
+    .dropdown-menu {
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-radius: 0;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        width: 100%;
+        position: static;
+        background-color: transparent;
+        transition: max-height 0.3s ease-out;
+        animation: fadeSlideIn 1s ease forwards;
+    }
+
+    /* Estilo para cada item del submenú */
+    .dropdown-menu__item {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        margin-left: 7rem;
+    }
+
+    /* Estilo para los enlaces del submenú */
+    .dropdown-menu__link {
+        display: block;
+        padding: 3px;
+        text-decoration: none;
+        color: black;
+        text-align: center;
+    }
+
+    /* Mostrar el submenú cuando el enlace del menú tiene la clase 'selected' */
+    .menu-list__link--dropdown.selected+.dropdown-menu {
+        display: flex;
+    }
+
+    /* Estilo para la flecha de los dropdowns */
+    .dropdown-arrow {
+        margin-left: 8px;
+        transition: transform 0.3s ease;
+        /* Transición suave al rotar */
+    }
+
+    /* Rotar la flecha cuando el dropdown está abierto */
+    .menu-list__link--dropdown.selected .dropdown-arrow {
+        transform: rotate(180deg);
+        /* Gira 180 grados cuando el dropdown está abierto */
+    }
+
+    .hamburger-btn {
+        display: block;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        z-index: 5;
+        max-width: 5px;
+    }
+
+    .arrow-down {
+        width: 12px;
+        height: 12px;
+        border: solid var(--colorWhite);
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+        transition: transform 0.3s ease;
+        /* si querés que se vea más grande ajustá width/height/border-width */
+    }
+
+    .arrow-down.open {
+        transform: rotate(-135deg);
+    }
+
+    .layout__navbar {
+        position: fixed;
+        padding: 0;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        background-image: url('../img/HeroAltaVendedor.png');
+        background-size: cover;
+        background-position: center;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: fadeSlideIn 1s ease forwards;
     }
 
 
     .navbar__header {
         display: none;
         /* Oculta el logo en pantallas pequeñas */
+    }
+
+    .navbar__container-lists {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* Centra la flecha */
+        width: 100%;
     }
 
     /*Landing Page*/
@@ -527,9 +661,8 @@
 
     .form-group input,
     .form-group textarea {
-        font-size: 1rem;
         padding: 1rem;
-        margin: 0;
+        margin: 0.3rem;
     }
 
     .edit-producto__submit-button {
@@ -760,6 +893,23 @@
     .checkout-list {
         width: 100%;
         padding: 0;
+    }
+
+    /* **********************************ADMIN********************************** */
+
+    .container-banner__vendedor {
+        width: auto;
+        height: 22vh;
+        background-position: center;
+        border-radius: 0.3rem 1rem 0.3rem 1rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .header__vendedor {
+        font-size: 5rem;
+        margin: 0 0 -2.0rem 8px;
+        text-align: center;
+        width: 100%;
     }
 
 }

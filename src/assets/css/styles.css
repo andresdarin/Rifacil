@@ -3426,16 +3426,6 @@ button:disabled {
     transform: scale(1.05);
 }
 
-@media (max-width: 768px) {
-    .rifas__manuales {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .rifa-card {
-        width: 90%;
-    }
-}
 
 /* Mostrar el botón de hamburguesa solo en pantallas pequeñas */
 .hamburger-btn {
@@ -3447,7 +3437,7 @@ button:disabled {
     color: var(--colorWhite);
     cursor: pointer;
     margin: 0;
-    ;
+
 }
 
 .arrow-down {
@@ -3460,6 +3450,10 @@ button:disabled {
     /* Esto crea una flecha hacia abajo */
     transform: rotate(0deg);
     /* Asegura que la flecha apunte hacia abajo */
+}
+
+.arrow-down.open {
+    transform: rotate(-135deg);
 }
 
 .container-lists__menu-list {
@@ -3496,4 +3490,34 @@ button:disabled {
 .menu-list__link:active {
     outline: none;
     color: inherit;
+}
+
+/* Dropdown de Rifas */
+.menu-list__link--dropdown {
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    display: none;
+    list-style: none;
+    padding-left: 20px;
+}
+
+.dropdown-menu__item {
+    padding: 5px 0;
+}
+
+.dropdown-menu__link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.menu-list__link--dropdown.selected+.dropdown-menu {
+    display: block;
+    /* Muestra el dropdown cuando está seleccionado */
+}
+
+.menu-toggle {
+    display: none;
+    /* Oculto por defecto */
 }

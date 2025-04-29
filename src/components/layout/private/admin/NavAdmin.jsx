@@ -1,78 +1,104 @@
-import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 
 export const NavAdmin = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-    // Controla el estado del menú desplegable
+    // Al montar, aseguramos que ambos menús estén cerrados
+    useEffect(() => {
+        setIsMenuOpen(false);
+        setIsDropdownOpen(false);
+    }, []);
+
+    const closeMenu = () => {
+        setIsMenuOpen(false);
+        setIsDropdownOpen(false);
+    };
+
+    const toggleMenu = () => {
+        setIsMenuOpen(open => !open);
+        // Al abrir/cerrar el menu principal, cerramos el dropdown
+        setIsDropdownOpen(false);
+    };
+
     const toggleDropdown = () => {
-        setIsDropdownOpen(!isDropdownOpen);
+        setIsDropdownOpen(open => !open);
     };
 
     return (
         <nav className="navbar__container-lists">
-            <ul className="container-lists__menu-list">
+            {/* Flecha hamburguesa centrada */}
+            <button className="hamburger-btn" onClick={toggleMenu}>
+                <div className={`arrow-down ${isMenuOpen ? 'open' : ''}`}></div>
+            </button>
+
+            {/* Menú principal */}
+            <ul className={`container-lists__menu-list ${isMenuOpen ? 'open' : ''}`}>
                 <li className="menu-list__item">
-                    <NavLink to='/admin/profile' className="menu-list__link">
+                    <NavLink to="/admin/profile" className="menu-list__link" onClick={closeMenu}>
                         <span className="menu-list__title">Perfil</span>
                     </NavLink>
                 </li>
-
                 <li className="menu-list__item">
-                    <NavLink to="/admin/alta-vendedor" className="menu-list__link">
+                    <NavLink to="/admin/alta-vendedor" className="menu-list__link" onClick={closeMenu}>
                         <span className="menu-list__title">Alta Vendedor</span>
                     </NavLink>
                 </li>
-
-                <li className="menu-list__item">
-                    {/* Añade el evento onClick para mostrar/ocultar el menú desplegable */}
+                <li className={`menu-list__item ${isDropdownOpen ? 'open' : ''}`}>
                     <span
                         className={`menu-list__link menu-list__link--dropdown ${isDropdownOpen ? 'selected' : ''}`}
                         onClick={toggleDropdown}
                     >
                         <span className="menu-list__title">Rifas</span>
                     </span>
-
-
-                    {/* Menú desplegable que se muestra solo si isDropdownOpen es true */}
                     {isDropdownOpen && (
                         <ul className="dropdown-menu">
                             <li className="dropdown-menu__item">
-                                <NavLink to="/admin/rifas/crear" className="dropdown-menu__link">Generación</NavLink>
+                                <NavLink to="/admin/rifas/crear" className="dropdown-menu__link" onClick={closeMenu}>
+                                    Generación
+                                </NavLink>
                             </li>
                             <li className="dropdown-menu__item">
-                                <NavLink to="/admin/rifas/asignar" className="dropdown-menu__link">Asignar</NavLink>
+                                <NavLink to="/admin/rifas/asignar" className="dropdown-menu__link" onClick={closeMenu}>
+                                    Asignar
+                                </NavLink>
                             </li>
                             <li className="dropdown-menu__item">
-                                <NavLink to="/admin/rifas/historial" className="dropdown-menu__link">Historial</NavLink>
+                                <NavLink to="/admin/rifas/historial" className="dropdown-menu__link" onClick={closeMenu}>
+                                    Historial
+                                </NavLink>
                             </li>
                             <li className="dropdown-menu__item">
-                                <NavLink to="/admin/rifas/premios" className="dropdown-menu__link">Premios</NavLink>
+                                <NavLink to="/admin/rifas/premios" className="dropdown-menu__link" onClick={closeMenu}>
+                                    Premios
+                                </NavLink>
                             </li>
                             <li className="dropdown-menu__item">
-                                <NavLink to="/admin/rifas/sorteo" className="dropdown-menu__link">Agendar Sorteo</NavLink>
+                                <NavLink to="/admin/rifas/sorteo" className="dropdown-menu__link" onClick={closeMenu}>
+                                    Agendar Sorteo
+                                </NavLink>
                             </li>
                             <li className="dropdown-menu__item">
-                                <NavLink to="/admin/rifas/sortear" className="dropdown-menu__link">SORTEAR</NavLink>
+                                <NavLink to="/admin/rifas/sortear" className="dropdown-menu__link" onClick={closeMenu}>
+                                    SORTEAR
+                                </NavLink>
                             </li>
                         </ul>
                     )}
                 </li>
-
                 <li className="menu-list__item">
-                    <NavLink to='/admin/productos' className="menu-list__link">
+                    <NavLink to="/admin/productos" className="menu-list__link" onClick={closeMenu}>
                         <span className="menu-list__title">Productos</span>
                     </NavLink>
                 </li>
-
                 <li className="menu-list__item">
-                    <NavLink to='/admin/admin-config' className="menu-list__link">
+                    <NavLink to="/admin/admin-config" className="menu-list__link" onClick={closeMenu}>
                         <span className="menu-list__title">Configuración</span>
                     </NavLink>
                 </li>
-
                 <li className="menu-list__item">
-                    <NavLink to='/admin/logout' className="menu-list__link">
+                    <NavLink to="/admin/logout" className="menu-list__link" onClick={closeMenu}>
                         <span className="menu-list__title">Cerrar Sesión</span>
                     </NavLink>
                 </li>
