@@ -245,6 +245,9 @@
         padding: 0px;
     }
 
+    /* Estilo para el botón de registro */
+
+
     /* Estilo general para los items del menú */
     .menu-toggle {
         display: flex;
@@ -901,7 +904,7 @@
         width: auto;
         height: 22vh;
         background-position: center;
-        border-radius: 0.3rem 1rem 0.3rem 1rem;
+        border-radius: 0 0 .5rem .5rem;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
     }
 
@@ -910,6 +913,47 @@
         margin: 0 0 -2.0rem 8px;
         text-align: center;
         width: 100%;
+    }
+
+    /* **********************************Tendencias********************************** */
+    .tendencias-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .tendencias-title {
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+    }
+
+    .chart-bar-container {
+        height: 300px;
+        width: 100vw;
+        margin-bottom: 15px;
+    }
+
+    .legend-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        width: 100vw;
+    }
+
+    .legend-item {
+        font-size: 0.8rem;
+        margin-bottom: 6px;
+    }
+
+    .legend-color {
+        height: 12px;
+        margin-right: 6px;
+    }
+
+    .legend-product-name {
+        max-width: 110px;
     }
 
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Global } from '../../helpers/Global';
 import { Bar } from 'react-chartjs-2';
 import { Chart, BarElement, Tooltip, Legend, CategoryScale, LinearScale } from 'chart.js';
@@ -9,6 +9,20 @@ const Tendencias = () => {
     const [productos, setProductos] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+    const chartContainerRef = useRef(null);
+
+    // Manejar el cambio de tamaño de pantalla
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     const fetchTendencias = async () => {
         try {
@@ -48,18 +62,50 @@ const Tendencias = () => {
         fetchTendencias();
     }, []);
 
-    if (loading) return <div>Cargando tendencias...</div>;
-    if (error) return <div>Error: {error}</div>;
+    if (loading) return <div className="tendencias-container">Cargando tendencias...</div>;
+    if (error) return <div className="tendencias-container">Error: {error}</div>;
+
+    // Genera colores consistentes para cada producto
+    const generateConsistentColors = (index) => {
+        const colors = [
+            'rgba(255, 99, 132, 0.6)', // rosa
+            'rgba(54, 162, 235, 0.6)', // azul
+            'rgba(255, 206, 86, 0.6)', // amarillo
+            'rgba(75, 192, 192, 0.6)', // turquesa
+            'rgba(153, 102, 255, 0.6)', // púrpura
+            'rgba(255, 159, 64, 0.6)', // naranja
+            'rgba(99, 255, 132, 0.6)', // verde claro
+            'rgba(235, 162, 54, 0.6)', // naranja claro
+        ];
+
+        return colors[index % colors.length];
+    };
+
+    // Ordenar productos por cantidad (de mayor a menor)
+    const productosOrdenados = [...productos].sort((a, b) => b.cantidadVendidos - a.cantidadVendidos);
+
+    // Limitar a 10 productos para mejor visualización en móvil
+    const productosVisibles = isMobile
+        ? productosOrdenados.slice(0, 5)
+        : productosOrdenados;
+
+    // Acortar nombres largos para mejor visualización
+    const formatProductName = (name) => {
+        const maxLength = isMobile ? 12 : 20;
+        if (name.length > maxLength) {
+            return name.substring(0, maxLength - 2) + '...';
+        }
+        return name;
+    };
 
     // Data para el gráfico de barras
     const data = {
-        labels: productos.map(producto => producto.nombreProducto),
+        labels: productosVisibles.map(producto => formatProductName(producto.nombreProducto)),
         datasets: [
             {
-                label: 'Cantidad Vendida',
-                data: productos.map(producto => producto.cantidadVendidos),
-                backgroundColor: productos.map(() => `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.6)`),
-                borderColor: productos.map(() => `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`),
+                label: 'Cantidad',
+                data: productosVisibles.map(producto => producto.cantidadVendidos),
+                backgroundColor: productosVisibles.map((_, index) => generateConsistentColors(index)),
                 borderWidth: 0,
             },
         ],
@@ -67,35 +113,62 @@ const Tendencias = () => {
 
     const options = {
         responsive: true,
+        maintainAspectRatio: false,
+        resizeDelay: 100,
         plugins: {
             legend: {
-                display: false, // Desactiva la leyenda predeterminada del gráfico
+                display: false,
             },
             tooltip: {
                 enabled: true,
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                titleFont: {
+                    size: isMobile ? 12 : 14,
+                    weight: 'bold'
+                },
+                bodyFont: {
+                    size: isMobile ? 11 : 13
+                },
+                padding: isMobile ? 8 : 10,
+                callbacks: {
+                    title: (tooltipItems) => {
+                        const index = tooltipItems[0].dataIndex;
+                        return productosVisibles[index].nombreProducto;
+                    },
+                    label: (tooltipItem) => {
+                        return `Cantidad: ${tooltipItem.raw}`;
+                    }
+                }
             },
         },
         scales: {
             x: {
-                title: {
-                    display: true
-                },
+                display: true,
                 grid: {
-                    display: false, // Desactiva la cuadrícula del eje X
+                    display: false,
                 },
                 ticks: {
-                    display: false, // Desactiva las etiquetas (nombres de productos) en el eje X
+                    display: true,
+                    autoSkip: true,
+                    maxRotation: isMobile ? 60 : 45,
+                    minRotation: isMobile ? 60 : 45,
+                    color: 'rgba(0, 0, 0, 0.6)',
+                    font: {
+                        size: isMobile ? 8 : 10
+                    }
                 },
             },
             y: {
-                title: {
-                    display: true
-                },
+                display: true,
                 grid: {
-                    display: false, // Desactiva la cuadrícula del eje X
+                    display: false,
                 },
                 ticks: {
-                    display: false, // Desactiva las etiquetas (nombres de productos) en el eje X
+                    display: true,
+                    color: 'rgba(0, 0, 0, 0.6)',
+                    font: {
+                        size: isMobile ? 8 : 10
+                    }
                 },
             },
         },
@@ -103,25 +176,29 @@ const Tendencias = () => {
 
     return (
         <div className="tendencias-container">
-            <h2>Tendencias</h2>
-            <div className="chart-bar-container">
-                <Bar data={data} options={options} />
-                <div className="legend-container">
-                    {productos.map((producto, index) => (
-                        <div key={producto._id || index} className="legend-item" style={{ display: 'flex', alignItems: 'center' }}>
-                            <div style={{
-                                width: '15px',
-                                height: '15px',
-                                backgroundColor: data.datasets[0].backgroundColor[index],
-                                marginRight: '8px'
-                            }}></div>
-                            <span className='tendencias-container__span'>{producto.nombreProducto}</span>
-                        </div>
-                    ))}
-                </div>
+            <h2 className="tendencias-title">Tendencias</h2>
 
+            {/* Contenedor adaptable para el gráfico */}
+            <div className="chart-bar-container" ref={chartContainerRef}>
+                <Bar data={data} options={options} />
             </div>
 
+            {/* Leyenda más organizada y compacta */}
+            <div className="legend-container">
+                {productosOrdenados.map((producto, index) => (
+                    <div key={producto._id || index} className="legend-item">
+                        <div className="legend-color" style={{
+                            backgroundColor: generateConsistentColors(index)
+                        }}></div>
+                        <span className="legend-product-name">
+                            {producto.nombreProducto}
+                        </span>
+                        <span className="legend-quantity">
+                            ({producto.cantidadVendidos})
+                        </span>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };
