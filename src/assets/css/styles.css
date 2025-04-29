@@ -33,7 +33,9 @@ body {
     align-items: center;
 }
 
-
+.coursive {
+    font-style: italic;
+}
 
 /* Header */
 
@@ -1056,7 +1058,7 @@ canvas {
 }
 
 .card-vendedores {
-    align-items: center !important;
+    align-items: center;
 }
 
 .edit-button {
@@ -1220,6 +1222,10 @@ canvas {
 
 .react-datepicker__month-container {
     width: 100%;
+}
+
+.react-datepicker {
+    width: 2rem;
 }
 
 
@@ -1421,10 +1427,13 @@ canvas {
 
 .legend-container {
     display: grid;
+    align-self: center;
+    justify-content: center;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 8px;
     margin-top: 20px;
     padding: 0 10px;
+    width: 85%;
 }
 
 .legend-item {
@@ -1463,11 +1472,12 @@ canvas {
 }
 
 .tendencias-title {
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: 200;
     color: var(--colorWhite);
     text-align: center;
     margin-bottom: 20px;
+    margin-top: 3rem;
 }
 
 /*Error 404*/
@@ -3574,4 +3584,18 @@ button:disabled {
 .menu-toggle {
     display: none;
     /* Oculto por defecto */
+}
+
+.canva {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    width: 85%;
+    margin-top: 6rem;
+}
+
+.titulo-responsive {
+    display: none;
 }

@@ -53,7 +53,7 @@ export const AltaVendedor = () => {
         <div className="alta-vendedor__container">
             {/* Hero Section */}
             <div className="container-banner__vendedor">
-                <header className='header__vendedor'>Alta Vendedor</header>
+                <header className='header__vendedor header__alta-vendedor'>Alta Vendedor</header>
             </div>
 
             {/* Formulario */}
@@ -63,7 +63,7 @@ export const AltaVendedor = () => {
                 {saved == 'error' ? <strong className='alert alert-danger'>Vendedor no registado </strong> : ''}
 
                 <form className="alta-vendedor__form" autoComplete="off" onSubmit={saveVendedor}>
-                    <div className="form-group">
+                    <div className="form-group form-group__vendedor">
                         <input
                             type="text"
                             id="nombreUsu"
@@ -75,7 +75,7 @@ export const AltaVendedor = () => {
                         />
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group form-group__vendedor">
                         <input
                             type="text"
                             id="nombreCompleto"
@@ -87,7 +87,7 @@ export const AltaVendedor = () => {
                         />
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group form-group__vendedor">
                         <input
                             type="password"
                             id="password"
@@ -99,7 +99,7 @@ export const AltaVendedor = () => {
                         />
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group form-group__vendedor">
                         <input
                             type="text"
                             id="ci"
@@ -111,7 +111,7 @@ export const AltaVendedor = () => {
                         />
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group form-group__vendedor">
                         <input
                             type="email"
                             id="email"
@@ -123,7 +123,7 @@ export const AltaVendedor = () => {
                         />
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group form-group__vendedor">
                         <input
                             type="tel"
                             id="telefono"
@@ -135,7 +135,7 @@ export const AltaVendedor = () => {
                         />
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group form-group__vendedor">
                         <input
                             type="name"
                             id="rol"

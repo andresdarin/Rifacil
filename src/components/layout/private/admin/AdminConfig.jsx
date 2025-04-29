@@ -102,7 +102,7 @@ export const AdminConfig = () => {
     return (
         <div>
             <div className="container-banner__vendedor">
-                <header className='header__vendedor'>Editar Perfil</header>
+                <header className='header__vendedor header__vendedor-config'>Editar Perfil</header>
             </div>
             <div className="config-admin-w-avatar">
                 {/* Imagen del Avatar */}

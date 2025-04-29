@@ -179,26 +179,30 @@ const Tendencias = () => {
             <h2 className="tendencias-title">Tendencias</h2>
 
             {/* Contenedor adaptable para el gráfico */}
-            <div className="chart-bar-container" ref={chartContainerRef}>
-                <Bar data={data} options={options} />
+            <div className="canva">
+                <div className="chart-bar-container" ref={chartContainerRef}>
+                    <Bar data={data} options={options} />
+                </div>
+                {/* Leyenda más organizada y compacta */}
+                <div className="legend-container">
+                    {productosOrdenados.map((producto, index) => (
+                        <div key={producto._id || index} className="legend-item">
+                            <div className="legend-color" style={{
+                                backgroundColor: generateConsistentColors(index)
+                            }}></div>
+                            <span className="legend-product-name">
+                                {producto.nombreProducto}
+                            </span>
+                            <span className="legend-quantity">
+                                ({producto.cantidadVendidos})
+                            </span>
+                        </div>
+                    ))}
+                </div>
+
             </div>
 
-            {/* Leyenda más organizada y compacta */}
-            <div className="legend-container">
-                {productosOrdenados.map((producto, index) => (
-                    <div key={producto._id || index} className="legend-item">
-                        <div className="legend-color" style={{
-                            backgroundColor: generateConsistentColors(index)
-                        }}></div>
-                        <span className="legend-product-name">
-                            {producto.nombreProducto}
-                        </span>
-                        <span className="legend-quantity">
-                            ({producto.cantidadVendidos})
-                        </span>
-                    </div>
-                ))}
-            </div>
+
         </div>
     );
 };

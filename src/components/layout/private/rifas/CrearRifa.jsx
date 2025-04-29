@@ -117,7 +117,7 @@ export const CrearRifa = () => {
                 </div>
 
                 <div className="precio_fecha">
-                    <h2 className="contador__titulo">Precio de la rifa</h2>
+                    <h2 className="contador__titulo contador__titulo_generar">Precio de la rifa</h2>
                     <i className="fas fa-usd currency" aria-hidden="true"></i>
                     <input
                         type="number"
@@ -127,7 +127,7 @@ export const CrearRifa = () => {
                         min="0"
                     />
 
-                    <h2 className="contador__titulo">Fecha de sorteo</h2>
+                    <h2 className="contador__titulo contador__titulo_generar">Fecha de sorteo</h2>
                     <i className="fas fa-calendar currency"></i>
                     <DatePicker
                         selected={fecha}

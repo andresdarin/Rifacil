@@ -230,7 +230,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
         <>
             {showHeroSection && (
                 <div className="container-banner__productos">
-                    <header className="header__productos">Productos</header>
+                    <header className="header__productos header__productos-listado">Productos</header>
                 </div>
             )}
             {/* Campo de búsqueda */}
@@ -247,11 +247,12 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
             </div>
 
             <div className="card-layout">
+                <h2 class="titulo-responsive card-title-vertical">Productos</h2>
                 <div className="card-content">
                     <div className="card-list">
                         {productos.length > 0 ? (
                             productos.map((producto) => (
-                                <div key={producto._id} className="card">
+                                <div key={producto._id} className="card card-productos">
                                     <div>
                                         <h1>{producto.nombreProducto}</h1>
                                         <h4>${producto.precio}</h4>
@@ -266,7 +267,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                                                 </button>
                                             )}
                                         </h4>
-                                        <h4>Llevas vendidos {producto.cantidadVendidos} de este producto.</h4>
+                                        <h4 className='coursive'>Llevas vendidos {producto.cantidadVendidos} de este producto.</h4>
                                         {expandedId === producto._id && (
                                             <div className="edit-form-container">
                                                 <EditarProducto
@@ -278,7 +279,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                                             </div>
                                         )}
                                     </div>
-                                    <div className="card-buttons">
+                                    <div className="card-buttons card-buttons__productos">
                                         <button className="edit-button" onClick={() => handleEditToggle(producto._id)}>
                                             <i className="fa fa-pencil" aria-hidden="true" />
                                         </button>

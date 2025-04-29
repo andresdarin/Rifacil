@@ -115,7 +115,7 @@ export const ListadoVendedores = () => {
                                 </div>
 
                                 <div className="card-buttons">
-                                    <button className="delete-button" onClick={() => handleDeleteUser(vendedor._id)}>
+                                    <button className="delete-button delete-button_vendedores" onClick={() => handleDeleteUser(vendedor._id)}>
                                         <i className="fa fa-trash" aria-hidden="true" />
                                     </button>
                                 </div>
