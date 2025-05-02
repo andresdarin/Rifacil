@@ -180,13 +180,29 @@ export const Premios = () => {
 
     return (
         <div className="premios-container">
-            <div className="container-banner__vendedor">
-                <header className="header__vendedor">Premios</header>
+            <div className="container-banner__vendedor container-banner_premios">
+                <header className="header__vendedor header_premios">Premios</header>
             </div>
 
             <div className="grid-container_premios">
                 <div className="sorteos-lista">
                     <h2 className='sorteos-header'>Sorteos Futuros</h2>
+                    {/* Dropdown visible solo en móviles */}
+                    <select
+                        className="sorteos-dropdown responsive-only"
+                        value={selectedSorteo || ''}
+                        onChange={(e) => handleSorteoToggle(e.target.value)}
+                    >
+                        <option value="" disabled>Selecciona un sorteo</option>
+                        {sorteos.map((sorteo) => (
+                            <option key={sorteo.id} value={sorteo.id}>
+                                {new Date(sorteo.fechaSorteo).toLocaleDateString('es-ES')} -
+                                {sorteo.premios.length > 0
+                                    ? sorteo.premios.map((p) => p.nombre).join(', ')
+                                    : 'Sin premios'}
+                            </option>
+                        ))}
+                    </select>
                     {sorteos.length > 0 ? (
                         sorteos.map((sorteo) => (
                             <div

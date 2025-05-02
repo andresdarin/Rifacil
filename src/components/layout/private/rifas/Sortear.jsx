@@ -52,7 +52,7 @@ export const Sortear = () => {
     return (
         <div className='sorteo-container'>
             <div className="container-banner__vendedor">
-                <header className="header__vendedor">Sortear</header>
+                <header className="header__vendedor header__sortear">Sortear</header>
             </div>
             <div className='calendar_container calendar_container__sortear'>
                 <DatePicker

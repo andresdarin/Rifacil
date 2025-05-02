@@ -102,6 +102,10 @@ body {
     padding: 0;
 }
 
+.container-banner_main {
+    width: 100vw;
+}
+
 .menu-list__item {
     display: flex;
     align-items: center;
@@ -1224,10 +1228,6 @@ canvas {
     width: 100%;
 }
 
-.react-datepicker {
-    width: 2rem;
-}
-
 
 .react-datepicker__day--selected {
     background-color: var(--color4);
@@ -1247,6 +1247,8 @@ canvas {
     text-align: space;
     margin-bottom: 10px;
 }
+
+
 
 .agendar__button,
 .sortear__button {
@@ -2353,6 +2355,15 @@ button:disabled {
     margin: 0.7rem 0.7rem;
 }
 
+.item-vendedor {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    margin: .5rem .5rem 0 0;
+    background-color: transparent;
+
+}
+
 .rifa-item_profile {
     padding: 2rem;
     min-width: 100%;
@@ -2361,6 +2372,10 @@ button:disabled {
 .rifa-item.seleccionado {
     background-color: var(--color5);
     transform: scale(1.05);
+}
+
+.vendedores-dropdown {
+    display: none;
 }
 
 .asignar-button button,
@@ -3074,6 +3089,10 @@ button:disabled {
     font-size: 3rem;
 }
 
+.emoji-troph_historial {
+    display: none;
+}
+
 /*Estadisticas vendedor*/
 
 .meta-chart-container {
@@ -3598,4 +3617,12 @@ button:disabled {
 
 .titulo-responsive {
     display: none;
+}
+
+.responsive-only {
+    display: none;
+}
+
+.desktop-only {
+    display: block;
 }

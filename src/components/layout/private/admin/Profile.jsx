@@ -17,9 +17,9 @@ export const Profile = () => {
 	}, []);
 
 	return (
-		<div>
+		<div className="container-banner_main">
 			<div className="container-banner__vendedor">
-				<header className='header__vendedor'>Admin</header>
+				<header className='header__vendedor header__admin'>Admin</header>
 			</div>
 			<div className="profile-content">
 				<Tendencias />

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 
 export const NavAdmin = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const menuRef = useRef(null);
 
     // Al montar, aseguramos que ambos menús estén cerrados
     useEffect(() => {
@@ -18,7 +19,6 @@ export const NavAdmin = () => {
 
     const toggleMenu = () => {
         setIsMenuOpen(open => !open);
-        // Al abrir/cerrar el menu principal, cerramos el dropdown
         setIsDropdownOpen(false);
     };
 
@@ -26,15 +26,30 @@ export const NavAdmin = () => {
         setIsDropdownOpen(open => !open);
     };
 
+    // Cierra el menú al hacer clic fuera
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                closeMenu();
+            }
+        };
+
+        if (isMenuOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isMenuOpen]);
+
     return (
         <nav className="navbar__container-lists">
-            {/* Flecha hamburguesa centrada */}
             <button className="hamburger-btn" onClick={toggleMenu}>
                 <div className={`arrow-down ${isMenuOpen ? 'open' : ''}`}></div>
             </button>
 
-            {/* Menú principal */}
-            <ul className={`container-lists__menu-list ${isMenuOpen ? 'open' : ''}`}>
+            <ul ref={menuRef} className={`container-lists__menu-list ${isMenuOpen ? 'open' : ''}`}>
                 <li className="menu-list__item">
                     <NavLink to="/admin/profile" className="menu-list__link" onClick={closeMenu}>
                         <span className="menu-list__title">Perfil</span>

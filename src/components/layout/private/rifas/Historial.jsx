@@ -66,7 +66,7 @@ export const Historial = () => {
     return (
         <div className="historial-container">
             <div className="container-banner__vendedor">
-                <header className="header__vendedor">Historial</header>
+                <header className="header__vendedor header__admin">Historial</header>
             </div>
             <div className="table-container">
                 {sorteos.length === 0 ? (
@@ -81,7 +81,7 @@ export const Historial = () => {
                                 <th>Premios y Rifas Ganadoras</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className='historial_sorteos-body'>
                             {sorteos.map((sorteo, index) => (
                                 <tr key={index}>
                                     <td className="historial_sorteos-mes">
@@ -89,19 +89,21 @@ export const Historial = () => {
                                     </td>
                                     <td className="historial_sorteos-anio">{sorteo.año}</td>
                                     <td className="historial_sorteos-fecha">
-                                        {new Date(sorteo.fechaSorteo).toLocaleDateString()}
+                                        {new Date(sorteo.fechaSorteo).toLocaleDateString().replace(/\//g, '.')}
                                     </td>
                                     <td className="nro_premio-list">
                                         {sorteo.premios.map((premio, i) => (
                                             <div
-                                                className="item"
+                                                className={`item ${i === 0 ? 'item--destacado' : ''}`}
                                                 key={i}
                                                 onClick={() => handlePrizeClick(premio)}
                                             >
+                                                {i === 0 && <h1 className='emoji-troph_historial'>🏆</h1>}
                                                 <h2>{sorteo.rifasGanadoras[i]?.NumeroRifa || 'Sin número'}</h2>
                                                 <h4>{premio.nombre}</h4>
                                             </div>
                                         ))}
+
                                     </td>
                                 </tr>
                             ))}

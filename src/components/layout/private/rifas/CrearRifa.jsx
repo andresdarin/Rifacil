@@ -96,7 +96,7 @@ export const CrearRifa = () => {
     return (
         <div>
             <div className="container-banner__vendedor">
-                <header className="header__vendedor">Alta</header>
+                <header className="header__vendedor header__alta-rifa">Alta</header>
             </div>
 
             <div className="contador__controls card_rifa">

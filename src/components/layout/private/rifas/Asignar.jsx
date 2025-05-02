@@ -174,7 +174,7 @@ export const Asignar = () => {
     return (
         <div className="container-asignar">
             <div className="container-banner__vendedor">
-                <header className="header__vendedor">Asignar Números</header>
+                <header className="header__vendedor header__admin">Asignar Números</header>
             </div>
             <div className="asignar-rifas-container">
                 <aside className="vendedores-list">
@@ -190,7 +190,15 @@ export const Asignar = () => {
                             <i className="fa-solid fa-magnifying-glass" />
                         </button>
                     </div>
-                    <ul>
+                    {/* Dropdown de vendedores para pantallas pequeñas */}
+                    <select className="vendedores-dropdown">
+                        {vendedores.map((vendedor) => (
+                            <option key={vendedor._id} value={vendedor._id}>
+                                {vendedor.nombreCompleto} - Nº {vendedor.ci}
+                            </option>
+                        ))}
+                    </select>
+                    <ul className='card item-vendedor'>
                         {mostrarVendedoresPorPagina.map((vendedor) => (
                             <li
                                 key={vendedor._id}
@@ -203,7 +211,7 @@ export const Asignar = () => {
                         ))}
                     </ul>
 
-                    <div className="ver-mas">
+                    <div className="ver-mas  item-vendedor">
                         {showMore ? (
                             <button onClick={toggleShowMore}>Mostrar menos</button>
                         ) : (
@@ -231,7 +239,7 @@ export const Asignar = () => {
                 </div>
 
                 <div className="asignar-button">
-                    <button onClick={asignarRifas} disabled={!vendedorSeleccionado || rifasSeleccionadas.length === 0}>
+                    <button className='asignar-button__rifas' onClick={asignarRifas} disabled={!vendedorSeleccionado || rifasSeleccionadas.length === 0}>
                         Asignar Rifas
                     </button>
                 </div>
