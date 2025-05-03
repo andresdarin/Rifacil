@@ -82,9 +82,9 @@ export const Profile = () => {
     if (!vendedor) return <div className='center'>No se encontró el vendedor.</div>;
 
     return (
-        <div>
+        <div className='container-banner_metas'>
             <div className="container-banner__vendedor">
-                <header className='header__vendedor'>{vendedor.nombreUsu}</header>
+                <header className='header__vendedor header__vendedor_prof'>{vendedor.nombreUsu}</header>
             </div>
 
             <section>

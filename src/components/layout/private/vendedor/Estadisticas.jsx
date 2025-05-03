@@ -24,7 +24,7 @@ export const Estadisticas = () => {
 
         <div className="estadisticas">
             <div className="container-banner__vendedor">
-                <header className='header__vendedor'>Estadísticas</header>
+                <header className='header__vendedor header__estadisticas'>Estadísticas</header>
             </div>
 
             <section className="estadisticas__resumen">

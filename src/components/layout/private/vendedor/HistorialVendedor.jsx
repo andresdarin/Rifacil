@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Global } from '../../../../helpers/Global';
 
 export const HistorialVendedor = () => {
@@ -6,6 +6,7 @@ export const HistorialVendedor = () => {
     const [loading, setLoading] = useState(true);
     const [expandedVentaId, setExpandedVentaId] = useState(null);
     const token = localStorage.getItem("token");
+    const expandedRef = useRef(null);
 
     useEffect(() => {
         document.body.style.backgroundImage = "url('/src/assets/img/BackgroundLong.png')";
@@ -29,7 +30,6 @@ export const HistorialVendedor = () => {
                 });
 
                 const data = await response.json();
-
                 if (response.ok) {
                     setVentas(data.ventas);
                 } else {
@@ -46,10 +46,24 @@ export const HistorialVendedor = () => {
         fetchVentas();
     }, []);
 
-    const toggleExpand = (id) => {
-        setExpandedVentaId(prevId => prevId === id ? null : id);
-    };
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                expandedVentaId &&
+                expandedRef.current &&
+                !expandedRef.current.contains(event.target)
+            ) {
+                setExpandedVentaId(null);
+            }
+        };
 
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [expandedVentaId]);
+
+    const toggleExpand = (id) => {
+        setExpandedVentaId(prevId => (prevId === id ? null : id));
+    };
 
     const formatDate = (fecha) => {
         return new Date(fecha)
@@ -60,7 +74,7 @@ export const HistorialVendedor = () => {
     return (
         <>
             <div className="container-banner__vendedor">
-                <header className="header__vendedor">Historial de Ventas</header>
+                <header className="header__vendedor header__vendedor-historial">Historial de Ventas</header>
             </div>
 
             {loading ? (
@@ -70,25 +84,33 @@ export const HistorialVendedor = () => {
             ) : (
                 <div className="ventas__listado">
                     {ventas.map((venta) => (
-                        <div key={venta._id} className="venta__card" onClick={() => toggleExpand(venta._id)}>
-                            <div className="card_sin_expand">
-                                <div className="section_card">
-                                    <h1>{venta.rifa.nombreParticipante}</h1>
-                                    <h3>Participante</h3>
+                        <div
+                            key={venta._id}
+                            className="venta__card"
+                            onClick={() => toggleExpand(venta._id)}
+                            ref={expandedVentaId === venta._id ? expandedRef : null}
+                        >
+                            {expandedVentaId !== venta._id && (
+                                <div className="card_sin_expand">
+                                    <div className="section_card">
+                                        <h1>{venta.rifa.nombreParticipante}</h1>
+                                        <h3>Participante</h3>
+                                    </div>
+                                    <div className="section_card">
+                                        <h1>{venta.rifa.NumeroRifa}</h1>
+                                        <h3>Número de Rifa</h3>
+                                    </div>
+                                    <div className="section_card">
+                                        <h1>{venta.rifa.precioRifa}</h1>
+                                        <h3>Precio ($)</h3>
+                                    </div>
+                                    <div className="section_card">
+                                        <h1>{formatDate(venta.fechaCompra)}</h1>
+                                        <h3>Fecha</h3>
+                                    </div>
                                 </div>
-                                <div className="section_card">
-                                    <h1>{venta.rifa.NumeroRifa}</h1>
-                                    <h3>Número de Rifa</h3>
-                                </div>
-                                <div className="section_card">
-                                    <h1>{venta.rifa.precioRifa}</h1>
-                                    <h3>Precio ($)</h3>
-                                </div>
-                                <div className="section_card">
-                                    <h1>{formatDate(venta.fechaCompra)}</h1>
-                                    <h3>Fecha</h3>
-                                </div>
-                            </div>
+                            )}
+
                             {expandedVentaId === venta._id && (
                                 <div className="expanded__details">
                                     <div className="detail__row"><h1>Participante</h1><h2>{venta.rifa.nombreParticipante}</h2></div>
@@ -100,9 +122,7 @@ export const HistorialVendedor = () => {
                                     <div className="detail__row"><h1>Monto Total ($)</h1><h2>{venta.montoTotal}</h2></div>
                                     <div className="detail__row"><h1>Método de Pago</h1><h2>{venta.metodoPago}</h2></div>
                                 </div>
-
                             )}
-
                         </div>
                     ))}
                 </div>

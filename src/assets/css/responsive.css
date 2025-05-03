@@ -945,7 +945,8 @@
         margin: 0 0 -1.6rem 8px;
     }
 
-    .header__admin {
+    .header__admin,
+    .header__vendedor_prof {
         font-size: 4rem;
         margin: 0 0 -1.6rem 8px;
     }
@@ -1506,6 +1507,7 @@
         z-index: 9999 !important;
     }
 
+
     .grid-rifas {
         width: 100vw;
     }
@@ -1882,4 +1884,267 @@
         font-size: 4rem;
         margin: -2rem 0 -1.6rem 0;
     }
+
+    .rifa-list-vendedor-profile {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+    }
+
+    .container-banner_metas {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .rifa-item-vendedor-profile {
+        min-width: none;
+        margin: .2rem;
+    }
+
+    .cliente-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 0;
+        height: 4rem;
+    }
+
+    .cliente-item h2 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin: 0;
+        padding: 0;
+        color: var(--color5);
+    }
+
+    .cliente-item strong,
+    .cliente-item span {
+        margin: 0;
+        font-size: 16px;
+        width: 50vw;
+        padding: 1rem;
+
+    }
+
+    .cliente-rifas {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 5px;
+    }
+
+    .rifas-label {
+        font-weight: 500;
+        color: #555;
+    }
+
+    .rifas-numeros {
+        font-weight: 600;
+        color: #000;
+    }
+
+    /* **********************************Estadisticas********************************** */
+    .header__estadisticas {
+        font-size: 4rem;
+        margin: 0 0 -1.6rem 0;
+        text-align: center;
+    }
+
+    .estadisticas__resumen {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        margin: 0 auto;
+    }
+
+    .estadisticas__resumen>div {
+        margin-bottom: 2rem;
+    }
+
+    .estadisticas-ventas {
+        background-image: url('../img/HeroAltaVendedor.png');
+        background-color: var(--color5);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        margin: 0 auto;
+    }
+
+    .estadisticas-grafica {
+        background-image: url('../img/HeroAltaVendedor.png');
+        background-color: var(--color5);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        margin: 0 auto;
+    }
+
+    .meta-chart-container {
+        width: 70vw;
+    }
+
+    .topproducto-item {
+        font-size: .8rem;
+        height: 2rem;
+        align-items: center;
+    }
+
+    .chart-text {
+        font-size: .5rem;
+    }
+
+    .meta-chart-emoji {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        margin-left: .5rem;
+    }
+
+    /* **********************************Ventas********************************** */
+
+    .ventas__listado {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        margin: 0 auto;
+    }
+
+    .venta__card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        margin: 0 auto;
+        height: 6rem;
+        width: 90vw;
+    }
+
+    .card_sin_expand {
+        display: flex;
+        flex-direction: row;
+        padding: 1rem;
+        width: 90vw;
+    }
+
+    .header__vendedor-historial {
+        margin: 0 0 -1.6rem 0;
+        font-size: 4rem;
+    }
+
+    .section_card {
+        display: flex;
+        flex-direction: column;
+        align-items: space-between;
+        justify-content: space-around;
+        margin: 0 auto;
+        min-width: 1px;
+    }
+
+    .section_card h1 {
+        font-size: 1rem;
+        margin: .5rem 0 auto 0;
+        padding: 0;
+    }
+
+    .section_card h3 {
+        font-size: .7rem;
+        margin: auto 0 .5rem 0;
+        color: var(--color3);
+        margin: 0;
+        padding: 0;
+    }
+
+    .expanded__details {
+        background-image: url('../img/HeroAltaVendedor.png');
+        background-color: var(--color5);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        margin: 0 auto;
+        z-index: 4;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .blur-background {
+        filter: blur(4px);
+        transition: filter 0.3s ease;
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        backdrop-filter: blur(4px);
+        background-color: rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    /* **********************************VenderRifa********************************** */
+    .header__vender {
+        font-size: 4rem;
+        margin: 0 0 -1.6rem 0;
+        text-align: center;
+    }
+
+    .rifas__manuales {
+        display: flex;
+        flex-direction: wrap;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        margin: 0 auto;
+    }
+
+    .rifa-card-venta {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        margin: 0 auto;
+        height: 3rem;
+        border-radius: .3rem;
+        font-size: .9rem;
+    }
+
+    .expanded {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        margin: 0 auto;
+        height: 130vw;
+        width: 90vw;
+    }
+
+    .expanded h3 {
+        font-size: 1.5rem;
+        margin: 0;
+        padding: 0;
+        font-weight: bold;
+
+    }
+
+
 }

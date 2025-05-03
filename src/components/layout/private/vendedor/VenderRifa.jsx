@@ -107,7 +107,7 @@ export const VenderRifa = () => {
     return (
         <>
             <div className="container-banner__vendedor">
-                <header className='header__vendedor'>Vender</header>
+                <header className='header__vendedor header__vender'>Vender</header>
             </div>
 
             {/* Buscador con botón */}
@@ -121,7 +121,6 @@ export const VenderRifa = () => {
                 <button className="search-bar__submit-button" onClick={handleSearch}>🔍</button>
             </div>
 
-            {selectedRifa && <div className="overlay" onClick={() => setSelectedRifa(null)} />}
 
             <div className="rifas__manuales">
                 {/* Si se buscó y no hay resultados */}
@@ -133,7 +132,7 @@ export const VenderRifa = () => {
                 {filteredRifas.map(rifa => (
                     <div
                         key={rifa.NumeroRifa._id}
-                        className={`rifa-card ${selectedRifa === rifa.NumeroRifa._id ? 'expanded' : ''}`}
+                        className={`rifa-card rifa-card-venta ${selectedRifa === rifa.NumeroRifa._id ? 'expanded' : ''}`}
                         onClick={e => { e.stopPropagation(); setSelectedRifa(rifa.NumeroRifa._id); }}
                     >
                         <h3>{rifa.NumeroRifa.numero}</h3>
@@ -210,6 +209,7 @@ export const VenderRifa = () => {
                     </div>
                 ))}
             </div>
+            {selectedRifa && <div className="overlay" onClick={() => setSelectedRifa(null)} />}
         </>
     );
 };

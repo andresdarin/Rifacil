@@ -3426,7 +3426,7 @@ button:disabled {
     height: 100vh;
     backdrop-filter: blur(6px);
     background-color: rgba(0, 0, 0, 0.3);
-    z-index: 5;
+    z-index: 1300;
 }
 
 @keyframes fadeInScale {
