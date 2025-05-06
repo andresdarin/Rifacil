@@ -3643,3 +3643,25 @@ button:disabled {
 .desktop-only {
     display: block;
 }
+
+.card-rifa.assigned {
+    background-color: #e0ffe0;
+    /* Cambia el color de fondo a un verde suave */
+    border: 2px solid green;
+    /* Puedes agregar un borde verde */
+}
+
+.card-rifa.assigned .nro_rifa {
+    color: green;
+    /* Cambia el color del número de la rifa */
+}
+
+.card-rifa.assigned .currency {
+    color: green;
+    /* Cambia el color del ícono de pago */
+}
+
+.card-rifa.assigned h5 {
+    color: green;
+    /* Resalta el texto del vendedor en verde */
+}

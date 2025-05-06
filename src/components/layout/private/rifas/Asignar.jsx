@@ -48,8 +48,10 @@ export const Asignar = () => {
                 });
                 const dataRifas = await responseRifas.json();
                 if (dataRifas.status === 'success') {
-                    setRifas(dataRifas.rifas);
-                    setFilteredRifas(dataRifas.rifas); // Inicializa las rifas filtradas
+                    // Filtrar solo rifas sin vendedorAsignado (null)
+                    const rifasNoAsignadas = dataRifas.rifas.filter(r => !r.vendedorAsignado);
+                    setRifas(rifasNoAsignadas);
+                    setFilteredRifas(rifasNoAsignadas);
                 } else {
                     console.error('Error al cargar las rifas', dataRifas.message);
                 }
@@ -125,9 +127,19 @@ export const Asignar = () => {
             const result = await response.json();
             if (response.ok) {
                 alert('Rifas asignadas con éxito.');
+
+                // Elimina las rifas asignadas del estado general de rifas
+                const rifasRestantes = rifas.filter(r =>
+                    !rifasSeleccionadas.some(asignada => asignada._id === r._id)
+                );
+
+                setRifas(rifasRestantes);
+                setFilteredRifas(rifasRestantes);
+
                 setRifasSeleccionadas([]);
                 setVendedorSeleccionado(null);
-            } else {
+            }
+            else {
                 alert(result.message || 'Error al asignar las rifas.');
             }
         } catch (error) {
@@ -248,6 +260,7 @@ export const Asignar = () => {
                             </li>
                         ))}
                     </ul>
+
                 </div>
 
                 <div className="asignar-button">

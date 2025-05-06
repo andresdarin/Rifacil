@@ -57,7 +57,10 @@ const ListadoRifas = () => {
 
             <div className="grid-container">
                 {rifasFiltradas.map((rifa) => (
-                    <div key={rifa._id} className="grid-card card-rifa">
+                    <div
+                        key={rifa._id}
+                        className={`grid-card card-rifa ${rifa.vendedorAsignado ? 'assigned' : ''}`}
+                    >
                         <h1 className='nro_rifa img-container'>{rifa.NumeroRifa}</h1>
 
                         <h1>
@@ -72,6 +75,17 @@ const ListadoRifas = () => {
                         <h4 className="description">
                             {rifa.nombreParticipante ? rifa.nombreParticipante : '-'}
                         </h4>
+
+                        <h5 className='vendedor-span'>
+                            {rifa.vendedorAsignado ? (
+                                <span>
+                                    Vendedor: {rifa.vendedorAsignado.nombreCompleto} ({rifa.vendedorAsignado.ci})
+                                </span>
+                            ) : (
+                                <span>No asignado a ningún vendedor</span>
+                            )}
+                        </h5>
+
                     </div>
                 ))}
             </div>
