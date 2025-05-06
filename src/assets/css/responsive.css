@@ -1089,7 +1089,8 @@
         margin: 0 0 0 0;
     }
 
-    .delete-button_vendedores {
+    .delete-button_vendedores,
+    .status-button {
         width: 35px;
         height: 35px;
         font-size: 2rem;
@@ -1101,6 +1102,15 @@
             0 0 10px var(--colorEliminar),
             0 0 20px var(--colorEliminar),
             0 0 40px var(--colorEliminar);
+    }
+
+    .status-button {
+        color: var(--color5);
+        text-shadow:
+            0 0 10px var(--color1),
+            0 0 10px var(--colorEditar),
+            0 0 20px var(--colorEditar),
+            0 0 40px var(--colorEditar);
     }
 
     .card-productos {

@@ -34,6 +34,7 @@ import MetaProgreso from '../components/layout/private/vendedor/Profile/MetaProg
 import { Estadisticas } from '../components/layout/private/vendedor/Estadisticas.jsx';
 import { VenderRifa } from '../components/layout/private/vendedor/VenderRifa.jsx';
 import { HistorialVendedor } from '../components/layout/private/vendedor/HistorialVendedor.jsx';
+import PagoRedirect from '../components/layout/public/tienda/PagoRedirect.jsx';
 
 
 export const Rutas = () => {
@@ -56,6 +57,7 @@ export const Rutas = () => {
                     <Route path='/tienda/success' element={<PagoSuccess />} />
                     <Route path='/tienda/failure' element={<PagoFailure />} />
                     <Route path='/tienda/pending' element={<PagoPending />} />
+                    <Route path='/tienda/pagoRedirect' element={<PagoRedirect />} />
                 </Route>
 
                 <Route path='/admin' element={<PrivateLayout />}>

@@ -962,6 +962,12 @@ h4 {
     margin-top: 12px;
 }
 
+.card-buttons-prof {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
 
 .btn-ver-mas {
     margin: 0;
@@ -1038,7 +1044,8 @@ canvas {
 
 
 .edit-button,
-.delete-button {
+.delete-button,
+.status-button {
     border: none;
     border-radius: 50%;
     width: 40px;
@@ -1058,6 +1065,16 @@ canvas {
 
 .delete-button:hover {
     background-color: var(--colorEliminarHover);
+    transform: scale(1.2);
+}
+
+.status-button {
+    background-color: var(--colorEditar);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.status-button:hover {
+    background-color: var(--colorEditarHover);
     transform: scale(1.2);
 }
 

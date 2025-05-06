@@ -6,24 +6,15 @@ export const Asignar = () => {
     const [rifas, setRifas] = useState([]);
     const [vendedorSeleccionado, setVendedorSeleccionado] = useState(null);
     const [rifasSeleccionadas, setRifasSeleccionadas] = useState([]);
-    const token = localStorage.getItem('token');
     const [searchTerm, setSearchTerm] = useState('');
+    const [searchRifaTerm, setSearchRifaTerm] = useState(''); // Estado para buscar rifas
     const [filteredVendedores, setFilteredVendedores] = useState([]);
-    const [page, setPage] = useState(1);  // Estado para el control de la página
-    const [totalPages, setTotalPages] = useState(1); // Número total de páginas
+    const [filteredRifas, setFilteredRifas] = useState([]); // Estado para las rifas filtradas
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     const [showMore, setShowMore] = useState(false);
 
-    const vendedoresPorPagina = 5;  // Número de vendedores por página
-
-    useEffect(() => {
-        document.body.style.backgroundImage = "url('/src/assets/img/BackgroundLong.png')";
-        document.body.style.backgroundSize = "cover";
-        document.body.style.backgroundPosition = "center";
-
-        return () => {
-            document.body.style.backgroundImage = '';
-        };
-    }, []);
+    const vendedoresPorPagina = 5;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -58,6 +49,7 @@ export const Asignar = () => {
                 const dataRifas = await responseRifas.json();
                 if (dataRifas.status === 'success') {
                     setRifas(dataRifas.rifas);
+                    setFilteredRifas(dataRifas.rifas); // Inicializa las rifas filtradas
                 } else {
                     console.error('Error al cargar las rifas', dataRifas.message);
                 }
@@ -82,6 +74,18 @@ export const Asignar = () => {
             setFilteredVendedores(filtered);
         }
     }, [searchTerm, vendedores]);
+
+    useEffect(() => {
+        // Filtrar rifas basados en el término de búsqueda
+        if (searchRifaTerm === '') {
+            setFilteredRifas(rifas); // Si no hay término de búsqueda, mostrar todas las rifas
+        } else {
+            const filtered = rifas.filter(rifa =>
+                rifa.NumeroRifa.toString().includes(searchRifaTerm) // Filtra por número de rifa
+            );
+            setFilteredRifas(filtered);
+        }
+    }, [searchRifaTerm, rifas]);
 
     const toggleRifaSeleccionada = (rifa) => {
         if (rifasSeleccionadas.some(r => r._id === rifa._id)) {
@@ -169,8 +173,6 @@ export const Asignar = () => {
         setShowMore(!showMore);
     };
 
-
-
     return (
         <div className="container-asignar">
             <div className="container-banner__vendedor">
@@ -190,7 +192,7 @@ export const Asignar = () => {
                             <i className="fa-solid fa-magnifying-glass" />
                         </button>
                     </div>
-                    {/* Dropdown de vendedores para pantallas pequeñas */}
+
                     <select className="vendedores-dropdown">
                         {vendedores.map((vendedor) => (
                             <option key={vendedor._id} value={vendedor._id}>
@@ -224,12 +226,22 @@ export const Asignar = () => {
 
                 <div className="rifas-list">
                     <h3>Números de Rifa</h3>
+                    <div className="search-bar search-bar_asign">
+                        <input
+                            type="text"
+                            placeholder="Buscar por número de rifa"
+                            value={searchRifaTerm}
+                            onChange={(e) => setSearchRifaTerm(e.target.value)}
+                        />
+                        <button className='search-bar__submit-button'>
+                            <i className="fa-solid fa-magnifying-glass" />
+                        </button>
+                    </div>
                     <ul className="rifa-list">
-                        {rifas.map((rifa) => (
+                        {filteredRifas.map((rifa) => (
                             <li
                                 key={rifa._id}
-                                className={`rifa-item ${rifasSeleccionadas.some(r => r._id === rifa._id) ? 'seleccionado' : ''
-                                    }`}
+                                className={`rifa-item ${rifasSeleccionadas.some(r => r._id === rifa._id) ? 'seleccionado' : ''}`}
                                 onClick={() => toggleRifaSeleccionada(rifa)}
                             >
                                 {rifa.NumeroRifa}
@@ -239,9 +251,7 @@ export const Asignar = () => {
                 </div>
 
                 <div className="asignar-button">
-                    <button className='asignar-button__rifas' onClick={asignarRifas} disabled={!vendedorSeleccionado || rifasSeleccionadas.length === 0}>
-                        Asignar Rifas
-                    </button>
+                    <button className='asignar-button__rifas' onClick={asignarRifas}>Asignar Rifas</button>
                 </div>
             </div>
         </div>
