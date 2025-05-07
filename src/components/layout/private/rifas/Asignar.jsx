@@ -7,9 +7,9 @@ export const Asignar = () => {
     const [vendedorSeleccionado, setVendedorSeleccionado] = useState(null);
     const [rifasSeleccionadas, setRifasSeleccionadas] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [searchRifaTerm, setSearchRifaTerm] = useState(''); // Estado para buscar rifas
+    const [searchRifaTerm, setSearchRifaTerm] = useState('');
     const [filteredVendedores, setFilteredVendedores] = useState([]);
-    const [filteredRifas, setFilteredRifas] = useState([]); // Estado para las rifas filtradas
+    const [filteredRifas, setFilteredRifas] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [showMore, setShowMore] = useState(false);
@@ -31,9 +31,19 @@ export const Asignar = () => {
                 });
                 const dataVendedores = await responseVendedores.json();
                 if (dataVendedores.status === 'success') {
-                    setVendedores(dataVendedores.users);
-                    setFilteredVendedores(dataVendedores.users); // Inicializa los vendedores filtrados
-                    setTotalPages(dataVendedores.pages); // Establece el número total de páginas
+                    console.log('Usuarios recibidos:', dataVendedores.users);
+                    // → inspecciona aquí en la consola del navegador cuál es el campo y valor
+                    // por ejemplo: v.estado: "Activo", v.activo: true, v.isActive: false, etc.
+                    // luego ajustas la condición de filtrado abajo
+                    const vendedoresActivos = dataVendedores.users.filter(v =>
+                        // ejemplo genérico:
+                        (v.estado || '')
+                            .toString()
+                            .toLowerCase() === 'activo'
+                    );
+                    setVendedores(vendedoresActivos);
+                    setFilteredVendedores(vendedoresActivos);
+                    setTotalPages(dataVendedores.pages);
                 } else {
                     console.error('Error al cargar los vendedores');
                 }
@@ -48,7 +58,6 @@ export const Asignar = () => {
                 });
                 const dataRifas = await responseRifas.json();
                 if (dataRifas.status === 'success') {
-                    // Filtrar solo rifas sin vendedorAsignado (null)
                     const rifasNoAsignadas = dataRifas.rifas.filter(r => !r.vendedorAsignado);
                     setRifas(rifasNoAsignadas);
                     setFilteredRifas(rifasNoAsignadas);
@@ -65,25 +74,23 @@ export const Asignar = () => {
     }, []);
 
     useEffect(() => {
-        // Filtrar vendedores basados en el término de búsqueda
         if (searchTerm === '') {
-            setFilteredVendedores(vendedores); // Si no hay término de búsqueda, mostrar todos los vendedores
+            setFilteredVendedores(vendedores);
         } else {
             const filtered = vendedores.filter(vendedor =>
                 vendedor.nombreCompleto.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                vendedor.ci.toLowerCase().includes(searchTerm.toLowerCase()) // Puedes filtrar por otros campos si lo deseas
+                vendedor.ci.toLowerCase().includes(searchTerm.toLowerCase())
             );
             setFilteredVendedores(filtered);
         }
     }, [searchTerm, vendedores]);
 
     useEffect(() => {
-        // Filtrar rifas basados en el término de búsqueda
         if (searchRifaTerm === '') {
-            setFilteredRifas(rifas); // Si no hay término de búsqueda, mostrar todas las rifas
+            setFilteredRifas(rifas);
         } else {
             const filtered = rifas.filter(rifa =>
-                rifa.NumeroRifa.toString().includes(searchRifaTerm) // Filtra por número de rifa
+                rifa.NumeroRifa.toString().includes(searchRifaTerm)
             );
             setFilteredRifas(filtered);
         }
@@ -91,10 +98,8 @@ export const Asignar = () => {
 
     const toggleRifaSeleccionada = (rifa) => {
         if (rifasSeleccionadas.some(r => r._id === rifa._id)) {
-            // Si ya está seleccionada, deseleccionar
             setRifasSeleccionadas(rifasSeleccionadas.filter(r => r._id !== rifa._id));
         } else {
-            // Si no está seleccionada, agregar
             setRifasSeleccionadas([...rifasSeleccionadas, rifa]);
         }
     };
@@ -128,18 +133,15 @@ export const Asignar = () => {
             if (response.ok) {
                 alert('Rifas asignadas con éxito.');
 
-                // Elimina las rifas asignadas del estado general de rifas
                 const rifasRestantes = rifas.filter(r =>
                     !rifasSeleccionadas.some(asignada => asignada._id === r._id)
                 );
 
                 setRifas(rifasRestantes);
                 setFilteredRifas(rifasRestantes);
-
                 setRifasSeleccionadas([]);
                 setVendedorSeleccionado(null);
-            }
-            else {
+            } else {
                 alert(result.message || 'Error al asignar las rifas.');
             }
         } catch (error) {
@@ -148,30 +150,21 @@ export const Asignar = () => {
         }
     };
 
-    const mostrarVendedoresPorPagina = filteredVendedores.slice(0, page * vendedoresPorPagina);
-
     const cargarMasVendedores = async () => {
-        if (page < totalPages) {
-            const nextPage = page + 1; // Incrementamos la página
-
-            // Hacemos una solicitud para obtener más vendedores
+        const token = localStorage.getItem('token');
+        if (page < totalPages && token) {
+            const nextPage = page + 1;
             try {
                 const responseVendedores = await fetch(`${Global.url}usuario/list/${nextPage}`, {
                     headers: { Authorization: token },
                 });
                 const dataVendedores = await responseVendedores.json();
-
                 if (dataVendedores.status === 'success') {
-                    // Agregar los vendedores de la siguiente página a los actuales
-                    setVendedores((prevVendedores) => [
-                        ...prevVendedores,
-                        ...dataVendedores.users,
-                    ]);
-                    setFilteredVendedores((prevFiltered) => [
-                        ...prevFiltered,
-                        ...dataVendedores.users,
-                    ]);
-                    setPage(nextPage); // Actualizar la página actual
+                    // Filtrar solo los nuevos activos
+                    const nuevosActivos = dataVendedores.users.filter(v => v.activo);
+                    setVendedores(prev => [...prev, ...nuevosActivos]);
+                    setFilteredVendedores(prev => [...prev, ...nuevosActivos]);
+                    setPage(nextPage);
                 } else {
                     console.error('Error al cargar más vendedores');
                 }
@@ -181,9 +174,9 @@ export const Asignar = () => {
         }
     };
 
-    const toggleShowMore = () => {
-        setShowMore(!showMore);
-    };
+    const toggleShowMore = () => setShowMore(!showMore);
+
+    const mostrarVendedoresPorPagina = filteredVendedores.slice(0, page * vendedoresPorPagina);
 
     return (
         <div className="container-asignar">
@@ -205,15 +198,8 @@ export const Asignar = () => {
                         </button>
                     </div>
 
-                    <select className="vendedores-dropdown">
-                        {vendedores.map((vendedor) => (
-                            <option key={vendedor._id} value={vendedor._id}>
-                                {vendedor.nombreCompleto} - Nº {vendedor.ci}
-                            </option>
-                        ))}
-                    </select>
                     <ul className='card item-vendedor'>
-                        {mostrarVendedoresPorPagina.map((vendedor) => (
+                        {mostrarVendedoresPorPagina.map(vendedor => (
                             <li
                                 key={vendedor._id}
                                 className={`vendedor-item ${vendedorSeleccionado?._id === vendedor._id ? 'seleccionado' : ''}`}
@@ -225,7 +211,7 @@ export const Asignar = () => {
                         ))}
                     </ul>
 
-                    <div className="ver-mas  item-vendedor">
+                    <div className="ver-mas item-vendedor">
                         {showMore ? (
                             <button onClick={toggleShowMore}>Mostrar menos</button>
                         ) : (
@@ -250,7 +236,7 @@ export const Asignar = () => {
                         </button>
                     </div>
                     <ul className="rifa-list">
-                        {filteredRifas.map((rifa) => (
+                        {filteredRifas.map(rifa => (
                             <li
                                 key={rifa._id}
                                 className={`rifa-item ${rifasSeleccionadas.some(r => r._id === rifa._id) ? 'seleccionado' : ''}`}
@@ -260,11 +246,12 @@ export const Asignar = () => {
                             </li>
                         ))}
                     </ul>
-
                 </div>
 
                 <div className="asignar-button">
-                    <button className='asignar-button__rifas' onClick={asignarRifas}>Asignar Rifas</button>
+                    <button className='asignar-button__rifas' onClick={asignarRifas}>
+                        Asignar Rifas
+                    </button>
                 </div>
             </div>
         </div>
