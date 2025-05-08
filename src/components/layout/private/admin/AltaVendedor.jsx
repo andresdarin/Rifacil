@@ -38,6 +38,8 @@ export const AltaVendedor = () => {
             if (data.status == 'success') {
                 console.log("Registro exitoso", data.user);
                 setSaved('saved');
+                e.target.reset();
+
             } else {
                 console.error(data.message);
                 setSaved('error');
