@@ -4,12 +4,9 @@ import { Global } from '../../../../helpers/Global';
 export const Resultado = () => {
     useEffect(() => {
         document.body.style.backgroundImage = "url('/src/assets/img/BackgroundLong.png')";
-        document.body.style.backgroundSize = "cover";
-        document.body.style.backgroundPosition = "center";
-
-        return () => {
-            document.body.style.backgroundImage = '';
-        };
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundPosition = 'center';
+        return () => { document.body.style.backgroundImage = ''; };
     }, []);
 
     const [sorteo, setSorteo] = useState(null);
@@ -20,44 +17,43 @@ export const Resultado = () => {
         const obtenerSorteo = async () => {
             try {
                 const response = await fetch(Global.url + 'sorteo/listarGanadores', {
-
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': token
-
-                    }
+                        Authorization: token,
+                    },
                 });
                 if (!response.ok) {
-                    throw new Error(`Error al obtener el sorteo: ${response.statusText}`);
+                    throw new Error(`Error al obtener sorteos: ${response.statusText}`);
                 }
                 const data = await response.json();
-                if (data.sorteos && data.sorteos.length > 0) {
-                    setSorteo(data.sorteos[0]); // Usar el primer sorteo disponible
+                if (Array.isArray(data.sorteos) && data.sorteos.length > 0) {
+                    // Ordenar por fechaSorteo descendente
+                    const sorted = data.sorteos
+                        .map(s => ({ ...s, fechaParsed: new Date(s.fechaSorteo) }))
+                        .sort((a, b) => b.fechaParsed - a.fechaParsed);
+                    const now = new Date();
+                    // Tomar el sorteo más reciente que ya haya ocurrido
+                    const reciente = sorted.find(s => s.fechaParsed <= now) || sorted[0];
+                    setSorteo(reciente);
                 } else {
                     setError('No hay sorteos disponibles.');
                 }
-            } catch (error) {
-                setError(error.message);
+            } catch (err) {
+                setError(err.message);
             }
         };
-
         obtenerSorteo();
-    }, []);
+    }, [token]);
 
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
-
-    if (!sorteo) {
-        return <div>Cargando datos del sorteo...</div>;
-    }
+    if (error) return <div>Error: {error}</div>;
+    if (!sorteo) return <div>Cargando datos del sorteo...</div>;
 
     return (
         <div className="resultado_container">
             <header className="header__resultado">Ganadores</header>
             <div className="card_res-container">
-                {/* Primer ganador - ocupa 4 columnas */}
+                {/* Primer ganador */}
                 <div className="card_res first-winner">
                     <h1 className='emoji-troph'>🏆</h1>
                     <h1>Primer Premio</h1>
@@ -66,8 +62,7 @@ export const Resultado = () => {
                     <p>{sorteo.ganadores[0]?.premio.nombre}</p>
                     <p>{sorteo.ganadores[0]?.premio.descripcion}</p>
                 </div>
-
-                {/* Segundo ganador - ocupa 2 columnas */}
+                {/* Segundo ganador */}
                 <div className="card_res second-winner">
                     <h1>🥈</h1>
                     <h1>Segundo Premio</h1>
@@ -76,8 +71,7 @@ export const Resultado = () => {
                     <p>{sorteo.ganadores[1]?.premio.nombre}</p>
                     <p>{sorteo.ganadores[1]?.premio.descripcion}</p>
                 </div>
-
-                {/* Tercer ganador - ocupa 2 columnas */}
+                {/* Tercer ganador */}
                 <div className="card_res second-winner">
                     <h1>🥉</h1>
                     <h1>Tercer Premio</h1>
@@ -86,11 +80,10 @@ export const Resultado = () => {
                     <p>{sorteo.ganadores[2]?.premio.nombre}</p>
                     <p>{sorteo.ganadores[2]?.premio.descripcion}</p>
                 </div>
-
-                {/* Otros ganadores - ocupan 1 columna cada uno */}
-                {sorteo.ganadores.slice(3).map((ganador, index) => (
-                    <div className="card_res remaining-winner" key={index}>
-                        <h1>Ganador {index + 4}</h1>
+                {/* Restantes */}
+                {sorteo.ganadores.slice(3).map((ganador, idx) => (
+                    <div className="card_res remaining-winner" key={idx}>
+                        <h1>Ganador {idx + 4}</h1>
                         <h2>{ganador.numeroRifa}</h2>
                         <p>{ganador.nombreParticipante || 'Desconocido'}</p>
                         <p>{ganador.premio.nombre}</p>
@@ -100,5 +93,6 @@ export const Resultado = () => {
             </div>
         </div>
     );
-
 };
+
+export default Resultado;
