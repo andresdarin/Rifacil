@@ -13,7 +13,7 @@ const Checkout = () => {
     const [isCreating, setIsCreating] = useState(false);
 
     useEffect(() => {
-        initMercadoPago('TU_PUBLIC_KEY_DE_MERCADO_PAGO', { locale: 'es-AR' });
+        initMercadoPago('TEST-d4105872-b1e3-4e6b-862e-5c9ca2729593', { locale: 'es-AR' });
     }, []);
 
     // Función única para crear preferencia y redirigir
