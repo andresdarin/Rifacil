@@ -704,6 +704,13 @@
         margin: 0 0 -30px 60px;
     }
 
+    .header_tienda {
+        font-size: 4.5rem;
+        color: var(--colorWhite);
+        text-align: center;
+        margin: 0 0 -1.8rem;
+    }
+
     .header__productos-listado {
         margin: 0 0 -1.6rem 0;
         font-size: 4rem;
@@ -728,8 +735,44 @@
         margin-top: 1.2rem;
     }
 
-    .card-tienda-list {
+    .card-tienda-layout-rifa {
+        display: grid;
+    }
+
+    .card-tienda-list-producto {
+        display: flex;
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card-tienda-layout-rifa {
+        display: flex;
+    }
+
+    .card-tienda-list {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 110%;
+        padding: 0;
+    }
+
+    .rifa-imagen {
+        width: 4rem;
+    }
+
+    .card-tienda-item-rifa {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+        min-width: 90%;
+    }
+
+    .items-tienda-rifa {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
     }
 
     .card-tienda-item {
@@ -751,14 +794,28 @@
         font-size: 0.8rem;
     }
 
+    .card-tienda-buttons-rifa {
+        width: 3rem;
+    }
+
+    .items-tienda-rifa h1 {
+        padding: 0 1rem;
+        font-size: 1.5rem;
+    }
+
+    .items-tienda-rifa h3 {
+        margin: 0 0 0 auto;
+    }
+
     .add-to-cart-button {
         display: flex;
-        width: 50px;
+        width: 1.4rem !important;
         border-radius: 0.3rem 1rem 0.3rem 1rem;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-        align-items: center;
+        align-items: flex-end;
         justify-content: center;
     }
+
 
     .float-cart-button {
         bottom: 20px;
@@ -1068,6 +1125,12 @@
         justify-content: center;
         flex-direction: row;
         gap: 1rem;
+    }
+
+    .pagination-tienda {
+        display: flex;
+        align-self: center;
+        margin: auto 0 auto auto;
     }
 
     .arrow-pagination {

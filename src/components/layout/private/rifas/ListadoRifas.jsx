@@ -6,31 +6,63 @@ const ListadoRifas = ({ refresh }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalRifas, setTotalRifas] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
+    const rifasPerPage = 18;
+
     const token = localStorage.getItem('token');
 
-    useEffect(() => {
-        const fetchRifas = async () => {
-            setLoading(true);
-            setError(null);
-            try {
-                const response = await fetch(Global.url + 'rifa/listarRifas', {
-                    headers: { 'Authorization': token }
-                });
-                if (!response.ok) throw new Error('Error al obtener la lista de rifas');
-                const data = await response.json();
-                setRifas(data.rifas);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchRifas();
-    }, [refresh]); // Re-fetch cuando cambie el prop refresh
+    // Función para obtener las rifas desde la API
+    const fetchRifas = async (page) => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await fetch(
+                `${Global.url}rifa/listarRifas?page=${page}&limit=${rifasPerPage}`,
+                {
+                    headers: { 'Authorization': token },
+                }
+            );
+            if (!response.ok) throw new Error('Error al obtener la lista de rifas');
+            const data = await response.json();
 
-    const rifasFiltradas = rifas.filter(rifa =>
+            // Actualizar el estado con los datos recibidos
+            setRifas(data.rifas);
+            setTotalRifas(data.totalRifas);
+            setTotalPages(data.totalPages);
+
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Efecto para cargar las rifas cada vez que cambie la página o el parámetro `refresh`
+    useEffect(() => {
+        fetchRifas(currentPage);
+    }, [currentPage, refresh]);
+
+    // Filtrar las rifas en el frontend
+    const filteredRifas = rifas.filter(rifa =>
         rifa.NumeroRifa.toString().includes(searchTerm)
     );
+
+    const paginate = (pageNumber) => {
+        if (pageNumber >= 1 && pageNumber <= totalPages) {
+            setCurrentPage(pageNumber);
+        }
+    };
+
+    // Función para manejar la búsqueda
+    const handleSearch = (value) => {
+        setSearchTerm(value);
+        setCurrentPage(1); // Reinicia la página a 1 en cada búsqueda
+
+        // Si la búsqueda está activa, no aplicamos paginación en el backend
+        // ya que filtramos los resultados en el frontend
+    };
 
     if (loading) return <p>Cargando rifas...</p>;
     if (error) return <p>Error: {error}</p>;
@@ -43,14 +75,15 @@ const ListadoRifas = ({ refresh }) => {
                     type="text"
                     placeholder="Buscar por número de rifa"
                     value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onChange={(e) => handleSearch(e.target.value)}
                 />
                 <button className='search-bar__submit-button'>
                     <i className="fa-solid fa-magnifying-glass" />
                 </button>
             </div>
+
             <div className="grid-container">
-                {rifasFiltradas.map((rifa) => (
+                {filteredRifas.map((rifa) => (
                     <div
                         key={rifa._id}
                         className={`grid-card card-rifa ${rifa.vendedorAsignado ? 'assigned' : ''}`}
@@ -78,6 +111,35 @@ const ListadoRifas = ({ refresh }) => {
                         </h5>
                     </div>
                 ))}
+            </div>
+
+            {/* Paginación */}
+            <div className="pagination pagination-tienda">
+                <button
+                    onClick={() => paginate(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="pagination__prev"
+                >
+                    Anterior
+                </button>
+
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                    <button
+                        key={pageNum}
+                        onClick={() => paginate(pageNum)}
+                        className={currentPage === pageNum ? 'active' : ''}
+                    >
+                        {pageNum}
+                    </button>
+                ))}
+
+                <button
+                    onClick={() => paginate(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className="pagination__next"
+                >
+                    Siguiente
+                </button>
             </div>
         </div>
     );

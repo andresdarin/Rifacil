@@ -1034,6 +1034,11 @@ canvas {
     width: 100%;
 }
 
+.pagination-tienda {
+    display: flex;
+    padding: auto auto 0 auto;
+}
+
 .arrow-pagination {
     margin: 0 1rem;
 }
@@ -1122,6 +1127,13 @@ canvas {
     background-color: #ccc;
     cursor: not-allowed;
 }
+
+.pagination-tienda {
+    align-self: center;
+    grid-column: 3;
+    /* Coloca el contenido en la tercera columna */
+}
+
 
 /*Productos*/
 .container-banner__productos,
@@ -2561,14 +2573,21 @@ button:disabled {
 
 /*Tienda*/
 .card-tienda-layout {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     max-width: 100%;
+    width: 80%;
 }
 
 .card-tienda-list {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    padding: 16px;
+    padding: 1.3rem;
+}
+
+.card-tienda-list-producto {
+    width: 90%;
 }
 
 .card-tienda-item {
@@ -2604,6 +2623,10 @@ button:disabled {
     margin: 1rem 0;
 }
 
+.card-tienda-item h4 {
+    font-size: 0.7rem;
+}
+
 .card-tienda-item img {
     cursor: pointer;
     transition: all 0.3s ease;
@@ -2611,6 +2634,46 @@ button:disabled {
 
 .card-tienda-item img:hover {
     transform: scale(1.15);
+}
+
+.card-tienda-item-rifa {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 12rem;
+    margin: auto;
+    margin-top: 2rem;
+    grid-column: span 1;
+    grid-row: span 1;
+
+}
+
+.rifa-imagen {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+
+
+.card-tienda-buttons-rifa {
+    margin-right: 0 !important;
+}
+
+.card-tienda-buttons-rifa button {
+    width: 100%;
+}
+
+.items-tienda-rifa h1 {
+    font-weight: bold;
+}
+
+.items-tienda-rifa h3 {
+    font-weight: 100;
+    color: var(--colorWhite);
 }
 
 .card-tienda-buttons {
