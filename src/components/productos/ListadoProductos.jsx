@@ -247,7 +247,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
             </div>
 
             <div className="card-layout">
-                <h2 class="titulo-responsive card-title-vertical">Productos</h2>
+                <h2 className="titulo-responsive card-title-vertical">Productos</h2>
                 <div className="card-content">
                     <div className="card-list">
                         {productos.length > 0 ? (

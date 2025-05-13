@@ -48,6 +48,11 @@ const NavVendedor = () => {
                     </NavLink>
                 </li>
                 <li className="menu-list__item">
+                    <NavLink to={`/vendedor/editarVendedor/${vendedorId}`} className="menu-list__link" onClick={closeMenu}>
+                        <span className="menu-list__title">Editar Perfil</span>
+                    </NavLink>
+                </li>
+                <li className="menu-list__item">
                     <NavLink to="/vendedor/logout" className="menu-list__link" onClick={closeMenu}>
                         <span className="menu-list__title">Cerrar Sesión</span>
                     </NavLink>

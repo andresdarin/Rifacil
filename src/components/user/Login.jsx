@@ -16,7 +16,7 @@ export const Login = () => {
 
     const loginUser = async (e) => {
         e.preventDefault();
-        setErrorMessage(""); // reset
+        setErrorMessage("");
 
         try {
             const request = await fetch(Global.url + 'usuario/login', {
@@ -27,23 +27,30 @@ export const Login = () => {
             const data = await request.json();
 
             if (data.status === 'success') {
+                // Primero validamos estado
+                if (data.user.estado === 'inactivo') {
+                    setStatus('error');
+                    setErrorMessage('Tu cuenta está inactiva. Contacta al administrador.');
+                    return;  // Abortamos antes de guardar token o redirigir
+                }
+
+                // Si está activo, continuamos con el login
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify(data.user));
                 localStorage.setItem('rol', data.user.rol);
                 setAuth(data.user);
                 setStatus('loged');
 
-                const userRol = data.user.rol;
-                const userId = data.user.id;
-                if (userRol === 'admin') {
+                // Redirección según rol
+                if (data.user.rol === 'admin') {
                     navigate('/admin/profile');
-                } else if (userRol === 'vendedor') {
-                    navigate(`/vendedor/profile/${userId}`);
+                } else if (data.user.rol === 'vendedor') {
+                    navigate(`/vendedor/profile/${data.user.id}`);
                 } else {
                     navigate('/landing');
                 }
             } else {
-                // Aquí mostramos el mensaje que venga del backend
+                // Login rechazado por credenciales
                 setStatus('error');
                 setErrorMessage(data.message || 'Error al iniciar sesión');
             }
@@ -51,7 +58,7 @@ export const Login = () => {
             setStatus('error');
             setErrorMessage(err.message || 'Error en la solicitud');
         }
-    }
+    };
 
     return (
         <div className="form-container sign-up">

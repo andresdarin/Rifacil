@@ -4,6 +4,7 @@ import { initMercadoPago } from '@mercadopago/sdk-react';
 import { CartContext } from '../../../../context/CartProvider';
 import mercadoPagoIcon from '../../../../assets/img/mercado-pago-icon.png';
 import backToChartIcon from '../../../../assets/img/back-to-chart.png';
+import { Global } from '../../../../helpers/Global';
 
 const Checkout = () => {
     const navigate = useNavigate();
@@ -11,12 +12,12 @@ const Checkout = () => {
     const token = localStorage.getItem('token');
     const [isCreating, setIsCreating] = useState(false);
 
-
     useEffect(() => {
         initMercadoPago('TEST-d4105872-b1e3-4e6b-862e-5c9ca2729593', { locale: 'es-AR' });
     }, []);
 
     const handleMercadoPago = async () => {
+        const token = localStorage.getItem("token");
         if (isCreating) return;
         setIsCreating(true);
 
@@ -26,6 +27,7 @@ const Checkout = () => {
             setIsCreating(false);
             return;
         }
+
         console.log("Enviando al backend:", cartItems.map(item => ({
             _id: item._id,
             quantity: item.quantity,
@@ -47,16 +49,33 @@ const Checkout = () => {
                             quantity: item.quantity,
                             tipo: item.tipo || (item.precioRifa ? 'rifa' : 'producto')
                         }))
-
                     })
                 }
             );
 
             const data = await res.json();
             console.log('Pago response:', res.status, data);
+
             if (!res.ok) {
                 alert(data.message || 'No se pudo iniciar el pago');
             } else {
+                // Si es rifa, actualizamos el estado `pagoRealizado`
+                const rifas = cartItems.filter(item => item.tipo === 'rifa' || !!item.NumeroRifa);
+                for (const rifa of rifas) {
+                    // Llamada a la API para actualizar el campo `pagoRealizado`
+                    await fetch(Global.url + '/rifa/actualizarRifa', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': token
+                        },
+                        body: JSON.stringify({
+                            rifaId: rifa._id
+                        }),
+                    });
+                }
+
+                // Limpiamos el carrito y redirigimos
                 clearCart();
                 window.location.href = data.init_point;
             }
@@ -67,6 +86,7 @@ const Checkout = () => {
             setIsCreating(false);
         }
     };
+
 
     const handleContinue = () => navigate('/tienda');
 
@@ -98,7 +118,6 @@ const Checkout = () => {
                                 </li>
                             );
                         })}
-
                     </ul>
                     <div className="checkout-total">
                         <h3>Total: ${calculateTotal()}</h3>

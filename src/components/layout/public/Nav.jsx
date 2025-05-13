@@ -58,6 +58,11 @@ export const Nav = () => {
                     </NavLink>
                 </li>
                 <li className="menu-list__item">
+                    <NavLink to='/editarPerfil' className="menu-list__link" onClick={() => setIsMenuOpen(false)}>
+                        <span className="menu-list__title">Editar Perfil</span>
+                    </NavLink>
+                </li>
+                <li className="menu-list__item">
                     <NavLink to='/admin/logout' className="menu-list__link" onClick={() => setIsMenuOpen(false)}>
                         <span className="menu-list__title">Cerrar Sesión</span>
                     </NavLink>

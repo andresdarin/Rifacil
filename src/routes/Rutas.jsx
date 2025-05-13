@@ -35,6 +35,7 @@ import { Estadisticas } from '../components/layout/private/vendedor/Estadisticas
 import { VenderRifa } from '../components/layout/private/vendedor/VenderRifa.jsx';
 import { HistorialVendedor } from '../components/layout/private/vendedor/HistorialVendedor.jsx';
 import PagoRedirect from '../components/layout/public/tienda/PagoRedirect.jsx';
+import { EditarPerfil } from '../components/user/EditarPerfil.jsx';
 
 
 export const Rutas = () => {
@@ -51,6 +52,7 @@ export const Rutas = () => {
                     <Route path='/reset-password/:token' element={<ResetPass />} />
                     <Route path='/resultado' element={<Resultado />} />
                     <Route path='/beneficios' element={<Beneficios />} />
+                    <Route path='/editarPerfil' element={<EditarPerfil />} />
                     <Route path='/tienda' element={<Tienda />} />
                     <Route path='/tienda/carrito' element={<Carrito />} />
                     <Route path='/tienda/checkout' element={<Checkout />} />
@@ -81,6 +83,7 @@ export const Rutas = () => {
                     <Route path='estadisticas/:id' element={<Estadisticas />} />
                     <Route path='historial-vendedor/:id' element={<HistorialVendedor />} />
                     <Route path='vender-rifa/:id' element={<VenderRifa />} />
+                    <Route path='editarVendedor/:id' element={<EditarPerfil />} />
                     <Route path='logout' element={<Logout />} />
                     <Route path='meta-anual/obtener-progreso' element={<MetaProgreso />} />
                 </Route>

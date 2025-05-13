@@ -29,29 +29,8 @@ export const Carrito = () => {
     };
 
     const handleProceedToCheckout = () => {
-        // Aquí sería donde inicias la integración con MercadoPago
-        // Suponiendo que MercadoPago redirige al usuario a una página de pago
-        // o simplemente realiza el pago dentro del mismo flujo, puedes usar
-        // un callback o promesa para limpiar el carrito después de la compra.
-        // Simulación de éxito de pago
-        processPayment().then((paymentStatus) => {
-            if (paymentStatus === 'success') {
-                clearCart();  // Limpia el carrito después de la compra
-                navigate('/compra-exitosa');  // Redirige a una página de compra exitosa
-            } else {
-                navigate('/compra-fallida');  // Redirige en caso de fallo en el pago
-            }
-        });
-    };
-
-    const processPayment = async () => {
-        // Aquí colocarías la lógica para interactuar con MercadoPago
-        // Esta es una simulación
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve('success');  // Simula un pago exitoso
-            }, 2000);
-        });
+        // Redirige a la página de Checkout
+        navigate('/tienda/checkout');
     };
 
     return (
