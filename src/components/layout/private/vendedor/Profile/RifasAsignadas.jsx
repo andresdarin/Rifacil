@@ -61,11 +61,17 @@ export const RifasAsignadas = ({ vendedorId, año }) => {
             <h1>Rifas Asignadas</h1>
             <ul className="rifa-list rifa-list-vendedor-profile">
                 {rifas.map(rifa => (
-                    <li key={rifa._id} className="rifa-item rifa-item-vendedor-profile rifa-item_profile">
+                    <li
+                        key={rifa._id}
+                        className={`rifa-item rifa-item-vendedor-profile rifa-item_profile ${rifa.pagoRealizado ? 'deshabilitada' : ''}`}
+
+                    >
                         {rifa.numero}
+                        {rifa.pagoRealizado}
                     </li>
                 ))}
             </ul>
+
         </div>
 
     );

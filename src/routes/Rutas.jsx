@@ -36,6 +36,7 @@ import { VenderRifa } from '../components/layout/private/vendedor/VenderRifa.jsx
 import { HistorialVendedor } from '../components/layout/private/vendedor/HistorialVendedor.jsx';
 import PagoRedirect from '../components/layout/public/tienda/PagoRedirect.jsx';
 import { EditarPerfil } from '../components/user/EditarPerfil.jsx';
+import { GestionMetasAnuales } from '../components/layout/private/metasAnuales/GestionMetasAnuales.jsx';
 
 
 export const Rutas = () => {
@@ -67,6 +68,7 @@ export const Rutas = () => {
                     <Route path='logout' element={<Logout />} />
                     <Route path='perfil' element={<AdminProfile />} />
                     <Route path='alta-vendedor' element={<AltaVendedor />} />
+                    <Route path='gestion-metas-anuales' element={<GestionMetasAnuales />} />
                     <Route path='rifas/asignar' element={<Asignar />} />
                     <Route path='rifas/crear' element={<CrearRifa />} />
                     <Route path='rifas/historial' element={<Historial />} />

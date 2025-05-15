@@ -35,8 +35,9 @@ export const VenderRifa = () => {
             const data = await res.json();
             if (data.status === 'success') {
                 setRifas(
-                    data.data.numerosRifa.map(({ _id, numero }) => ({
+                    data.data.numerosRifa.map(({ _id, numero, pagoRealizado }) => ({
                         NumeroRifa: { _id, numero },
+                        pagoRealizado,  // <-- agregado
                         nombreParticipante: '',
                         ciParticipante: '',
                         emailParticipante: '',
@@ -121,7 +122,6 @@ export const VenderRifa = () => {
                 <button className="search-bar__submit-button" onClick={handleSearch}>🔍</button>
             </div>
 
-
             <div className="rifas__manuales">
                 {/* Si se buscó y no hay resultados */}
                 {searchTerm && filteredRifas.length === 0 && (
@@ -132,8 +132,15 @@ export const VenderRifa = () => {
                 {filteredRifas.map(rifa => (
                     <div
                         key={rifa.NumeroRifa._id}
-                        className={`rifa-card rifa-card-venta ${selectedRifa === rifa.NumeroRifa._id ? 'expanded' : ''}`}
-                        onClick={e => { e.stopPropagation(); setSelectedRifa(rifa.NumeroRifa._id); }}
+                        className={`rifa-card rifa-card-venta 
+                                    ${selectedRifa === rifa.NumeroRifa._id ? 'expanded' : ''} 
+                                    ${rifa.pagoRealizado ? 'deshabilitada' : ''}`}
+                        onClick={e => {
+                            if (!rifa.pagoRealizado) {
+                                e.stopPropagation();
+                                setSelectedRifa(rifa.NumeroRifa._id);
+                            }
+                        }}
                     >
                         <h3>{rifa.NumeroRifa.numero}</h3>
 

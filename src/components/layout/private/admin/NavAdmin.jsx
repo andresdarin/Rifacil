@@ -60,6 +60,11 @@ export const NavAdmin = () => {
                         <span className="menu-list__title">Alta Vendedor</span>
                     </NavLink>
                 </li>
+                <li className="menu-list__item">
+                    <NavLink to="/admin/gestion-metas-anuales" className="menu-list__link" onClick={closeMenu}>
+                        <span className="menu-list__title">Metas Anuales</span>
+                    </NavLink>
+                </li>
                 <li className={`menu-list__item ${isDropdownOpen ? 'open' : ''}`}>
                     <span
                         className={`menu-list__link menu-list__link--dropdown ${isDropdownOpen ? 'selected' : ''}`}
