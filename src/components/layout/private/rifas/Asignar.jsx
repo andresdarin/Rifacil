@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Global } from '../../../../helpers/Global'; // Ajusta la ruta según tu proyecto
+import { Global } from '../../../../helpers/Global';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 
 export const Asignar = () => {
     const [vendedores, setVendedores] = useState([]);
@@ -10,250 +14,251 @@ export const Asignar = () => {
     const [searchRifaTerm, setSearchRifaTerm] = useState('');
     const [filteredVendedores, setFilteredVendedores] = useState([]);
     const [filteredRifas, setFilteredRifas] = useState([]);
-    const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const [showMore, setShowMore] = useState(false);
 
+    // Paginación vendedores
+    const [pageVen, setPageVen] = useState(1);
+    const [totalPagesVen, setTotalPagesVen] = useState(1);
     const vendedoresPorPagina = 5;
 
+    // Mostrar más/menos rifas
+    const [showMoreRif, setShowMoreRif] = useState(false);
+    const [showAllRif, setShowAllRif] = useState(false);
+    const rifasPorPagina = 15;
+
+    // Fetch vendedores
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchVendedores = async () => {
             const token = localStorage.getItem('token');
-            if (!token) {
-                alert('No se encontró el token de autenticación.');
-                return;
-            }
-
+            if (!token) return;
             try {
-                // Obtener vendedores
-                const responseVendedores = await fetch(`${Global.url}usuario/list`, {
-                    headers: { Authorization: token },
-                });
-                const dataVendedores = await responseVendedores.json();
-                if (dataVendedores.status === 'success') {
-                    console.log('Usuarios recibidos:', dataVendedores.users);
-                    // → inspecciona aquí en la consola del navegador cuál es el campo y valor
-                    // por ejemplo: v.estado: "Activo", v.activo: true, v.isActive: false, etc.
-                    // luego ajustas la condición de filtrado abajo
-                    const vendedoresActivos = dataVendedores.users.filter(v =>
-                        // ejemplo genérico:
-                        (v.estado || '')
-                            .toString()
-                            .toLowerCase() === 'activo'
-                    );
-                    setVendedores(vendedoresActivos);
-                    setFilteredVendedores(vendedoresActivos);
-                    setTotalPages(dataVendedores.pages);
-                } else {
-                    console.error('Error al cargar los vendedores');
+                const res = await fetch(`${Global.url}usuario/list/${pageVen}`, { headers: { Authorization: token } });
+                const data = await res.json();
+                if (data.status === 'success') {
+                    const activos = data.users.filter(v => (v.estado || '').toLowerCase() === 'activo');
+                    // Aquí está el cambio - no concatenamos, sino que reemplazamos con todos los vendedores hasta la página actual
+                    if (pageVen === 1) {
+                        setVendedores(activos);
+                    } else {
+                        setVendedores(prev => [...prev, ...activos]);
+                    }
+                    setTotalPagesVen(data.pages);
                 }
-
-                // Obtener rifas
-                const responseRifas = await fetch(Global.url + 'rifa/listarRifas', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': token,
-                    },
-                });
-                const dataRifas = await responseRifas.json();
-                if (dataRifas.status === 'success') {
-                    const rifasNoAsignadas = dataRifas.rifas.filter(r => !r.vendedorAsignado);
-                    setRifas(rifasNoAsignadas);
-                    setFilteredRifas(rifasNoAsignadas);
-                } else {
-                    console.error('Error al cargar las rifas', dataRifas.message);
-                }
-
-            } catch (error) {
-                console.error('Error al cargar datos:', error);
+            } catch (err) {
+                console.error(err);
             }
         };
+        fetchVendedores();
+    }, [pageVen]);
 
-        fetchData();
-    }, []);
-
+    // Actualizar filteredVendedores cuando cambian los vendedores
     useEffect(() => {
-        if (searchTerm === '') {
-            setFilteredVendedores(vendedores);
-        } else {
-            const filtered = vendedores.filter(vendedor =>
-                vendedor.nombreCompleto.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                vendedor.ci.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-            setFilteredVendedores(filtered);
-        }
+        setFilteredVendedores(
+            searchTerm
+                ? vendedores.filter(v =>
+                    v.nombreCompleto.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    v.ci.toLowerCase().includes(searchTerm.toLowerCase())
+                )
+                : vendedores
+        );
     }, [searchTerm, vendedores]);
 
+    // Fetch rifas
     useEffect(() => {
-        if (searchRifaTerm === '') {
-            setFilteredRifas(rifas);
-        } else {
-            const filtered = rifas.filter(rifa =>
-                rifa.NumeroRifa.toString().includes(searchRifaTerm)
-            );
-            setFilteredRifas(filtered);
-        }
+        const fetchRifas = async () => {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+            try {
+                const res = await fetch(`${Global.url}rifa/listarRifas?page=1&limit=1000`, {
+                    headers: { 'Content-Type': 'application/json', Authorization: token },
+                });
+                const data = await res.json();
+                if (data.status === 'success') {
+                    setRifas(data.rifas);
+                    setFilteredRifas(data.rifas);
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        fetchRifas();
+    }, []);
+
+    // Filtrar rifas
+    useEffect(() => {
+        setFilteredRifas(
+            searchRifaTerm
+                ? rifas.filter(r => r.NumeroRifa.toString().includes(searchRifaTerm))
+                : rifas
+        );
     }, [searchRifaTerm, rifas]);
 
-    const toggleRifaSeleccionada = (rifa) => {
-        if (rifasSeleccionadas.some(r => r._id === rifa._id)) {
-            setRifasSeleccionadas(rifasSeleccionadas.filter(r => r._id !== rifa._id));
-        } else {
-            setRifasSeleccionadas([...rifasSeleccionadas, rifa]);
+    // Toggle selección de rifa
+    const toggleRifaSeleccionada = rifa => {
+        // Verificar explícitamente si la rifa tiene vendedor asignado
+        if (rifa.vendedorAsignado) {
+            // No hacer nada si ya tiene vendedor asignado
+            return;
         }
+
+        setRifasSeleccionadas(prev =>
+            prev.some(x => x._id === rifa._id)
+                ? prev.filter(x => x._id !== rifa._id)
+                : [...prev, rifa]
+        );
     };
 
+    // Asignar rifas
     const asignarRifas = async () => {
         if (!vendedorSeleccionado || rifasSeleccionadas.length === 0) {
-            alert('Por favor, selecciona un vendedor y al menos un número de rifa.');
+            toast.error('Selecciona un vendedor y al menos una rifa.');
             return;
         }
-
         const token = localStorage.getItem('token');
-        if (!token) {
-            alert('No se encontró el token de autenticación.');
-            return;
-        }
-
         try {
-            const response = await fetch(`${Global.url}rifa/asignarRifaAVendedor`, {
+            const res = await fetch(`${Global.url}rifa/asignarRifaAVendedor`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: token,
-                },
+                headers: { 'Content-Type': 'application/json', Authorization: token },
                 body: JSON.stringify({
                     ci: vendedorSeleccionado.ci,
                     numerosRifas: rifasSeleccionadas.map(r => r.NumeroRifa),
                 }),
             });
-
-            const result = await response.json();
-            if (response.ok) {
-                alert('Rifas asignadas con éxito.');
-
-                const rifasRestantes = rifas.filter(r =>
-                    !rifasSeleccionadas.some(asignada => asignada._id === r._id)
-                );
-
-                setRifas(rifasRestantes);
-                setFilteredRifas(rifasRestantes);
+            const result = await res.json();
+            if (res.ok) {
+                toast.success('Rifas asignadas exitosamente');
+                // Actualizar las rifas después de la asignación
+                const rifasActualizadas = rifas.map(r => {
+                    if (rifasSeleccionadas.some(sr => sr._id === r._id)) {
+                        return { ...r, vendedorAsignado: vendedorSeleccionado.ci };
+                    }
+                    return r;
+                });
+                setRifas(rifasActualizadas);
+                setFilteredRifas(rifasActualizadas);
                 setRifasSeleccionadas([]);
                 setVendedorSeleccionado(null);
+                setShowMoreRif(false);
+                setShowAllRif(false);
             } else {
-                alert(result.message || 'Error al asignar las rifas.');
+                toast.error(result.message || 'Error al asignar rifas');
             }
-        } catch (error) {
-            console.error('Error al asignar las rifas:', error);
-            alert('Error al asignar las rifas. Intenta más tarde.');
+        } catch (err) {
+            console.error(err);
+            toast.error('Error al asignar rifas');
         }
     };
 
-    const cargarMasVendedores = async () => {
-        const token = localStorage.getItem('token');
-        if (page < totalPages && token) {
-            const nextPage = page + 1;
-            try {
-                const responseVendedores = await fetch(`${Global.url}usuario/list/${nextPage}`, {
-                    headers: { Authorization: token },
-                });
-                const dataVendedores = await responseVendedores.json();
-                if (dataVendedores.status === 'success') {
-                    // Filtrar solo los nuevos activos
-                    const nuevosActivos = dataVendedores.users.filter(v => v.activo);
-                    setVendedores(prev => [...prev, ...nuevosActivos]);
-                    setFilteredVendedores(prev => [...prev, ...nuevosActivos]);
-                    setPage(nextPage);
-                } else {
-                    console.error('Error al cargar más vendedores');
-                }
-            } catch (error) {
-                console.error('Error al cargar más vendedores:', error);
-            }
-        }
-    };
+    // Cargar más vendedores
+    const cargarMasVendedores = () => pageVen < totalPagesVen && setPageVen(prev => prev + 1);
 
-    const toggleShowMore = () => setShowMore(!showMore);
-
-    const mostrarVendedoresPorPagina = filteredVendedores.slice(0, page * vendedoresPorPagina);
+    // Toggle mostrar más/menos
+    const handleToggleRifas = () => setShowMoreRif(prev => !prev);
+    const handleShowAllRifas = () => setShowAllRif(true);
 
     return (
         <div className="container-asignar">
+            <ToastContainer position="top-right" autoClose={3000} />
             <div className="container-banner__vendedor">
                 <header className="header__vendedor header__admin">Asignar Números</header>
             </div>
             <div className="asignar-rifas-container">
+                {/* Vendedores */}
                 <aside className="vendedores-list">
                     <h3>Vendedores</h3>
                     <div className="search-bar search-bar_asign">
                         <input
-                            type="text"
-                            placeholder="Buscar Vendedores"
                             value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
+                            onChange={e => setSearchTerm(e.target.value)}
+                            placeholder="Buscar Vendedores"
                         />
-                        <button className='search-bar__submit-button'>
+                        <button className="search-bar__submit-button">
                             <i className="fa-solid fa-magnifying-glass" />
                         </button>
                     </div>
-
-                    <ul className='card item-vendedor'>
-                        {mostrarVendedoresPorPagina.map(vendedor => (
+                    <ul className="card item-vendedor">
+                        {filteredVendedores.map(v => (
                             <li
-                                key={vendedor._id}
-                                className={`vendedor-item ${vendedorSeleccionado?._id === vendedor._id ? 'seleccionado' : ''}`}
-                                onClick={() => setVendedorSeleccionado(vendedor)}
+                                key={v._id}
+                                className={`vendedor-item ${vendedorSeleccionado?._id === v._id ? 'seleccionado' : ''}`}
+                                onClick={() => setVendedorSeleccionado(v)}
                             >
-                                <h2>{vendedor.nombreCompleto}</h2>
-                                <h4>Nº {vendedor.ci}</h4>
+                                <h2>{v.nombreCompleto}</h2>
+                                <h4>Nº {v.ci}</h4>
                             </li>
                         ))}
                     </ul>
-
                     <div className="ver-mas item-vendedor">
-                        {showMore ? (
-                            <button onClick={toggleShowMore}>Mostrar menos</button>
-                        ) : (
-                            page < totalPages && (
-                                <button onClick={cargarMasVendedores}>Ver más vendedores</button>
-                            )
-                        )}
+                        {pageVen < totalPagesVen && <button onClick={cargarMasVendedores}>Ver más vendedores</button>}
                     </div>
                 </aside>
 
+                {/* Rifas */}
                 <div className="rifas-list">
-                    <h3>Números de Rifa</h3>
+                    <h3>Rifas</h3>
                     <div className="search-bar search-bar_asign">
                         <input
-                            type="text"
-                            placeholder="Buscar por número de rifa"
                             value={searchRifaTerm}
-                            onChange={(e) => setSearchRifaTerm(e.target.value)}
+                            onChange={e => setSearchRifaTerm(e.target.value)}
+                            placeholder="Buscar por número de rifa"
                         />
-                        <button className='search-bar__submit-button'>
+                        <button className="search-bar__submit-button">
                             <i className="fa-solid fa-magnifying-glass" />
                         </button>
                     </div>
                     <ul className="rifa-list">
-                        {filteredRifas.map(rifa => (
-                            <li
-                                key={rifa._id}
-                                className={`rifa-item ${rifasSeleccionadas.some(r => r._id === rifa._id) ? 'seleccionado' : ''}`}
-                                onClick={() => toggleRifaSeleccionada(rifa)}
-                            >
-                                {rifa.NumeroRifa}
-                            </li>
-                        ))}
+                        {(showAllRif
+                            ? filteredRifas
+                            : showMoreRif
+                                ? filteredRifas
+                                : filteredRifas.slice(0, rifasPorPagina)).map(r => (
+                                    <li
+                                        key={r._id}
+                                        className={`rifa-item ${r.vendedorAsignado
+                                            ? 'deshabilitada'
+                                            : rifasSeleccionadas.some(x => x._id === r._id)
+                                                ? 'seleccionado'
+                                                : ''
+                                            }`}
+                                        onClick={() => toggleRifaSeleccionada(r)}
+                                    >
+                                        <span>{r.NumeroRifa}</span>
+                                        {r.vendedorAsignado && <span className="vendedor-asignado">Asignada</span>}
+                                    </li>
+                                ))}
                     </ul>
-                </div>
 
-                <div className="asignar-button">
-                    <button className='asignar-button__rifas' onClick={asignarRifas}>
+                    {!showAllRif && filteredRifas.length > rifasPorPagina && (
+                        <div className="control-rifas">
+                            <button className='btn-asignar' onClick={handleToggleRifas}>
+                                <FontAwesomeIcon icon={showMoreRif ? faMinus : faPlus} />                            </button>
+                        </div>
+                    )}
+                </div>
+            </div>
+
+            {/* Panel de asignación */}
+            <div className="panel-asignacion">
+                <div className="info-seleccionada">
+                    <div className="info-item-flex">
+                        <div className='info-item'>
+                            <h4>Vendedor</h4>
+                            <p>{vendedorSeleccionado ? vendedorSeleccionado.nombreCompleto : 'No seleccionado'}</p>
+                        </div>
+                        <div className='info-item'>
+                            <h4>Rifas seleccionadas</h4>
+                            <p>{rifasSeleccionadas.length} rifas</p>
+                        </div>
+                    </div>
+                    <button
+                        className="btn-asignar"
+                        onClick={asignarRifas}
+                        disabled={!vendedorSeleccionado || rifasSeleccionadas.length === 0}
+                    >
                         Asignar Rifas
                     </button>
                 </div>
             </div>
+
         </div>
     );
 };
