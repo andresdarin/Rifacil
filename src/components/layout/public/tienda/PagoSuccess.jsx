@@ -13,23 +13,14 @@ const PagoSuccess = () => {
         const status = queryParams.get('status');
 
         if (paymentId && status) {
-            // Simulación de validación del pago usando fetch
-            // En producción harías algo como:
-            // fetch(`/api/pagos/verify-payment`, {
-            //   method: 'POST',
-            //   headers: { 'Content-Type': 'application/json' },
-            //   body: JSON.stringify({ paymentId, status })
-            // })
-            // .then(res => res.json())
-            // .then(data => { ... })
-
-            // Por ahora simulamos localmente:
             if (status === 'approved') {
                 setPaymentStatus('success');
                 setPaymentDetails({
                     payment_id: paymentId,
-                    amount: 100 // Aquí iría el monto real desde la respuesta
+                    totalAPagar: 100
                 });
+
+                localStorage.removeItem('cart');
             } else {
                 setPaymentStatus('failure');
             }
@@ -37,31 +28,53 @@ const PagoSuccess = () => {
     }, [location]);
 
     if (paymentStatus === null) {
-        return <div>Verificando el estado de tu pago...</div>;
+        return (
+            <div className="success-container centered">
+                <div className="status-message">Verificando el estado de tu pago...</div>
+            </div>
+        );
     }
 
     if (paymentStatus === 'failure') {
         return (
-            <div className="success-container">
-                <h1>¡Pago Fallido! 😞</h1>
+            <div className="success-container centered">
+                <div className="container-banner__productos">
+                    <header className="header__productos header__checkout">
+                        Pago Fallido! 😞
+                    </header>
+                </div>
                 <p>Hubo un problema al procesar tu pago. Intenta nuevamente.</p>
-                <Link to="/tienda">Volver a intentar</Link>
+                <Link to="/tienda/Failure">Volver a intentar</Link>
             </div>
         );
     }
 
     return (
-        <div className="success-container">
-            <h1>¡Pago Exitoso! 🎉</h1>
-            <p>Tu compra se ha procesado correctamente.</p>
-            {paymentDetails && (
-                <>
-                    <p><strong>Detalles del pago:</strong></p>
-                    <p>ID de pago: {paymentDetails.payment_id}</p>
-                    <p>Monto: ${paymentDetails.amount}</p>
-                </>
-            )}
-            <Link to="/landing">Volver a la página principal</Link>
+        <div className="success-container centered">
+            <div className="container-banner__productos">
+                <header className="header__productos header__checkout">
+                    Pago Exitoso!
+                </header>
+            </div>
+            <div className="boleta-container">
+                <div className="boleta checkout-box">
+                    <h1>🎉🎉🎉</h1>
+                    <h3 className='checkout-item'>Tu compra se ha procesado correctamente.</h3>
+                    {paymentDetails && (
+                        <>
+                            <h2><strong>Detalles del pago</strong></h2>
+                            <h3>ID {paymentDetails.payment_id}</h3>
+                            <h3>Monto ${paymentDetails.totalAPagar}</h3>
+                        </>
+                    )}
+                </div>
+                <div className="links">
+                    <Link className='btn btn-pay-success' to="/landing">Volver a la página principal</Link>
+                    <Link className='btn btn-pay-success' to="/tienda">Volver a la Tienda</Link>
+                </div>
+            </div>
+
+
         </div>
     );
 };

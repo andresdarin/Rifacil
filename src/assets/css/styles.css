@@ -377,9 +377,21 @@ body {
     width: 100%;
 }
 
-.btn-success:hover {
+.btn-success:hover,
+.btn-pay-success:hover {
     background-color: darkgreen;
 }
+
+.btn-pay-success {
+    text-decoration: none;
+    margin: .5rem !important;
+}
+
+.checkout-item-failure {
+    text-align: center;
+    display: flex;
+}
+
 
 .form-container {
     color: whitesmoke;
@@ -3905,4 +3917,70 @@ button:disabled {
     display: block;
     appearance: none;
 
+}
+
+.pago-success__container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    padding: 2rem;
+    text-align: center;
+}
+
+.pago-success__content {
+    margin-top: 2rem;
+    max-width: 600px;
+}
+
+.pago-success__detalles {
+    margin: 1.5rem 0;
+}
+
+.text__descripcion {
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+}
+
+.text__bold {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.btn__volver {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #0077cc;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn__volver:hover {
+    background-color: #005fa3;
+}
+
+.boleta-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.boleta {
+    background-image: url('../img/HeroAltaVendedor.png');
+    background-color: var(--color5);
+    color: var(--colorWhite);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 10rem;
+}
+
+.boleta h1 {
+    font-size: 5rem;
+    text-align: center;
 }
