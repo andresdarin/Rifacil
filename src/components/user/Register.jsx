@@ -1,8 +1,8 @@
-// src/components/user/Register.jsx
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useForm } from '../../hooks/useForm';
 import { Global } from '../../helpers/Global';
 import { useNavigate } from 'react-router-dom';
+import userDefaultImg from '../../assets/img/Default.png'; // imagen por defecto
 
 const Register = () => {
 
@@ -10,6 +10,17 @@ const Register = () => {
     const [saved, setSaved] = useState('not_sended');
     const [serverMessage, setServerMessage] = useState('');
     const navigate = useNavigate();
+    const [avatarFile, setAvatarFile] = useState(null);
+    const fileInputRef = useRef(null);
+
+    const handleImageChange = (e) => {
+        setAvatarFile(e.target.files[0]);
+    };
+
+    const removeImage = () => {
+        setAvatarFile(null);
+        if (fileInputRef.current) fileInputRef.current.value = null;
+    };
 
     const LoginRedirect = () => {
         navigate('/login');
@@ -19,25 +30,27 @@ const Register = () => {
         e.preventDefault();
 
         try {
-            let newUser = form;
+            let formData = new FormData();
 
-            // 1. Registrar usuario
+            for (const key in form) {
+                formData.append(key, form[key]);
+            }
+
+            if (avatarFile) {
+                formData.append('avatar', avatarFile);
+            }
+
             const registerRequest = await fetch(Global.url + 'usuario/register', {
                 method: 'POST',
-                body: JSON.stringify(newUser),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                body: formData,
             });
 
             const registerData = await registerRequest.json();
-            console.log("Respuesta del servidor (registro):", registerData);
 
             if (registerData.status === 'success') {
                 setSaved('saved');
                 setServerMessage('');
 
-                // 2. Login automático después de registrar
                 const loginRequest = await fetch(Global.url + 'usuario/login', {
                     method: 'POST',
                     body: JSON.stringify({
@@ -50,17 +63,12 @@ const Register = () => {
                 });
 
                 const loginData = await loginRequest.json();
-                console.log("Respuesta del servidor (login):", loginData);
 
                 if (loginData.status === 'success') {
-                    // Guardar token y user en localStorage
                     localStorage.setItem('token', loginData.token);
                     localStorage.setItem('user', JSON.stringify(loginData.user));
-
-                    // Redirigir a landing o dashboard logueado
                     navigate('/landing');
                 } else {
-                    // Si el login falla, redirigir a login para que lo intente manual
                     setSaved('error');
                     setServerMessage('Registro exitoso pero no se pudo iniciar sesión automáticamente. Por favor, inicia sesión.');
                     navigate('/login');
@@ -75,7 +83,6 @@ const Register = () => {
             setServerMessage('Error al conectar con el servidor');
         }
     };
-
 
     return (
         <div className="form-container sign-up">
@@ -97,35 +104,58 @@ const Register = () => {
 
                 <form className='form-login' onSubmit={saveUser}>
                     <div className="form-group form-group_login">
-                        <label htmlFor='nombreUsu' />
+                        <div
+                            className="avatar-preview avatar-preview-register"
+                            onClick={() => fileInputRef.current && fileInputRef.current.click()}
+                        >
+                            {avatarFile ? (
+                                <img
+                                    src={URL.createObjectURL(avatarFile)}
+                                    alt="Vista previa avatar"
+                                />
+                            ) : (
+                                <img
+                                    src={userDefaultImg}
+                                    alt="Imagen por defecto"
+                                />
+                            )}
+                        </div>
+
+
+                        {/* Input file oculto */}
+                        <input
+                            type="file"
+                            accept="image/*"
+                            ref={fileInputRef}
+                            style={{ display: 'none' }}
+                            onChange={handleImageChange}
+                        />
+                    </div>
+
+                    {/* Los demás inputs */}
+
+                    <div className="form-group form-group_login">
                         <input type='text' name='nombreUsu' placeholder='Nombre de usuario' onChange={changed} />
                     </div>
                     <div className="form-group form-group_login">
-                        <label htmlFor='nombreCompleto' />
                         <input type='text' name='nombreCompleto' placeholder='Nombre Completo' onChange={changed} />
                     </div>
                     <div className="form-group form-group_login">
-                        <label htmlFor='ci' />
                         <input type='text' name='ci' placeholder='Documento de identidad' onChange={changed} />
                     </div>
                     <div className="form-group form-group_login">
-                        <label htmlFor='telefono' />
                         <input type='text' name='telefono' placeholder='Teléfono' onChange={changed} />
                     </div>
                     <div className="form-group form-group_login">
-                        <label htmlFor='direccion' />
                         <input type='text' name='direccion' placeholder='Dirección' onChange={changed} />
                     </div>
                     <div className="form-group form-group_login">
-                        <label htmlFor='email' />
                         <input type='email' name='email' placeholder='eMail' onChange={changed} />
                     </div>
                     <div className="form-group form-group_login">
-                        <label htmlFor='password' />
                         <input type='password' name='password' placeholder='Contraseña' onChange={changed} />
                     </div>
                     <div className="form-group form-group_login">
-                        <label htmlFor='passwordRep' />
                         <input type='password' name='passwordRep' placeholder='Confirma tu Contraseña' onChange={changed} />
                     </div>
 

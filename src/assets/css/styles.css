@@ -4038,3 +4038,13 @@ button:disabled {
     width: 15rem;
     margin: 3rem auto auto auto;
 }
+
+.avatar-preview-register {
+    width: 15rem;
+    transition: 0.3s ease;
+
+}
+
+.avatar-preview-register:hover {
+    transform: scale(1.1);
+}

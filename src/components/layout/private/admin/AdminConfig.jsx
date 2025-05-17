@@ -154,7 +154,7 @@ export const AdminConfig = () => {
                 <header className='header__vendedor header__vendedor-config'>Editar Perfil</header>
             </div>
             <div className="config-admin-w-avatar">
-                <div className="avatar-preview" onClick={handleImageClick}>
+                <div className="avatar-preview avatar-Prof" onClick={handleImageClick}>
                     <img src={avatarPreview} alt="Avatar" className="avatar-img" />
 
                     <input
