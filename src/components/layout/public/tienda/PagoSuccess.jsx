@@ -12,6 +12,7 @@ const PagoSuccess = () => {
         const paymentId = queryParams.get('payment_id');
         const status = queryParams.get('status');
         const total = queryParams.get('total');
+        const externalReference = queryParams.get('external_reference');
 
         if (paymentId && status) {
             if (status === 'approved') {
@@ -22,11 +23,15 @@ const PagoSuccess = () => {
                 });
 
                 localStorage.removeItem('cart');
+
+                // Llamar al backend para registrar la compra y actualizar metas
+                fetch(`https://tu-api.com/api/pago/exito?payment_id=${paymentId}&status=${status}&external_reference=${externalReference}`);
             } else {
                 setPaymentStatus('failure');
             }
         }
     }, [location]);
+
 
     if (paymentStatus === null) {
         return (
@@ -66,6 +71,7 @@ const PagoSuccess = () => {
                         <>
                             <h2><strong>Detalles del pago</strong></h2>
                             <h3>ID {paymentDetails.payment_id}</h3>
+                            <h3>ID {paymentDetails.status}</h3>
                             <h3>Monto ${paymentDetails.totalAPagar}</h3>
                         </>
                     )}
