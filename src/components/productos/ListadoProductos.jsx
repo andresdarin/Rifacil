@@ -226,6 +226,9 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
         }));
     };
 
+    const hasVentas = productos.some(producto => producto.cantidadVendidos > 0);
+
+
     return (
         <>
             {showHeroSection && (
@@ -253,6 +256,13 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                         {productos.length > 0 ? (
                             productos.map((producto) => (
                                 <div key={producto._id} className="card card-productos">
+                                    <div className="img-container-list-prod">
+                                        <img
+                                            className='img'
+                                            src={producto.imagen ? `${Global.url}uploads/${producto.imagen}` : '/images/default-product.png'}
+                                            alt={producto.nombreProducto}
+                                        />
+                                    </div>
                                     <div>
                                         <h1>{producto.nombreProducto}</h1>
                                         <h4>${producto.precio}</h4>
@@ -295,12 +305,14 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                     </div>
 
                     {/* Gráfico de Doughnut - Manteniendo la estructura */}
-                    <div className="chart-title-container">
-                        <h2 className='emptyMessage'>Estadísticas de venta</h2>
-                        <div className={`chart-container ${productos.length === 0 ? 'hidden' : ''}`}>
-                            <Doughnut data={data} options={options} />
+                    {hasVentas && (
+                        <div className="chart-title-container">
+                            <h2 className='emptyMessage'>Estadísticas de venta</h2>
+                            <div className="chart-container">
+                                <Doughnut data={data} options={options} />
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
 
                 {/* Paginado */}

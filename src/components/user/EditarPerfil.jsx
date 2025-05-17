@@ -1,5 +1,5 @@
 // src/components/user/EditarPerfil.jsx
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from '../../hooks/useForm';
 import { Global } from '../../helpers/Global';
 import { useNavigate } from 'react-router-dom';
@@ -7,12 +7,34 @@ import { useNavigate } from 'react-router-dom';
 export const EditarPerfil = () => {
     const [saved, setSaved] = useState('not_sended');
     const [serverMessage, setServerMessage] = useState('');
+    const [previewImage, setPreviewImage] = useState(null); // Para mostrar la imagen antes de subir
     const navigate = useNavigate();
+    const imageInputRef = useRef(null); // << Referencia al input file
 
     const user = JSON.parse(localStorage.getItem('user')); // Usuario logueado
     const token = localStorage.getItem('token');
 
-    const { form, changed, setForm } = useForm(user || {}); // Precargar los datos
+    // Inicializa el formulario con datos del usuario
+    const { form, changed, setForm } = useForm(user || {});
+
+    // Manejar la selección de imagen para mostrar vista previa y actualizar el form
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            // Vista previa
+            const reader = new FileReader();
+            reader.onload = () => {
+                setPreviewImage(reader.result);
+            };
+            reader.readAsDataURL(file);
+
+            // Guardar el archivo en el form para enviar al backend
+            setForm({
+                ...form,
+                image: file,
+            });
+        }
+    };
 
     const updateUser = async (e) => {
         e.preventDefault();
@@ -23,23 +45,43 @@ export const EditarPerfil = () => {
         }
 
         try {
+            // Usamos FormData para enviar la imagen junto con el resto de campos
+            const formData = new FormData();
+
+            // Agregar campos del formulario (menos la imagen que ya está separada)
+            Object.keys(form).forEach(key => {
+                if (key !== 'image') {
+                    formData.append(key, form[key]);
+                }
+            });
+
+            // Si hay imagen, la añadimos
+            if (form.image) {
+                formData.append('image', form.image);
+            }
+
             const request = await fetch(Global.url + 'usuario/update', {
                 method: 'PUT',
-                body: JSON.stringify(form),
+                body: formData,
                 headers: {
-                    'Content-Type': 'application/json',
                     'Authorization': token
+                    // No ponemos Content-Type porque fetch con FormData lo asigna automáticamente
                 }
             });
 
             const data = await request.json();
             console.log("Respuesta del servidor:", data);
 
-
             if (data.status === 'success') {
                 setSaved('saved');
                 setServerMessage('');
                 localStorage.setItem('user', JSON.stringify(data.user)); // Actualizar localStorage
+
+                // Actualizar preview con la nueva imagen (si la hay)
+                if (data.user.imagen) {
+                    setPreviewImage(Global.url + 'user/avatar/' + data.user.imagen);
+                }
+
                 if (data.user.rol === 'admin') {
                     navigate('/admin/profile');
                 } else if (data.user.rol === 'vendedor') {
@@ -59,29 +101,28 @@ export const EditarPerfil = () => {
     };
 
     const handleDeleteAccount = async () => {
-        const token = localStorage.getItem('token')
+        const token = localStorage.getItem('token');
         const confirmDelete = window.confirm(
             '¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.'
         );
         if (!confirmDelete) return;
 
-        // 1. Sacar el id del usuario
         const userData = JSON.parse(localStorage.getItem('user'));
+        console.log('userData', userData)
         const userId = userData?.id || userData?._id;
+        console.log('userId', userId)
         if (!userId) {
             alert('Error interno: no se encontró el ID de usuario.');
             return;
         }
 
         try {
-            // 2. Llamar a la ruta DELETE con el id
             const response = await fetch(
                 `${Global.url}usuario/logicDelete/${userId}`,
                 {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
-                        // 3. Asegúrate del formato que espera tu middleware
                         'Authorization': token
                     }
                 }
@@ -102,6 +143,18 @@ export const EditarPerfil = () => {
         }
     };
 
+    const handleImageClick = () => {
+        // Simula el click en el input oculto
+        imageInputRef.current.click();
+    };
+
+    // Construir avatarUrl correctamente
+    const avatarUrl = previewImage
+        ? previewImage
+        : user?.imagen
+            ? Global.url + 'uploads/avatars/' + user.imagen
+            : null;
+
 
     return (
         <div className='edit__layout'>
@@ -113,7 +166,6 @@ export const EditarPerfil = () => {
 
                 <div className='login-card login-card__edit'>
 
-
                     {saved === 'saved' && (
                         <strong className='alert alert-success'>
                             Datos actualizados correctamente
@@ -124,6 +176,44 @@ export const EditarPerfil = () => {
                             {serverMessage}
                         </strong>
                     )}
+
+                    {/* Imagen de perfil con input oculto */}
+                    <div className="profile-image-preview" style={{ marginBottom: '15px', cursor: 'pointer' }}>
+                        {avatarUrl ? (
+                            <>
+                                <img
+                                    src={avatarUrl}
+                                    alt="Imagen de perfil"
+                                    style={{
+                                        width: '150px',
+                                        height: '150px',
+                                        borderRadius: '50%',
+                                        objectFit: 'cover',
+                                        cursor: 'pointer'
+                                    }}
+                                    onClick={handleImageClick}
+                                />
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    ref={imageInputRef}
+                                    style={{ display: 'none' }}
+                                    onChange={handleImageChange}
+                                />
+                            </>
+                        ) : (
+                            <>
+                                <p onClick={handleImageClick} style={{ cursor: 'pointer' }}>No hay imagen de perfil (haz clic para subir)</p>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    ref={imageInputRef}
+                                    style={{ display: 'none' }}
+                                    onChange={handleImageChange}
+                                />
+                            </>
+                        )}
+                    </div>
 
                     <form className='form-login' onSubmit={updateUser}>
                         <div className="form-group form-group_login">
@@ -190,7 +280,6 @@ export const EditarPerfil = () => {
                                 required
                             />
                         </div>
-                        {/* Opcionalmente puedes permitir cambiar contraseña */}
                         <div className="form-group form-group_login">
                             <button
                                 type="button"
@@ -200,7 +289,6 @@ export const EditarPerfil = () => {
                                 Cambiar contraseña
                             </button>
                         </div>
-
 
                         <div className="buttons-login buttons-register">
                             <button type="button" className='btn' onClick={() => navigate(-1)}>Cancelar</button>
@@ -214,7 +302,6 @@ export const EditarPerfil = () => {
                 >
                     Borrar Cuenta Permanentemente!
                 </button>
-
             </div>
         </div>
     );

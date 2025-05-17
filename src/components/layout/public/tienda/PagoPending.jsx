@@ -12,7 +12,7 @@ export const PagoPending = () => {
 
             <div className="boleta-container">
                 <div className="boleta checkout-box">
-                    <h1>⌛</h1>
+                    <h1>⌛⌛⌛</h1>
                     <h3 className='checkout-item'>Estamos procesando tu pago</h3>
                     <p>No te preocupes, en unas horas te avisaremos por e-mail si se acreditó correctamente.</p>
                 </div>

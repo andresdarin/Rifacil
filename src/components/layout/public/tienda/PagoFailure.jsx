@@ -11,7 +11,7 @@ export const PagoFailure = () => {
             </div>
             <div className="boleta-container">
                 <div className="boleta checkout-box">
-                    <h1>😞</h1>
+                    <h1>😞😞😞</h1>
                     <h3 className='checkout-item '>
                         No pudimos procesar tu pago correctamente.
                     </h3>

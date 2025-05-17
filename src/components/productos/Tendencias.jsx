@@ -49,7 +49,7 @@ const Tendencias = () => {
             if (data.status === 'success' && Array.isArray(data.products)) {
                 setProductos(data.products);
             } else {
-                setError('No se pudieron obtener las tendencias.');
+                setProductos([]);  // No hay productos, pero no es error
             }
         } catch (error) {
             setError(error.message || 'Ocurrió un error al obtener las tendencias.');
@@ -58,12 +58,18 @@ const Tendencias = () => {
         }
     };
 
+
     useEffect(() => {
         fetchTendencias();
     }, []);
 
-    if (loading) return <div className="tendencias-container">Cargando tendencias...</div>;
-    if (error) return <div className="tendencias-container">Error: {error}</div>;
+
+
+    if (!loading && productos.length === 0) {
+        return <div className="tendencias-container tendencias-msg">No hay tendencias para mostrar aún.</div>;
+    }
+    if (loading) return <div className="tendencias-container tendencias-msg">Cargando tendencias...</div>;
+    if (error) return <div className="tendencias-container tendencias-msg">Error: {error}</div>;
 
     // Genera colores consistentes para cada producto
     const generateConsistentColors = (index) => {

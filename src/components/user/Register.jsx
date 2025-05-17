@@ -21,7 +21,8 @@ const Register = () => {
         try {
             let newUser = form;
 
-            const request = await fetch(Global.url + 'usuario/register', {
+            // 1. Registrar usuario
+            const registerRequest = await fetch(Global.url + 'usuario/register', {
                 method: 'POST',
                 body: JSON.stringify(newUser),
                 headers: {
@@ -29,16 +30,44 @@ const Register = () => {
                 }
             });
 
-            const data = await request.json();
-            console.log("Respuesta del servidor:", data);
+            const registerData = await registerRequest.json();
+            console.log("Respuesta del servidor (registro):", registerData);
 
-            if (data.status === 'success') {
+            if (registerData.status === 'success') {
                 setSaved('saved');
                 setServerMessage('');
-                navigate('/landing');
+
+                // 2. Login automático después de registrar
+                const loginRequest = await fetch(Global.url + 'usuario/login', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        email: form.email,
+                        password: form.password
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const loginData = await loginRequest.json();
+                console.log("Respuesta del servidor (login):", loginData);
+
+                if (loginData.status === 'success') {
+                    // Guardar token y user en localStorage
+                    localStorage.setItem('token', loginData.token);
+                    localStorage.setItem('user', JSON.stringify(loginData.user));
+
+                    // Redirigir a landing o dashboard logueado
+                    navigate('/landing');
+                } else {
+                    // Si el login falla, redirigir a login para que lo intente manual
+                    setSaved('error');
+                    setServerMessage('Registro exitoso pero no se pudo iniciar sesión automáticamente. Por favor, inicia sesión.');
+                    navigate('/login');
+                }
             } else {
                 setSaved('error');
-                setServerMessage(data.message || 'Ocurrió un error inesperado');
+                setServerMessage(registerData.message || 'Ocurrió un error inesperado');
             }
         } catch (error) {
             console.error("Error en fetch:", error);
@@ -46,6 +75,7 @@ const Register = () => {
             setServerMessage('Error al conectar con el servidor');
         }
     };
+
 
     return (
         <div className="form-container sign-up">

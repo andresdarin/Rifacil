@@ -11,13 +11,14 @@ const PagoSuccess = () => {
         const queryParams = new URLSearchParams(location.search);
         const paymentId = queryParams.get('payment_id');
         const status = queryParams.get('status');
+        const total = queryParams.get('total');
 
         if (paymentId && status) {
             if (status === 'approved') {
                 setPaymentStatus('success');
                 setPaymentDetails({
                     payment_id: paymentId,
-                    totalAPagar: 100
+                    totalAPagar: parseFloat(total)
                 });
 
                 localStorage.removeItem('cart');
@@ -48,6 +49,7 @@ const PagoSuccess = () => {
             </div>
         );
     }
+
 
     return (
         <div className="success-container centered">
