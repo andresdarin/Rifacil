@@ -4,7 +4,6 @@ import { Global } from '../../../../../helpers/Global';
 export const IngresosTotales = () => {
     const [ingresosTotales, setIngresosTotales] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
     const token = localStorage.getItem('token');
 
     useEffect(() => {
@@ -19,14 +18,15 @@ export const IngresosTotales = () => {
                 });
 
                 if (!response.ok) {
-                    throw new Error(`Error HTTP: ${response.status}`);
+                    setIngresosTotales(0); // Si hay error HTTP, asumimos ingresos cero
+                    return;
                 }
 
                 const data = await response.json();
                 setIngresosTotales(data.ingresosTotales);
             } catch (err) {
                 console.error('Error al obtener los ingresos totales:', err.message);
-                setError(err.message);
+                setIngresosTotales(0); // También en errores de red
             } finally {
                 setLoading(false);
             }
@@ -36,7 +36,6 @@ export const IngresosTotales = () => {
     }, [token]);
 
     if (loading) return <p>Cargando ingresos...</p>;
-    if (error) return <p>Error: {error}</p>;
 
     return (
         <div className="ingresos-container">
@@ -44,7 +43,11 @@ export const IngresosTotales = () => {
                 <span role="img" aria-label="money-bag">💰</span>
             </div>
             <h2 className="ingresos-title">Ingresos Totales por Rifas</h2>
-            <p className="ingresos-amount">${ingresosTotales?.toLocaleString()}</p>
+            {
+                ingresosTotales === 0
+                    ? <p className="ingresos-amount-none">Aún no hay ingresos registrados.</p>
+                    : <p className="ingresos-amount">${ingresosTotales?.toLocaleString()}</p>
+            }
         </div>
     );
 };

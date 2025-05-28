@@ -20,7 +20,7 @@ export const TotalRifasVendidas = () => {
                 });
 
                 if (!response.ok) {
-                    throw new Error(`Error HTTP: ${response.status}`);
+                    throw new Error(`${response.status}`);
                 }
 
                 const data = await response.json();

@@ -4,36 +4,70 @@ import { useLocation, Link } from 'react-router-dom';
 const PagoSuccess = () => {
     const [paymentStatus, setPaymentStatus] = useState(null);
     const [paymentDetails, setPaymentDetails] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     const location = useLocation();
 
     useEffect(() => {
-        const queryParams = new URLSearchParams(location.search);
-        const paymentId = queryParams.get('payment_id');
-        const status = queryParams.get('status');
-        const total = queryParams.get('total');
-        const externalReference = queryParams.get('external_reference');
+        const confirmPayment = async () => {
+            try {
+                setIsLoading(true);
+                const queryParams = new URLSearchParams(location.search);
 
-        if (paymentId && status) {
-            if (status === 'approved') {
-                setPaymentStatus('success');
-                setPaymentDetails({
-                    payment_id: paymentId,
-                    totalAPagar: parseFloat(total)
-                });
+                // Obtener todos los parámetros necesarios
+                const paymentId = queryParams.get('payment_id');
+                const status = queryParams.get('status');
+                const external_reference = queryParams.get('external_reference');
+                const total = queryParams.get('total');
 
-                localStorage.removeItem('cart');
+                // Verificar que tenemos los parámetros necesarios
+                if (!paymentId || !status || !external_reference) {
+                    throw new Error('Faltan parámetros necesarios para confirmar el pago');
+                }
 
-                // Llamar al backend para registrar la compra y actualizar metas
-                fetch(`https://tu-api.com/api/pago/exito?payment_id=${paymentId}&status=${status}&external_reference=${externalReference}`);
-            } else {
+                if (status === 'approved') {
+                    // Llamar a la API para confirmar el pago en el backend usando fetch
+                    const url = `http://localhost:4001/api/pago/exito?payment_id=${paymentId}&status=${status}&external_reference=${external_reference}`;
+
+                    const response = await fetch(url);
+
+                    if (!response.ok) {
+                        throw new Error('Error en la respuesta del servidor');
+                    }
+
+                    const data = await response.json();
+
+                    // Verificar la respuesta del servidor
+                    if (data && data.estadoPago === 'aprobado') {
+                        setPaymentStatus('success');
+                        setPaymentDetails({
+                            payment_id: paymentId,
+                            totalAPagar: parseFloat(total),
+                            external_reference: external_reference
+                        });
+
+                        // Limpiar el carrito después de un pago exitoso
+                        localStorage.removeItem('cart');
+                    } else {
+                        throw new Error('El servidor no confirmó la aprobación del pago');
+                    }
+                } else {
+                    setPaymentStatus('failure');
+                }
+            } catch (err) {
+                console.error('Error al confirmar el pago:', err);
+                setError(err.message || 'Hubo un error al procesar tu pago');
                 setPaymentStatus('failure');
+            } finally {
+                setIsLoading(false);
             }
-        }
+        };
+
+        confirmPayment();
     }, [location]);
 
-
-    if (paymentStatus === null) {
+    if (isLoading) {
         return (
             <div className="success-container centered">
                 <div className="status-message">Verificando el estado de tu pago...</div>
@@ -41,7 +75,7 @@ const PagoSuccess = () => {
         );
     }
 
-    if (paymentStatus === 'failure') {
+    if (error || paymentStatus === 'failure') {
         return (
             <div className="success-container centered">
                 <div className="container-banner__productos">
@@ -49,12 +83,11 @@ const PagoSuccess = () => {
                         Pago Fallido! 😞
                     </header>
                 </div>
-                <p>Hubo un problema al procesar tu pago. Intenta nuevamente.</p>
+                <p>{error || 'Hubo un problema al procesar tu pago. Intenta nuevamente.'}</p>
                 <Link to="/tienda/Failure">Volver a intentar</Link>
             </div>
         );
     }
-
 
     return (
         <div className="success-container centered">
@@ -71,7 +104,9 @@ const PagoSuccess = () => {
                         <>
                             <h2><strong>Detalles del pago</strong></h2>
                             <h3>ID {paymentDetails.payment_id}</h3>
-                            <h3>ID {paymentDetails.status}</h3>
+                            {paymentDetails.external_reference && (
+                                <h3>Referencia: {paymentDetails.external_reference}</h3>
+                            )}
                             <h3>Monto ${paymentDetails.totalAPagar}</h3>
                         </>
                     )}
@@ -81,8 +116,6 @@ const PagoSuccess = () => {
                     <Link className='btn btn-pay-success' to="/tienda">Volver a la Tienda</Link>
                 </div>
             </div>
-
-
         </div>
     );
 };

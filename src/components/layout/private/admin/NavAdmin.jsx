@@ -75,6 +75,16 @@ export const NavAdmin = () => {
                     {isDropdownOpen && (
                         <ul className="dropdown-menu">
                             <li className="dropdown-menu__item">
+                                <NavLink to="/admin/rifas/sorteo" className="dropdown-menu__link" onClick={closeMenu}>
+                                    Agendar Sorteo
+                                </NavLink>
+                            </li>
+                            <li className="dropdown-menu__item">
+                                <NavLink to="/admin/rifas/premios" className="dropdown-menu__link" onClick={closeMenu}>
+                                    Premios
+                                </NavLink>
+                            </li>
+                            <li className="dropdown-menu__item">
                                 <NavLink to="/admin/rifas/crear" className="dropdown-menu__link" onClick={closeMenu}>
                                     Generación
                                 </NavLink>
@@ -90,18 +100,8 @@ export const NavAdmin = () => {
                                 </NavLink>
                             </li>
                             <li className="dropdown-menu__item">
-                                <NavLink to="/admin/rifas/premios" className="dropdown-menu__link" onClick={closeMenu}>
-                                    Premios
-                                </NavLink>
-                            </li>
-                            <li className="dropdown-menu__item">
-                                <NavLink to="/admin/rifas/sorteo" className="dropdown-menu__link" onClick={closeMenu}>
-                                    Agendar Sorteo
-                                </NavLink>
-                            </li>
-                            <li className="dropdown-menu__item">
                                 <NavLink to="/admin/rifas/sortear" className="dropdown-menu__link" onClick={closeMenu}>
-                                    SORTEAR
+                                    SORTEAR🍀
                                 </NavLink>
                             </li>
                         </ul>

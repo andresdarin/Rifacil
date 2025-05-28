@@ -34,14 +34,14 @@ export const AltaVendedor = () => {
         }
     };
 
-    const validRoles = ['vendedor', 'admin']; // Define aquí los roles válidos
+    const validRoles = ['vendedor']; // Define aquí los roles válidos
 
     const saveVendedor = async (e) => {
         e.preventDefault();
 
         // Validar rol
         if (!form.rol || !validRoles.includes(form.rol.toLowerCase())) {
-            setErrorRol(`Rol no válido. Debe ser uno de: ${validRoles.join(', ')}`);
+            setErrorRol(`Rol no válido. Debe ser ${validRoles.join(', ')}`);
             setSaved('error');
             return;
         } else {
@@ -193,11 +193,14 @@ export const AltaVendedor = () => {
                         <input
                             type="text"
                             id="rol"
-                            placeholder={`Rol (ej: ${validRoles.join(', ')})`}
+                            placeholder='Rol'
                             name="rol"
                             required
                             autoComplete="off"
-                            onChange={changed}
+                            onChange={(e) => {
+                                e.target.value = e.target.value.toLowerCase();
+                                changed(e); //aca es donde cambio el rol a minussss
+                            }}
                         />
                     </div>
 

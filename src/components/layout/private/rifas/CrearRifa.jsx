@@ -120,7 +120,8 @@ export const CrearRifa = () => {
                         onChange={handleFechaChange}
                         minDate={new Date()}
                         dateFormat="dd-MM-yyyy"
-                        className="input_fecha-crear"
+                        calendarClassName="custom-datepicker"
+                        className="input_fecha-crear input_fecha--crear"
                     />
                 </div>
 

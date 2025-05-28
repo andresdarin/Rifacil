@@ -28,18 +28,28 @@ export const Tienda = () => {
                 if (!token) throw new Error('Sin token de autorización.');
 
                 const res1 = await fetch(`${Global.url}rifa/listarRifas?page=1&limit=${rifasPerPage}`, {
-                    method: 'GET', headers: { 'Content-Type': 'application/json', Authorization: token }
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: token
+                    }
                 });
                 const data1 = await res1.json();
                 const totalRifas = data1.totalRifas;
 
                 const res2 = await fetch(`${Global.url}rifa/listarRifas?page=1&limit=${totalRifas}`, {
-                    method: 'GET', headers: { 'Content-Type': 'application/json', Authorization: token }
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: token
+                    }
                 });
-                const data2 = await res2.json();
+                const todasLasRifas = await res2.json();
 
-                setAllRifas(data2.rifas);
-                setFilteredRifas(data2.rifas);
+                const rifasConPagoFalse = todasLasRifas.rifas.filter(rifa => rifa.pagoRealizado === false);
+                setAllRifas(rifasConPagoFalse);
+                setFilteredRifas(rifasConPagoFalse);
+
             } catch (err) {
                 console.error(err);
             }
@@ -82,44 +92,90 @@ export const Tienda = () => {
     const [searchTermProd, setSearchTermProd] = useState('');
     const [expanded, setExpanded] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
-    const productsPerPage = 10;
+    const [totalPages, setTotalPages] = useState(1);
+    const [isSearching, setIsSearching] = useState(false);
 
-    useEffect(() => {
-        const fetchProductos = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                const res = await fetch(`${Global.url}producto/listar-todos-los-productos`, {
-                    method: 'GET', headers: { 'Content-Type': 'application/json', Authorization: token }
-                });
-                const data = await res.json();
-                if (data.status === 'success') setProductos(data.products);
-            } catch (err) {
-                console.error(err);
-            }
-        };
-        fetchProductos();
-    }, []);
-
-    const fetchProductosByName = async () => {
+    // Función para cargar productos por página
+    const fetchProductos = async (page = 1) => {
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch(`${Global.url}producto/filtrarProducto/${searchTermProd}`, {
-                method: 'GET', headers: { 'Content-Type': 'application/json', Authorization: token }
+            const res = await fetch(`${Global.url}producto/listProductos/${page}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: token
+                }
             });
+
             const data = await res.json();
-            if (data.status === 'success') setProductos(data.productos);
+            if (data.status === 'success') {
+                setProductos(data.products);
+                setTotalPages(data.pages); // Usar pages del backend
+            }
         } catch (err) {
             console.error(err);
         }
     };
 
-    const indexLastProd = currentPage * productsPerPage;
-    const indexFirstProd = indexLastProd - productsPerPage;
-    const currentProducts = productos.slice(indexFirstProd, indexLastProd);
-    const totalPages = Math.ceil(productos.length / productsPerPage);
+    // Cargar productos iniciales
+    useEffect(() => {
+        if (!isSearching) {
+            fetchProductos(currentPage);
+        }
+    }, [currentPage, isSearching]);
+
+    // Función para buscar productos por nombre
+    const fetchProductosByName = async () => {
+        if (!searchTermProd.trim()) {
+            // Si no hay término de búsqueda, volver a la paginación normal
+            setIsSearching(false);
+            setCurrentPage(1);
+            return;
+        }
+
+        try {
+            const token = localStorage.getItem('token');
+            const res = await fetch(`${Global.url}producto/filtrarProducto/${searchTermProd}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: token
+                }
+            });
+            const data = await res.json();
+            if (data.status === 'success') {
+                setProductos(data.productos);
+                setIsSearching(true);
+                setCurrentPage(1);
+                // Calcular páginas para resultados de búsqueda (paginación del lado del cliente)
+                setTotalPages(Math.ceil(data.productos.length / 10)); // Asumiendo 10 por página
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    // Limpiar búsqueda cuando se borra el input
+    useEffect(() => {
+        if (!searchTermProd.trim() && isSearching) {
+            setIsSearching(false);
+            setCurrentPage(1);
+        }
+    }, [searchTermProd, isSearching]);
+
+    // Para los productos mostrados, si estamos buscando hacemos paginación del lado del cliente
+    const currentProducts = isSearching
+        ? productos.slice((currentPage - 1) * 10, currentPage * 10)
+        : productos;
 
     const toggleDesc = id => setExpanded(prev => ({ ...prev, [id]: !prev[id] }));
-    const paginateProd = n => setCurrentPage(n);
+
+    const paginateProd = (page) => {
+        if (page >= 1 && page <= totalPages) {
+            setCurrentPage(page);
+        }
+    };
+
     const handleAddToCart = prod => addItem(prod);
     const goToCart = () => navigate('/tienda/carrito');
 

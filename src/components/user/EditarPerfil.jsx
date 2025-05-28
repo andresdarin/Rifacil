@@ -284,7 +284,7 @@ export const EditarPerfil = () => {
                             <button
                                 type="button"
                                 className="btn"
-                                onClick={() => navigate('/reset-password/' + localStorage.getItem('token'))}
+                                onClick={() => navigate('/recover-pass')}
                             >
                                 Cambiar contraseña
                             </button>
