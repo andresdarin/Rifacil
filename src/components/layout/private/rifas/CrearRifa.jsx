@@ -13,7 +13,6 @@ export const CrearRifa = () => {
     const token = localStorage.getItem('token');
 
     useEffect(() => {
-        document.body.style.backgroundImage = "url('/src/assets/img/BackgroundLong.png')";
         document.body.style.backgroundSize = 'cover';
         document.body.style.backgroundPosition = 'center';
         return () => { document.body.style.backgroundImage = ''; };

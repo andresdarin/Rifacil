@@ -9,7 +9,6 @@ export const Profile = () => {
 	const [userImage, setUserImage] = useState('/src/assets/img/user.png');
 
 	useEffect(() => {
-		document.body.style.backgroundImage = "url('/src/assets/img/BackgroundLong.png')";
 		document.body.style.backgroundSize = "cover";
 		document.body.style.backgroundPosition = "center";
 

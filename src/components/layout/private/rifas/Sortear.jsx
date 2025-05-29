@@ -10,7 +10,6 @@ export const Sortear = () => {
 
     useEffect(() => {
         // Configurar fondo al montar el componente
-        document.body.style.backgroundImage = "url('/src/assets/img/BackgroundLong.png')";
         document.body.style.backgroundSize = "cover";
         document.body.style.backgroundPosition = "center";
 

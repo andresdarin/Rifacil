@@ -11,7 +11,6 @@ export const Premios = () => {
 
     // Cambiar el fondo de la página
     useEffect(() => {
-        document.body.style.backgroundImage = "url('/src/assets/img/BackgroundLong.png')";
         document.body.style.backgroundSize = "cover";
         document.body.style.backgroundPosition = "center";
 
