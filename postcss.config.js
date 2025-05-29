@@ -1,10 +1,10 @@
-module.exports = {
+export default {
     plugins: {
         'postcss-pxtorem': {
-            rootValue: 16, // 1rem = 16px
+            rootValue: 16,
             unitPrecision: 5,
-            propList: ['*'], // convierte todos los props
-            selectorBlackList: [], // excluye clases si querés (ej. ['.no-rem'])
+            propList: ['*'],
+            selectorBlackList: [],
             replace: true,
             mediaQuery: false,
             minPixelValue: 0
