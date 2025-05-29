@@ -583,27 +583,27 @@ body,
 
 /* Imágenes de fondo para las columnas */
 .column1 {
-    background-image: url('/src/assets/img/ImgLP1.jpg');
+    background-image: url('../img/ImgLP1.jpg');
 }
 
 .column2 {
-    background-image: url('/src/assets/img/ImgLP2.png');
+    background-image: url('../img/ImgLP2.png');
 }
 
 .column3 {
-    background-image: url('/src/assets/img/ImgLP2.png');
+    background-image: url('../img/ImgLP2.png');
 }
 
 .column4 {
-    background-image: url('/src/assets/img/ImgLP4.jpg');
+    background-image: url('../img/ImgLP4.jpg');
 }
 
 .column5 {
-    background-image: url('/src/assets/img/ImgLP5.jpg');
+    background-image: url('../img/ImgLP5.jpg');
 }
 
 .column6 {
-    background-image: url('/src/assets/img/ImgLP2.png');
+    background-image: url('../img/ImgLP2.png');
 }
 
 .article_title {
@@ -3263,7 +3263,7 @@ button:disabled {
 }
 
 .cliente-item {
-    background-image: url(/src/assets/img/HeroAltaVendedor.png);
+    background-image: url('../img/HeroAltaVendedor.png');
     padding: 1rem;
     border-radius: 0.6rem 2rem 0.6rem 2rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
