@@ -4081,7 +4081,7 @@ button:disabled {
 .avatar-preview-register {
     width: 15rem;
     transition: 0.3s ease;
-
+    margin: 3rem;
 }
 
 .avatar-preview-register:hover {

@@ -40,10 +40,7 @@ export const Profile = () => {
 
 	return (
 		<div className="container-banner_main">
-			<div
-				className="container-banner__vendedor"
-				style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
-			>
+			<div className="container-banner__vendedor">
 				<header className="header__vendedor header__admin">Admin</header>
 
 			</div>

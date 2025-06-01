@@ -87,9 +87,6 @@ const Register = () => {
     return (
         <div className="form-container sign-up">
             <div className='login-card'>
-                <header className="content__header content__header--public">
-                    <h1 className="content__title content__title-register">Registro</h1>
-                </header>
 
                 {saved === 'saved' && (
                     <strong className='alert alert-success'>

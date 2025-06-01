@@ -39,7 +39,7 @@ const PagoSuccess = () => {
                     const data = await response.json();
 
                     // Verificar la respuesta del servidor
-                    if (data && data.estadoPago === 'aprobado') {
+                    if (status === 'approved') {
                         setPaymentStatus('success');
                         setPaymentDetails({
                             payment_id: paymentId,
@@ -47,7 +47,6 @@ const PagoSuccess = () => {
                             external_reference: external_reference
                         });
 
-                        // Limpiar el carrito después de un pago exitoso
                         localStorage.removeItem('cart');
                     } else {
                         throw new Error('El servidor no confirmó la aprobación del pago');
