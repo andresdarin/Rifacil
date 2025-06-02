@@ -2945,7 +2945,6 @@ button:disabled {
 .edit__layout {
     display: flex;
     flex-direction: column;
-    height: 73vw;
 }
 
 .login-card__edit {

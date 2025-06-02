@@ -17,7 +17,6 @@ export const AdminConfig = () => {
 
     useEffect(() => {
         // fondo
-        document.body.style.backgroundImage = "url('/src/assets/img/BackGorundVendedor.png')";
         document.body.style.backgroundSize = "cover";
         document.body.style.backgroundPosition = "center";
 
