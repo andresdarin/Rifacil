@@ -179,7 +179,7 @@ export const Premios = () => {
 
     return (
         <div className="premios-container">
-            <div className="container-banner__vendedor container-banner_premios">
+            <div className="container-banner__productos container-banner_premios">
                 <header className="header__vendedor header_premios">Premios</header>
             </div>
 

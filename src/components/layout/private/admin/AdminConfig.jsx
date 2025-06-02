@@ -150,7 +150,7 @@ export const AdminConfig = () => {
 
     return (
         <div>
-            <div className="container-banner__vendedor">
+            <div className="container-banner__productos">
                 <header className='header__vendedor header__vendedor-config'>Editar Perfil</header>
             </div>
             <div className="config-admin-w-avatar">

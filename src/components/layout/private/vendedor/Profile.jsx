@@ -78,7 +78,7 @@ export const Profile = () => {
 
     return (
         <div className='container-banner_metas'>
-            <div className="container-banner__vendedor">
+            <div className="container-banner__productos">
                 <header className='header__vendedor header__vendedor_prof'>{vendedor.nombreUsu}</header>
 
                 {avatarUrl && (

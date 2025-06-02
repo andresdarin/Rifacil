@@ -72,7 +72,7 @@ export const HistorialVendedor = () => {
 
     return (
         <>
-            <div className="container-banner__vendedor">
+            <div className="container-banner__productos">
                 <header className="header__vendedor header__vendedor-historial">Historial de Ventas</header>
             </div>
 

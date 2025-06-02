@@ -76,7 +76,7 @@ export const CrearRifa = () => {
 
     return (
         <div>
-            <div className="container-banner__vendedor">
+            <div className="container-banner__productos">
                 <header className="header__vendedor header__alta-rifa">Alta</header>
             </div>
 
@@ -106,7 +106,7 @@ export const CrearRifa = () => {
                     <i className="fas fa-usd currency" aria-hidden="true"></i>
                     <input
                         type="number"
-                        className="input_precio"
+                        className="input_precio input_fecha-crear input_fecha--crear"
                         value={precio}
                         onChange={handlePrecioChange}
                         min="0"
@@ -120,7 +120,7 @@ export const CrearRifa = () => {
                         minDate={new Date()}
                         dateFormat="dd-MM-yyyy"
                         calendarClassName="custom-datepicker"
-                        className="input_fecha-crear input_fecha--crear"
+                        className="input_precio input_fecha-crear input_fecha--crear"
                     />
                 </div>
 

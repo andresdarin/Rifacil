@@ -158,7 +158,7 @@ export const EditarPerfil = () => {
 
     return (
         <div className='edit__layout'>
-            <header className="container-banner__vendedor">
+            <header className="container-banner__productos header__editar-perfil">
                 <h1 className="header__vendedor">Editar Perfil</h1>
             </header>
 
@@ -291,7 +291,7 @@ export const EditarPerfil = () => {
                         </div>
 
                         <div className="buttons-login buttons-register">
-                            <button type="button" className='btn' onClick={() => navigate(-1)}>Cancelar</button>
+                            <button type="button" className='btn btn-cancelar-editar' onClick={() => navigate(-1)}>Cancelar</button>
                             <button type="submit" className='btn'>Guardar Cambios</button>
                         </div>
                     </form>

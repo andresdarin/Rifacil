@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Global } from '../../../../helpers/Global';
 
 const ListadoRifas = ({ refresh }) => {
@@ -13,7 +13,9 @@ const ListadoRifas = ({ refresh }) => {
 
     const token = localStorage.getItem('token');
 
-    // Función para obtener las rifas desde la API
+    // Ref para guardar la posición del scroll
+    const scrollPos = useRef(0);
+
     const fetchRifas = async (page) => {
         setLoading(true);
         setError(null);
@@ -27,7 +29,6 @@ const ListadoRifas = ({ refresh }) => {
             if (!response.ok) throw new Error('Error al obtener la lista de rifas');
             const data = await response.json();
 
-            // Actualizar el estado con los datos recibidos
             setRifas(data.rifas);
             setTotalRifas(data.totalRifas);
             setTotalPages(data.totalPages);
@@ -39,29 +40,53 @@ const ListadoRifas = ({ refresh }) => {
         }
     };
 
-    // Efecto para cargar las rifas cada vez que cambie la página o el parámetro `refresh`
     useEffect(() => {
         fetchRifas(currentPage);
     }, [currentPage, refresh]);
 
-    // Filtrar las rifas en el frontend
+    // Después de que se actualizan las rifas (y currentPage), restauramos scroll
+    useEffect(() => {
+        // Restaurar scroll solo si hay un valor guardado
+        if (scrollPos.current) {
+            window.scrollTo(0, scrollPos.current);
+            scrollPos.current = 0; // reset para no estar restaurando siempre
+        }
+    }, [rifas]);
+
     const filteredRifas = rifas.filter(rifa =>
         rifa.NumeroRifa.toString().includes(searchTerm)
     );
 
-    const paginate = (pageNumber) => {
+    // Guardamos scroll antes de cambiar de página
+    const paginate = (e, pageNumber) => {
+        e.preventDefault();
         if (pageNumber >= 1 && pageNumber <= totalPages) {
+            scrollPos.current = window.scrollY;  // guardamos la posición actual del scroll
             setCurrentPage(pageNumber);
         }
     };
 
-    // Función para manejar la búsqueda
     const handleSearch = (value) => {
         setSearchTerm(value);
-        setCurrentPage(1); // Reinicia la página a 1 en cada búsqueda
+        setCurrentPage(1);
+    };
 
-        // Si la búsqueda está activa, no aplicamos paginación en el backend
-        // ya que filtramos los resultados en el frontend
+    const maxPageButtons = 5;
+
+    const getPageNumbers = () => {
+        let startPage = Math.max(currentPage - Math.floor(maxPageButtons / 2), 1);
+        let endPage = startPage + maxPageButtons - 1;
+
+        if (endPage > totalPages) {
+            endPage = totalPages;
+            startPage = Math.max(endPage - maxPageButtons + 1, 1);
+        }
+
+        const pages = [];
+        for (let i = startPage; i <= endPage; i++) {
+            pages.push(i);
+        }
+        return pages;
     };
 
     if (loading) return <p>Cargando rifas...</p>;
@@ -113,34 +138,53 @@ const ListadoRifas = ({ refresh }) => {
                 ))}
             </div>
 
-            {/* Paginación */}
             <div className="pagination pagination-tienda">
                 <button
-                    onClick={() => paginate(currentPage - 1)}
+                    type="button"
+                    onClick={(e) => paginate(e, currentPage - 1)}
                     disabled={currentPage === 1}
-                    className="pagination__prev"
+                    className="pagination__prev pagination-listar-rifas"
                 >
                     Anterior
                 </button>
 
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
-                    <button
-                        key={pageNum}
-                        onClick={() => paginate(pageNum)}
-                        className={currentPage === pageNum ? 'active' : ''}
-                    >
-                        {pageNum}
-                    </button>
-                ))}
+                <div className="page-numbers">
+                    {getPageNumbers()[0] > 1 && (
+                        <>
+                            <button type="button" className='pagination-listar-rifas' onClick={(e) => paginate(e, 1)}>1</button>
+                            {getPageNumbers()[0] > 2 && <span>...</span>}
+                        </>
+                    )}
+
+                    {getPageNumbers().map((pageNum) => (
+                        <button
+                            key={pageNum}
+                            type="button"
+                            onClick={(e) => paginate(e, pageNum)}
+                            className={currentPage === pageNum ? 'active pagination-listar-rifas' : 'pagination-listar-rifas'}
+                        >
+                            {pageNum}
+                        </button>
+                    ))}
+
+                    {getPageNumbers()[getPageNumbers().length - 1] < totalPages && (
+                        <>
+                            {getPageNumbers()[getPageNumbers().length - 1] < totalPages - 1 && <span>...</span>}
+                            <button type="button" className='pagination-listar-rifas tres-puntos' onClick={(e) => paginate(e, totalPages)}>{totalPages}</button>
+                        </>
+                    )}
+                </div>
 
                 <button
-                    onClick={() => paginate(currentPage + 1)}
+                    type="button"
+                    onClick={(e) => paginate(e, currentPage + 1)}
                     disabled={currentPage === totalPages}
-                    className="pagination__next"
+                    className="pagination__next pagination-listar-rifas"
                 >
                     Siguiente
                 </button>
             </div>
+
         </div>
     );
 };

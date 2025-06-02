@@ -156,10 +156,6 @@
         padding: 10px;
     }
 
-
-
-
-
     /* Login */
 
     .content__title h1 {
@@ -1369,6 +1365,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             margin-bottom: 1.5rem;
             transition: all 0.3s ease;
+            min-width: none;
         }
 
         .card_rifa:hover {
@@ -1570,7 +1567,7 @@
 
     .currency {
         color: var(--colorWhite);
-        width: 90%;
+        width: 3rem;
         text-align: center;
         text-transform: uppercase;
     }
@@ -1681,25 +1678,31 @@
 
     .rifa-item {
         font-size: 1rem;
-        height: 2rem;
+        height: 3rem;
+        width: 4.5rem;
         border-radius: .2rem;
         padding: .2rem;
     }
 
     .vendedores-dropdown {
+        color: var(--color4);
+
+        display: block;
         border: none;
         padding: 12px;
         border-radius: .2rem 1rem;
         font-size: 16px;
         transition: all .3s;
         margin-top: 10px;
-        width: 90vw;
+        width: 90%;
     }
 
     .vendedores-dropdown:focus {
         outline: none;
-        box-shadow: 0px 15px 20px -5px rgba(0, 123, 255, 0.2);
-        /* Sombra suave */
+        box-shadow: 0px 15px 20px -5px var(--color5), 
+            0px 10px 10px -5px var(--color5), 
+            0px 5px 5px -5px var(--color5)
+
     }
 
     .vendedores-dropdown option {
@@ -1717,6 +1720,45 @@
         max-width: 400px;
         margin: 0 auto;
     }
+
+    .info-seleccionada {
+        position: fixed;  
+        bottom: 0;  
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 100vw;
+        margin: 0 -1rem 0 0;
+        padding: 1rem;
+        border-radius: 0% !important;
+    }
+    .info-item-flex{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+    .btn-asignar-rifas{
+        border-radius: 50% !important;
+        width: 6rem !important;
+        height: 6rem !important;
+        display: flex;
+        align-items: center;  
+        justify-content: center;  
+        flex-direction: column;
+
+    }
+
+        .btn-icon {
+        display: inline;
+    }
+    .btn-text {
+        display: none;
+    }
+
+
 
     /* **********************************Historial********************************** */
 
@@ -2203,6 +2245,7 @@
         height: 3rem;
         border-radius: .3rem;
         font-size: .9rem;
+        min-width: 25vw;
     }
 
     .expanded {
@@ -2224,5 +2267,54 @@
 
     }
 
+    .card-content__productos {
+    flex-direction: column;
+    width: 100%;
+    overflow-x: auto;
+    height: 12rem;
+    margin: 1rem auto;
+    gap: 1rem;
+    }
 
+    .header__editar-perfil{
+        display: none;
+    }
+
+    .btn-cancelar-editar{
+        height: 5rem;
+    }
+
+    .login-card__edit{
+        width: 90vw;
+        margin-top: 2rem;
+    }
+    .float-edit-button{
+        width: 90vw;
+        margin: 0 auto;
+    }
+
+    .PS_all{
+        background-color: var(--colorBlack);
+        min-width: 100vw;
+        z-index: 1000;
+        color: var(--colo);
+    }
+
+    .pagination-listar-rifas{
+        background-color: var(--color5);
+        border-radius: 0.6rem 2rem 0.6rem 2rem;
+        margin: 1rem 0;
+        padding: .7rem;
+        width: 45vw;
+    }
+    .page-numbers {
+        display: none;
+    }
+
+    .precio_fecha{       
+        display: flex;
+        flex-direction: column;
+    }
+  
 }
+

@@ -716,8 +716,8 @@ body,
 .avatar-img {
     display: flex;
     justify-content: flex-start;
-    width: 30rem;
-    height: auto;
+    width: 15rem;
+    height: 15rem;
     cursor: pointer;
 }
 
@@ -944,6 +944,7 @@ body,
     align-items: center;
     justify-content: center;
     margin: 2rem auto 2rem auto;
+    min-height: 700px;
 }
 
 .card-layout__vendedores {
@@ -1088,6 +1089,7 @@ canvas {
     align-items: center;
     margin: 3rem 0 0 0;
     width: 100%;
+    z-index: 1000;
 }
 
 .pagination-tienda {
@@ -1253,20 +1255,24 @@ canvas {
     color: var(--colorWhite);
 }
 
-.sorteo__container h3 {
+.sorteo__container h3,
+.premios-list h3 {
     font-weight: bold;
 }
 
-.sorteo__container ul {
+.sorteo__container ul,
+.premios-list ul {
     list-style: none;
     font-size: 22px;
 }
 
-.sorteo__container li {
+.sorteo__container li,
+.premios-list li {
     margin: 20px 0;
 }
 
-.sorteo__container li p {
+.sorteo__container li p ,
+.premios-list li p{
     font-size: 18px;
 }
 
@@ -1453,6 +1459,8 @@ canvas {
 .search-bar_asign {
     margin: 0;
     width: 100%;
+    display: flex;
+    flex-direction: row !important;
 }
 
 .search-bar_asign input {
@@ -1969,6 +1977,7 @@ input[type="number"]::-webkit-inner-spin-button {
     width: 15rem;
     height: 20rem;
     margin: 0 0 2rem 0;
+    font-size: .9rem;
 }
 
 .sorteo-container {
@@ -2070,6 +2079,7 @@ button:disabled {
 }
 
 .img-container {
+    margin: 1rem;
     display: grid;
     overflow: hidden;
 }
@@ -2578,6 +2588,13 @@ button:disabled {
 .ver-mas button:hover {
     transform: perspective(1000px) translateX(7px) rotateX(3deg) rotateY(3deg) scale(1);
     box-shadow: none;
+}
+
+.btn-icon {
+    display: none;
+}
+.btn-text {
+    display: inline;
 }
 
 .ver-mas {
@@ -4087,4 +4104,35 @@ button:disabled {
 .avatar-preview-register:hover {
     transform: scale(1.1);
     cursor: pointer;
+}
+
+.PS_all{
+    background-color: var(--colorBlack);
+    height: 100vh;
+    overflow: hidden;
+    overflow-y: auto;
+}
+.premios-list{
+        padding: 3rem;
+    height: 90vh;
+    font-weight: 200;
+    font-size: 26px;
+    color: var(--colorWhite);
+    background-color: var(--colorBlack);
+}
+.sorteo__container{
+        background-color: var(--colorBlack);
+
+}
+
+.pagination-listar-rifas{
+    background-color: var(--color5);
+    background-image: url('../img/HeroAltaVendedor.png');
+    border-radius: 0.6rem 2rem 0.6rem 2rem;
+    margin: 0 .2rem 2rem .2rem;
+    padding: 1rem;
+}
+.page-numbers{
+    display: flex;
+    justify-content: center;
 }

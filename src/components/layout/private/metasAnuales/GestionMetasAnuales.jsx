@@ -64,7 +64,7 @@ export const GestionMetasAnuales = () => {
 
     return (
         <div className='container-metas-anuales'>
-            <div className="container-banner__vendedor">
+            <div className="container-banner__productos">
                 <header className='header__vendedor header__admin'>Metas Anuales</header>
             </div>
             <div className="gestion-metas">

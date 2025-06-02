@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Global } from '../../../../helpers/Global';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faMinus, faArrowsToCircle } from '@fortawesome/free-solid-svg-icons';
 
 export const Asignar = () => {
     const [vendedores, setVendedores] = useState([]);
@@ -14,18 +13,18 @@ export const Asignar = () => {
     const [searchRifaTerm, setSearchRifaTerm] = useState('');
     const [filteredVendedores, setFilteredVendedores] = useState([]);
     const [filteredRifas, setFilteredRifas] = useState([]);
+    const [vendedoresDDL, setVendedoresDDL] = useState([]);
 
-    // Paginación vendedores
     const [pageVen, setPageVen] = useState(1);
     const [totalPagesVen, setTotalPagesVen] = useState(1);
     const vendedoresPorPagina = 5;
 
-    // Mostrar más/menos rifas
     const [showMoreRif, setShowMoreRif] = useState(false);
     const [showAllRif, setShowAllRif] = useState(false);
     const rifasPorPagina = 15;
 
-    // Fetch vendedores
+    const [asignando, setAsignando] = useState(false);
+
     useEffect(() => {
         const fetchVendedores = async () => {
             const token = localStorage.getItem('token');
@@ -35,7 +34,6 @@ export const Asignar = () => {
                 const data = await res.json();
                 if (data.status === 'success') {
                     const activos = data.users.filter(v => (v.estado || '').toLowerCase() === 'activo');
-                    // Aquí está el cambio - no concatenamos, sino que reemplazamos con todos los vendedores hasta la página actual
                     if (pageVen === 1) {
                         setVendedores(activos);
                     } else {
@@ -50,7 +48,26 @@ export const Asignar = () => {
         fetchVendedores();
     }, [pageVen]);
 
-    // Actualizar filteredVendedores cuando cambian los vendedores
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+
+        const fetchTodosVendedoresActivos = async () => {
+            try {
+                const res = await fetch(`${Global.url}usuario/vendedores/activos`, {
+                    headers: { Authorization: token }
+                });
+                const data = await res.json();
+                if (data.status === 'success') {
+                    setVendedoresDDL(data.vendedores);
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        fetchTodosVendedoresActivos();
+    }, []);
+
     useEffect(() => {
         setFilteredVendedores(
             searchTerm
@@ -62,7 +79,6 @@ export const Asignar = () => {
         );
     }, [searchTerm, vendedores]);
 
-    // Fetch rifas
     useEffect(() => {
         const fetchRifas = async () => {
             const token = localStorage.getItem('token');
@@ -83,7 +99,6 @@ export const Asignar = () => {
         fetchRifas();
     }, []);
 
-    // Filtrar rifas
     useEffect(() => {
         setFilteredRifas(
             searchRifaTerm
@@ -92,80 +107,115 @@ export const Asignar = () => {
         );
     }, [searchRifaTerm, rifas]);
 
-    // Toggle selección de rifa
-    const toggleRifaSeleccionada = rifa => {
-        // Verificar explícitamente si la rifa tiene vendedor asignado
-        if (rifa.vendedorAsignado) {
-            // No hacer nada si ya tiene vendedor asignado
-            return;
-        }
-
+    const toggleRifaSeleccionada = useCallback((rifa) => {
+        if (rifa.vendedorAsignado) return;
         setRifasSeleccionadas(prev =>
             prev.some(x => x._id === rifa._id)
                 ? prev.filter(x => x._id !== rifa._id)
                 : [...prev, rifa]
         );
-    };
+    }, []);
 
-    // Asignar rifas
-    const asignarRifas = async () => {
+    const asignarRifas = useCallback(async () => {
+        // Prevenir múltiples clicks
+        if (asignando) {
+            return;
+        }
+
         if (!vendedorSeleccionado || rifasSeleccionadas.length === 0) {
             toast.error('Selecciona un vendedor y al menos una rifa.');
             return;
         }
-        const token = localStorage.getItem('token');
+
+        if (!vendedorSeleccionado.ci) {
+            toast.error('El vendedor seleccionado no tiene CI válido');
+            return;
+        }
+
+        setAsignando(true);
+
         try {
+            const token = localStorage.getItem('token');
+
             const res = await fetch(`${Global.url}rifa/asignarRifaAVendedor`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', Authorization: token },
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: token,
+                },
                 body: JSON.stringify({
                     ci: vendedorSeleccionado.ci,
                     numerosRifas: rifasSeleccionadas.map(r => r.NumeroRifa),
                 }),
             });
-            const result = await res.json();
+
+            const data = await res.json();
+
             if (res.ok) {
-                toast.success('Rifas asignadas exitosamente');
-                // Actualizar las rifas después de la asignación
-                const rifasActualizadas = rifas.map(r => {
-                    if (rifasSeleccionadas.some(sr => sr._id === r._id)) {
-                        return { ...r, vendedorAsignado: vendedorSeleccionado.ci };
-                    }
-                    return r;
-                });
-                setRifas(rifasActualizadas);
-                setFilteredRifas(rifasActualizadas);
+                toast.success('Rifas asignadas correctamente');
+                // Resetear selección
                 setRifasSeleccionadas([]);
                 setVendedorSeleccionado(null);
-                setShowMoreRif(false);
-                setShowAllRif(false);
+
+                // Actualizar rifas para reflejar la asignación
+                setRifas(prevRifas =>
+                    prevRifas.map(rifa => {
+                        const wasAssigned = rifasSeleccionadas.some(r => r._id === rifa._id);
+                        return wasAssigned
+                            ? { ...rifa, vendedorAsignado: vendedorSeleccionado.ci }
+                            : rifa;
+                    })
+                );
             } else {
-                toast.error(result.message || 'Error al asignar rifas');
+                toast.error(data.message || 'Error al asignar rifas');
             }
-        } catch (err) {
-            console.error(err);
+        } catch (error) {
+            console.error(error);
             toast.error('Error al asignar rifas');
+        } finally {
+            setAsignando(false);
         }
-    };
+    }, [asignando, vendedorSeleccionado, rifasSeleccionadas]);
 
-    // Cargar más vendedores
-    const cargarMasVendedores = () => pageVen < totalPagesVen && setPageVen(prev => prev + 1);
+    const cargarMasVendedores = useCallback(() => {
+        if (pageVen < totalPagesVen) {
+            setPageVen(prev => prev + 1);
+        }
+    }, [pageVen, totalPagesVen]);
 
-    // Toggle mostrar más/menos
-    const handleToggleRifas = () => setShowMoreRif(prev => !prev);
-    const handleShowAllRifas = () => setShowAllRif(true);
+    const handleToggleRifas = useCallback(() => {
+        setShowMoreRif(prev => !prev);
+    }, []);
+
+    const handleShowAllRifas = useCallback(() => {
+        setShowAllRif(true);
+    }, []);
 
     return (
         <div className="container-asignar">
-            <ToastContainer position="top-right" autoClose={3000} />
-            <div className="container-banner__vendedor">
+            <div className="container-banner__productos">
                 <header className="header__vendedor header__admin">Asignar Números</header>
             </div>
             <div className="asignar-rifas-container">
                 {/* Vendedores */}
                 <aside className="vendedores-list">
                     <h3>Vendedores</h3>
-                    <div className="search-bar search-bar_asign">
+                    <select
+                        className="vendedores-dropdown"
+                        value={vendedorSeleccionado?._id || ''}
+                        onChange={(e) => {
+                            const selected = vendedoresDDL.find(v => v._id === e.target.value);
+                            setVendedorSeleccionado(selected);
+                        }}
+                    >
+                        <option value="">Seleccione un vendedor</option>
+                        {vendedoresDDL.map(v => (
+                            <option key={v._id} value={v._id}>
+                                {v.nombreCompleto} - Nº {v.ci}
+                            </option>
+                        ))}
+                    </select>
+                    <div className="search-bar search-bar_asign item-vendedor">
                         <input
                             value={searchTerm}
                             onChange={e => setSearchTerm(e.target.value)}
@@ -188,7 +238,9 @@ export const Asignar = () => {
                         ))}
                     </ul>
                     <div className="ver-mas item-vendedor">
-                        {pageVen < totalPagesVen && <button onClick={cargarMasVendedores}>Ver más vendedores</button>}
+                        {pageVen < totalPagesVen && (
+                            <button onClick={cargarMasVendedores}>Ver más vendedores</button>
+                        )}
                     </div>
                 </aside>
 
@@ -222,7 +274,7 @@ export const Asignar = () => {
                                         onClick={() => toggleRifaSeleccionada(r)}
                                     >
                                         <span>{r.NumeroRifa}</span>
-                                        {r.vendedorAsignado && <span className="vendedor-asignado">Asignada</span>}
+                                        {r.vendedorAsignado && <span className="vendedor-asignado asignada">Asignada</span>}
                                     </li>
                                 ))}
                     </ul>
@@ -230,35 +282,38 @@ export const Asignar = () => {
                     {!showAllRif && filteredRifas.length > rifasPorPagina && (
                         <div className="control-rifas">
                             <button className='btn-asignar' onClick={handleToggleRifas}>
-                                <FontAwesomeIcon icon={showMoreRif ? faMinus : faPlus} />                            </button>
+                                <FontAwesomeIcon icon={showMoreRif ? faMinus : faPlus} />
+                            </button>
                         </div>
                     )}
                 </div>
             </div>
 
             {/* Panel de asignación */}
-            <div className="panel-asignacion">
-                <div className="info-seleccionada">
-                    <div className="info-item-flex">
-                        <div className='info-item'>
-                            <h4>Vendedor</h4>
-                            <p>{vendedorSeleccionado ? vendedorSeleccionado.nombreCompleto : 'No seleccionado'}</p>
-                        </div>
-                        <div className='info-item'>
-                            <h4>Rifas seleccionadas</h4>
-                            <p>{rifasSeleccionadas.length} rifas</p>
-                        </div>
+            <div className="info-seleccionada panel-asignacion">
+                <div className="info-item-flex">
+                    <div className='info-item'>
+                        <h4>Vendedor</h4>
+                        <p>{vendedorSeleccionado ? vendedorSeleccionado.nombreCompleto : 'No seleccionado'}</p>
                     </div>
-                    <button
-                        className="btn-asignar"
-                        onClick={asignarRifas}
-                        disabled={!vendedorSeleccionado || rifasSeleccionadas.length === 0}
-                    >
-                        Asignar Rifas
-                    </button>
+                    <div className='info-item'>
+                        <h4>Rifas seleccionadas</h4>
+                        <p>{rifasSeleccionadas.length} rifas</p>
+                    </div>
                 </div>
+                <button
+                    className="btn-asignar btn-asignar-rifas"
+                    onClick={asignarRifas}
+                    disabled={asignando}
+                    style={{
+                        opacity: asignando ? 0.6 : 1,
+                        cursor: asignando ? 'not-allowed' : 'pointer'
+                    }}
+                >
+                    <FontAwesomeIcon icon={faArrowsToCircle} />
+                    {asignando ? 'Asignando...' : 'Asignar Rifas'}
+                </button>
             </div>
-
         </div>
     );
 };

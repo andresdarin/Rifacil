@@ -61,7 +61,7 @@ export const Historial = () => {
 
     return (
         <div className="historial-container">
-            <div className="container-banner__vendedor">
+            <div className="container-banner__productos">
                 <header className="header__vendedor header__admin">Historial</header>
             </div>
             <div className="table-container">

@@ -85,7 +85,7 @@ export const AltaVendedor = () => {
 
     return (
         <div className="alta-vendedor__container">
-            <div className="container-banner__vendedor">
+            <div className="container-banner__productos">
                 <header className='header__vendedor header__alta-vendedor'>Alta Vendedor</header>
             </div>
 

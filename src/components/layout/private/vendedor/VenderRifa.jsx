@@ -106,7 +106,7 @@ export const VenderRifa = () => {
 
     return (
         <>
-            <div className="container-banner__vendedor">
+            <div className="container-banner__productos">
                 <header className='header__vendedor header__vender'>Vender</header>
             </div>
 

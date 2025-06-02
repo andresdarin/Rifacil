@@ -262,7 +262,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                                             alt={producto.nombreProducto}
                                         />
                                     </div>
-                                    <div>
+                                    <div className='card-content__productos'>
                                         <h1>{producto.nombreProducto}</h1>
                                         <h4>${producto.precio}</h4>
                                         <h4>
@@ -275,7 +275,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                                                     {expandedDescriptions[producto._id] ? 'Ver menos' : 'Ver más'}
                                                 </button>
                                             )}
-                                        </h4>
+                                        </h4>]
                                         <h4 className='coursive'>Llevas vendidos {producto.cantidadVendidos} de este producto.</h4>
                                         {expandedId === producto._id && (
                                             <div className="edit-form-container">
@@ -333,8 +333,9 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                     </button>
                 </div>
 
-                <AltaProducto showHeroSection={false} showFormSection={showFormSection} reloadProductos={reloadProductos} />
+
             </div>
+            <AltaProducto showHeroSection={false} showFormSection={showFormSection} reloadProductos={reloadProductos} />
         </>
     );
 

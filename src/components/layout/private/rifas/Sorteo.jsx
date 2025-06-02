@@ -60,7 +60,7 @@ export const Sorteo = () => {
 
     return (
         <div className='sorteo-container'>
-            <div className="container-banner__vendedor">
+            <div className="container-banner__productos">
                 <header className="header__vendedor header__sortear">Agendar Sorteo</header>
             </div>
             <div className="form-container">

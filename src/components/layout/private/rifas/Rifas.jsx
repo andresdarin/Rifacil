@@ -10,7 +10,7 @@ export const Rifas = () => {
         };
     }, []);
     return (
-        <div className="container-banner__vendedor">
+        <div className="container-banner__productos">
             <header className='header__vendedor'>Rifas</header>
         </div>
     )

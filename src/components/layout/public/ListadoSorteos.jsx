@@ -52,20 +52,18 @@ export const ListadoSorteos = () => {
                     {new Date(proximoSorteo.fechaSorteo).toLocaleDateString()}
                 </h2>
             </div>
-            <div className="sorteo__container">
-                <div className="premios-list">
-                    <h3>Premios</h3>
-                    <ul>
-                        {proximoSorteo.premios.map((premio, index) => (
-                            <li key={premio.id}>
-                                <strong>{`${index + 1}º Premio: ${premio.nombre}`}</strong>
-                                <p className="premio-descripcion">
-                                    {premio.descripcion || "Sin descripción disponible"}
-                                </p>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+            <div className="premios-list">
+                <h3>Premios</h3>
+                <ul>
+                    {proximoSorteo.premios.map((premio, index) => (
+                        <li key={premio.id}>
+                            <strong>{`${index + 1}º Premio: ${premio.nombre}`}</strong>
+                            <p className="premio-descripcion">
+                                {premio.descripcion || "Sin descripción disponible"}
+                            </p>
+                        </li>
+                    ))}
+                </ul>
             </div>
         </div>
     );
