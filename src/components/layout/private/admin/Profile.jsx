@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../../../../context/AuthContext'; // Ajusta la ruta según tu estructura
+import { AuthContext } from '../../../../context/AuthProvider';
 import { Global } from '../../../../helpers/Global';
 import { ListadoVendedores } from '../vendedor/ListadoVendedores';
 import ListadoProductos from '../../../productos/ListadoProductos';
