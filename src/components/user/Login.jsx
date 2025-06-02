@@ -10,7 +10,7 @@ import { FaUser, FaLock } from 'react-icons/fa';
 export const Login = () => {
     const { form, changed } = useForm({});
     const [status, setStatus] = useState("not_sended");
-    const [errorMessage, setErrorMessage] = useState("");    // <-- Nuevo estado para el mensaje de error
+    const [errorMessage, setErrorMessage] = useState("");
     const { setAuth } = useAuth();
     const navigate = useNavigate();
 

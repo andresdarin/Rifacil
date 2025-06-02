@@ -59,13 +59,14 @@ const AuthProvider = ({ children }) => {
             return;
         }
 
-        if (!userObj || !userObj.id) {
+        if (!userObj || !(userObj._id || userObj.id)) {
             console.error("User ID is undefined");
             setLoading(false);
             return;
         }
 
-        const userId = userObj.id;
+        const userId = userObj._id || userObj.id;
+
 
         // Verifica que userId no sea undefined antes de hacer las solicitudes
         if (userId) {
