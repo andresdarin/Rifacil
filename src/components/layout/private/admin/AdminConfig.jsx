@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Global } from '../../../../helpers/Global';
+import avatarPreviewImg from '../../../../assets/img/Default.png';
 
 export const AdminConfig = () => {
     const [adminData, setAdminData] = useState({
@@ -10,7 +11,7 @@ export const AdminConfig = () => {
         currentPassword: '',
         avatarFile: null
     });
-    const [avatarPreview, setAvatarPreview] = useState('/src/assets/img/user.png');
+    const [avatarPreview, setAvatarPreview] = useState(avatarPreviewImg);
     const fileInputRef = useRef(null);
     const [saved, setSaved] = useState('not_sended');
     const [errorMessage, setErrorMessage] = useState('');
@@ -108,7 +109,7 @@ export const AdminConfig = () => {
         if (adminData.avatarFile) formData.append('image', adminData.avatarFile);
 
         try {
-            setSaved('saving'); // Añadir estado de guardando para mejor UX
+            setSaved('saving'); //(Mejor ux)
             const res = await fetch(`${Global.url}usuario/update`, {
                 method: 'PUT',
                 headers: { 'Authorization': token },
