@@ -20,14 +20,19 @@ export const AdminConfig = () => {
     const navigate = useNavigate();
 
     const token = localStorage.getItem('token');
-    const storedUser = JSON.parse(localStorage.getItem('user'));
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const userId = storedUser?._id;
+
 
     useEffect(() => {
         document.body.style.backgroundSize = "cover";
         document.body.style.backgroundPosition = "center";
 
-        if (storedUser) {
-            fetch(`${Global.url}usuario/profile/${storedUser._id}`, {
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+        const userId = storedUser?._id;
+
+        if (userId) {
+            fetch(`${Global.url}usuario/profile/${userId}`, {
                 headers: {
                     'Authorization': token
                 }
@@ -50,7 +55,8 @@ export const AdminConfig = () => {
                     console.error("Error al cargar el perfil del admin:", err);
                 });
         }
-    }, [storedUser, token]);
+    }, [token]);
+
 
     const handleInputChange = e => {
         const { name, value } = e.target;
