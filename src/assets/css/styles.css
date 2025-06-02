@@ -709,6 +709,11 @@ body,
     justify-content: center;
 }
 
+.avatar-Prof{
+    width: 15rem !important;
+    height: 15rem !important;  
+}
+
 .alta-vendedor__form-img {
     padding-top: 2.5rem !important;
 }

@@ -39,8 +39,6 @@ const AuthProvider = ({ children }) => {
         }
     };
 
-
-
     const authUser = async () => {
         const token = localStorage.getItem("token");
         const user = localStorage.getItem("user");

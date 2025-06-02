@@ -1,10 +1,12 @@
 // src/components/admin/AdminConfig.jsx
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { AuthContext } from '../../../../context/AuthProvider';
 import { Global } from '../../../../helpers/Global';
 import avatarPreviewImg from '../../../../assets/img/Default.png';
 import { useNavigate } from 'react-router-dom';
 
 export const AdminConfig = () => {
+    const { auth, setAuth } = useContext(AuthContext); // Agregar el contexto
     const [adminData, setAdminData] = useState({
         nombreCompleto: '',
         email: '',
@@ -22,7 +24,6 @@ export const AdminConfig = () => {
     const token = localStorage.getItem('token');
     const storedUser = JSON.parse(localStorage.getItem("user"));
     const userId = storedUser?._id;
-
 
     useEffect(() => {
         document.body.style.backgroundSize = "cover";
@@ -56,7 +57,6 @@ export const AdminConfig = () => {
                 });
         }
     }, [token]);
-
 
     const handleInputChange = e => {
         const { name, value } = e.target;
@@ -120,7 +120,12 @@ export const AdminConfig = () => {
             const data = await res.json();
 
             if (data.status === 'success') {
+                // Actualizar localStorage
                 localStorage.setItem('user', JSON.stringify(data.user));
+
+                // Actualizar el contexto de autenticación
+                setAuth(data.user);
+
                 setSaved('saved');
                 setErrorMessage('');
                 setTimeout(() => {

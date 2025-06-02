@@ -16,14 +16,18 @@ export const Profile = () => {
 
 		// Solo cargamos si ya terminó la validación y tenemos auth
 		if (!loading && auth && auth.imagen) {
+			// Agregamos timestamp para evitar caché
 			const urlImagen = `${Global.url.replace(/\/$/, '')}/uploads/avatars/${auth.imagen}?t=${new Date().getTime()}`;
 			setUserImage(urlImagen);
+		} else if (!loading && auth && !auth.imagen) {
+			// Si no hay imagen, usar la por defecto
+			setUserImage('/src/assets/img/user.png');
 		}
 
 		return () => {
 			document.body.style.backgroundImage = '';
 		};
-	}, [auth, loading]);
+	}, [auth, loading]); // Ahora se ejecutará cada vez que auth cambie
 
 	if (loading) return <p>Cargando perfil...</p>;
 
@@ -40,6 +44,8 @@ export const Profile = () => {
 							className='avatar-preview avatar-img avatar-Prof'
 							src={userImage}
 							alt="Avatar Usuario"
+							// Agregamos key para forzar re-render cuando cambie la imagen
+							key={auth?.imagen || 'default'}
 						/>
 					</div>
 				)}
