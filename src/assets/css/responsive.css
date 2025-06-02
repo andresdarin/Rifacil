@@ -2286,11 +2286,13 @@
 
     .login-card__edit{
         width: 90vw;
-        margin-top: 2rem;
+        margin-top: 10vw;
     }
     .float-edit-button{
-        width: 90vw;
-        margin: 0 auto;
+        position: inherit;
+        width: 80vw;
+        margin: 2rem auto;  
+        border-radius: 0.3rem;
     }
 
     .PS_all{

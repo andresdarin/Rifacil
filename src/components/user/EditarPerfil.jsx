@@ -294,7 +294,7 @@ export const EditarPerfil = () => {
 
                         <div className="buttons-login buttons-register">
                             <button type="button" className='btn btn-cancelar-editar' onClick={() => navigate(-1)}>Cancelar</button>
-                            <button type="submit" className='btn'>Guardar Cambios</button>
+                            <button type="submit" className='btn btn-cancelar-editar'>Guardar Cambios</button>
                         </div>
                     </form>
                 </div>
