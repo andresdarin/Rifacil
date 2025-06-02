@@ -1698,6 +1698,7 @@ canvas {
     border-radius: 5px;
     text-align: center;
     outline: none;
+    border: 1px solid var(--colorWhite) !important;
 }
 
 .currency {

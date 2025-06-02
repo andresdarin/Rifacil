@@ -4,6 +4,7 @@ import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Global } from '../../../../helpers/Global';
 import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../../../../context/CartProvider';
+import fotoRifa from '../../../../assets/img/foto_rifa.png';
 
 // Registrar elementos necesarios para el gráfico (si se usa)
 Chart.register(ArcElement, Tooltip, Legend);
@@ -208,7 +209,7 @@ export const Tienda = () => {
                             <div key={rifa._id} className="card-tienda-item card-tienda-item-rifa">
                                 <div className="items-tienda-rifa">
                                     <img
-                                        src="src/assets/img/foto_rifa.png"
+                                        src={fotoRifa}
                                         alt="Imagen de la rifa"
                                         className="rifa-imagen"
                                     />

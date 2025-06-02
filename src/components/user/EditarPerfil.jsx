@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from '../../hooks/useForm';
 import { Global } from '../../helpers/Global';
 import { useNavigate } from 'react-router-dom';
+import defaultAvatar from '../../assets/img/user.png';
+
 
 export const EditarPerfil = () => {
     const [saved, setSaved] = useState('not_sended');
@@ -153,7 +155,7 @@ export const EditarPerfil = () => {
         ? previewImage
         : user?.imagen
             ? Global.url + 'uploads/avatars/' + user.imagen
-            : null;
+            : defaultAvatar;
 
 
     return (
