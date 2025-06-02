@@ -1,6 +1,8 @@
+// src/components/admin/AdminConfig.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { Global } from '../../../../helpers/Global';
 import avatarPreviewImg from '../../../../assets/img/Default.png';
+import { useNavigate } from 'react-router-dom';
 
 export const AdminConfig = () => {
     const [adminData, setAdminData] = useState({
@@ -12,70 +14,64 @@ export const AdminConfig = () => {
         avatarFile: null
     });
     const [avatarPreview, setAvatarPreview] = useState(avatarPreviewImg);
-    const fileInputRef = useRef(null);
     const [saved, setSaved] = useState('not_sended');
     const [errorMessage, setErrorMessage] = useState('');
+    const fileInputRef = useRef(null);
+    const navigate = useNavigate();
+
+    const token = localStorage.getItem('token');
+    const storedUser = JSON.parse(localStorage.getItem('user'));
 
     useEffect(() => {
-        // fondo
         document.body.style.backgroundSize = "cover";
         document.body.style.backgroundPosition = "center";
 
-        // cargar perfil
-        const stored = localStorage.getItem('user');
-        if (stored) {
-            const me = JSON.parse(stored);
-            const token = localStorage.getItem('token');
-            fetch(`${Global.url}usuario/profile/${me.id}`, {
-                headers: { 'Authorization': token }
+        if (storedUser) {
+            fetch(`${Global.url}usuario/profile/${storedUser._id}`, {
+                headers: {
+                    'Authorization': token
+                }
             })
                 .then(res => res.json())
-                .then(json => {
-                    console.log('Perfil usuario:', json);
-                    if (json.status === 'success') {
-                        const u = json.user;
-                        setAdminData({
-                            nombreCompleto: u.nombreCompleto || '',
-                            email: u.email || '',
-                            password: '',
-                            confirmarPassword: '',
-                            currentPassword: '',
-                            avatarFile: null
-                        });
-                        if (u.imagen) {
-                            const urlImagen = `${Global.url.replace(/\/$/, '')}/uploads/avatars/${u.imagen}?t=${new Date().getTime()}`;
-                            console.log('Seteando avatar:', urlImagen);
-                            setAvatarPreview(urlImagen);
+                .then(data => {
+                    if (data.status === 'success') {
+                        const user = data.user;
+                        setAdminData(prev => ({
+                            ...prev,
+                            nombreCompleto: user.nombreCompleto || '',
+                            email: user.email || '',
+                        }));
+                        if (user.imagen) {
+                            setAvatarPreview(Global.url + 'uploads/avatars/' + user.imagen);
                         }
-                    } else {
-                        console.warn('No se pudo cargar el perfil:', json.message);
-                        setSaved('error');
-                        setErrorMessage("Error al cargar el perfil de usuario");
                     }
                 })
                 .catch(err => {
-                    console.error("Error al cargar perfil:", err);
-                    setSaved('error');
-                    setErrorMessage("Error al cargar el perfil de usuario");
+                    console.error("Error al cargar el perfil del admin:", err);
                 });
         }
-
-        return () => {
-            document.body.style.backgroundImage = '';
-        };
-    }, []);
-
+    }, [storedUser, token]);
 
     const handleInputChange = e => {
-        setAdminData({ ...adminData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setAdminData(prev => ({
+            ...prev,
+            [name]: value
+        }));
     };
 
     const handleImageChange = e => {
         const file = e.target.files[0];
         if (file) {
-            setAdminData({ ...adminData, avatarFile: file });
+            setAdminData(prev => ({
+                ...prev,
+                avatarFile: file
+            }));
+
             const reader = new FileReader();
-            reader.onloadend = () => setAvatarPreview(reader.result);
+            reader.onloadend = () => {
+                setAvatarPreview(reader.result);
+            };
             reader.readAsDataURL(file);
         }
     };
@@ -84,160 +80,154 @@ export const AdminConfig = () => {
         fileInputRef.current.click();
     };
 
-    const handleFormSubmit = async e => {
+    const handleSubmit = async e => {
         e.preventDefault();
-        // validaciones
-        if (adminData.password && adminData.password !== adminData.confirmarPassword) {
-            setErrorMessage("Las contraseñas no coinciden");
-            setSaved('error');
-            return;
-        }
+
         if (!adminData.currentPassword) {
-            setErrorMessage("Debes ingresar tu contraseña actual");
             setSaved('error');
+            setErrorMessage('Debes ingresar tu contraseña actual para guardar los cambios.');
             return;
         }
 
-        const token = localStorage.getItem('token');
-        const formData = new FormData();
-        formData.append('nombreCompleto', adminData.nombreCompleto);
-        formData.append('email', adminData.email);
-        formData.append('currentPassword', adminData.currentPassword);
-        if (adminData.password) formData.append('password', adminData.password);
-
-        // Cambiar "imagen" por "image" para que coincida con el nombre esperado en el backend
-        if (adminData.avatarFile) formData.append('image', adminData.avatarFile);
+        if (adminData.password && adminData.password !== adminData.confirmarPassword) {
+            setSaved('error');
+            setErrorMessage('Las contraseñas nuevas no coinciden.');
+            return;
+        }
 
         try {
-            setSaved('saving'); //(Mejor ux)
+            const formData = new FormData();
+            formData.append('nombreCompleto', adminData.nombreCompleto);
+            formData.append('email', adminData.email);
+            formData.append('currentPassword', adminData.currentPassword);
+            if (adminData.password) formData.append('password', adminData.password);
+            if (adminData.avatarFile) formData.append('image', adminData.avatarFile);
+
             const res = await fetch(`${Global.url}usuario/update`, {
                 method: 'PUT',
-                headers: { 'Authorization': token },
+                headers: {
+                    'Authorization': token
+                },
                 body: formData
             });
-            const json = await res.json();
-            if (res.ok) {
+
+            const data = await res.json();
+
+            if (data.status === 'success') {
+                localStorage.setItem('user', JSON.stringify(data.user));
                 setSaved('saved');
                 setErrorMessage('');
-                // Actualizar la imagen mostrada y el localStorage
-                if (json.user && json.user.imagen) {
-                    setAvatarPreview(`${Global.url}uploads/avatars/${json.user.imagen}`);
-
-                    // Actualizar también el usuario en localStorage
-                    const storedUser = JSON.parse(localStorage.getItem('user'));
-                    if (storedUser) {
-                        storedUser.imagen = json.user.imagen;
-                        localStorage.setItem('user', JSON.stringify(storedUser));
-                    }
-                }
-
-                // Limpiar contraseñas
-                setAdminData(prev => ({
-                    ...prev,
-                    password: '',
-                    confirmarPassword: '',
-                    currentPassword: '',
-                }));
+                setTimeout(() => {
+                    navigate('/admin/profile');
+                }, 1500);
             } else {
                 setSaved('error');
-                setErrorMessage(json.message || 'Error al actualizar el perfil');
+                setErrorMessage(data.message || 'Error desconocido');
             }
-        } catch (err) {
+        } catch (error) {
+            console.error('Error al actualizar:', error);
             setSaved('error');
-            setErrorMessage('Error en el servidor: ' + err.message);
+            setErrorMessage('Error al conectar con el servidor.');
         }
     };
 
     return (
-        <div>
-            <div className="container-banner__productos">
-                <header className='header__vendedor header__vendedor-config'>Editar Perfil</header>
-            </div>
-            <div className="config-admin-w-avatar">
-                <div className="avatar-preview avatar-Prof" onClick={handleImageClick}>
-                    <img src={avatarPreview} alt="Avatar" className="avatar-img" />
+        <div className='edit__layout'>
+            <header className="container-banner__productos header__editar-perfil">
+                <h1 className="header__vendedor">Config Admin</h1>
+            </header>
 
-                    <input
-                        type="file"
-                        accept="image/*"
-                        style={{ display: 'none' }}
-                        onChange={handleImageChange}
-                        ref={fileInputRef}
-                    />
-                </div>
-
-                <form className="form__admin-config" onSubmit={handleFormSubmit}>
-                    <div className="form-group form-group__config">
-                        <input
-                            type="text"
-                            name="nombreCompleto"
-                            placeholder='Nombre Completo'
-                            value={adminData.nombreCompleto}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-
-                    <div className="form-group form-group__config">
-                        <input
-                            type="email"
-                            name="email"
-                            placeholder='Email'
-                            value={adminData.email}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-
-                    <div className="form-group form-group__config">
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder='Nueva Contraseña'
-                            value={adminData.password}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-
-                    <div className="form-group form-group__config">
-                        <input
-                            type="password"
-                            name="confirmarPassword"
-                            placeholder='Confirmar Contraseña'
-                            value={adminData.confirmarPassword}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-
-                    <div className="form-group form-group__config">
-                        <input
-                            type="password"
-                            name="currentPassword"
-                            placeholder='Contraseña Actual'
-                            value={adminData.currentPassword}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </div>
-
-                    {saved === 'saving' && (
-                        <strong className='alert alert_edit alert-info'>
-                            Guardando cambios...
-                        </strong>
-                    )}
+            <div className="form-container sign-up">
+                <div className='login-card login-card__edit'>
                     {saved === 'saved' && (
-                        <strong className='alert alert_edit alert-success'>
-                            Perfil actualizado correctamente
+                        <strong className='alert alert-success'>
+                            Datos actualizados correctamente
                         </strong>
                     )}
                     {saved === 'error' && errorMessage && (
-                        <strong className='alert alert_edit alert-danger'>
+                        <strong className='alert alert-danger'>
                             {errorMessage}
                         </strong>
                     )}
 
-                    <button type="submit" className="admin-config__submit-button">
-                        <i className="fa fa-save" aria-hidden="true"></i>
-                    </button>
-                </form>
+                    <div
+                        className="profile-image-preview"
+                        style={{ marginBottom: '15px', cursor: 'pointer' }}
+                        onClick={handleImageClick}
+                    >
+                        <img
+                            src={avatarPreview}
+                            alt="Avatar"
+                            style={{
+                                width: '150px',
+                                height: '150px',
+                                borderRadius: '50%',
+                                objectFit: 'cover'
+                            }}
+                        />
+                        <input
+                            type="file"
+                            accept="image/*"
+                            ref={fileInputRef}
+                            style={{ display: 'none' }}
+                            onChange={handleImageChange}
+                        />
+                    </div>
+
+                    <form className='form-login' onSubmit={handleSubmit}>
+                        <div className="form-group form-group_login">
+                            <input
+                                type='text'
+                                name='nombreCompleto'
+                                placeholder='Nombre completo'
+                                value={adminData.nombreCompleto}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div className="form-group form-group_login">
+                            <input
+                                type='email'
+                                name='email'
+                                placeholder='Correo electrónico'
+                                value={adminData.email}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div className="form-group form-group_login">
+                            <input
+                                type='password'
+                                name='password'
+                                placeholder='Nueva contraseña (opcional)'
+                                value={adminData.password}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div className="form-group form-group_login">
+                            <input
+                                type='password'
+                                name='confirmarPassword'
+                                placeholder='Confirmar nueva contraseña'
+                                value={adminData.confirmarPassword}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                        <div className="form-group form-group_login form-group_pass-confirm">
+                            <input
+                                type='password'
+                                name='currentPassword'
+                                placeholder='Contraseña actual'
+                                value={adminData.currentPassword}
+                                onChange={handleInputChange}
+                                required
+                            />
+                        </div>
+
+                        <div className="buttons-login buttons-register">
+                            <button type="button" className='btn btn-cancelar-editar' onClick={() => navigate(-1)}>Cancelar</button>
+                            <button type="submit" className='btn btn-cancelar-editar'>Guardar Cambios</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     );
