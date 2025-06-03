@@ -712,6 +712,7 @@ body,
 .avatar-Prof{
     width: 15rem !important;
     height: 15rem !important;  
+    margin: 1rem !important;
 }
 
 .alta-vendedor__form-img {
@@ -728,6 +729,10 @@ body,
 
 .alta-vendedor__container {
     width: 100%;
+}
+
+.profile-image-preview{
+    margin: 2rem;
 }
 
 /* Banner del héroe */
