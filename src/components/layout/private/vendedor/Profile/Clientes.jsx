@@ -53,7 +53,9 @@ export const Clientes = ({ vendedorId }) => {
                             <li className="cliente-item" key={index}>
                                 <strong>{cliente.nombre}</strong><br />
                                 <span>Rifas Adquiridas: </span>
-                                <h2>{rifasMostradas.join(' | ')}</h2>
+                                <div className="numeros-rifas-scroll">
+                                    <h2>{rifasMostradas.join(' | ')}</h2>
+                                </div>
                                 {hayMas && (
                                     <button
                                         onClick={() => toggleExpand(index)}
@@ -63,6 +65,7 @@ export const Clientes = ({ vendedorId }) => {
                                     </button>
                                 )}
                             </li>
+
                         );
                     })}
                 </ul>
