@@ -4,6 +4,7 @@ import { Global } from '../../../../../helpers/Global';
 export const Clientes = ({ vendedorId }) => {
     const [clientes, setClientes] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [clienteExpandido, setClienteExpandido] = useState(null); // estado para ver más
     const token = localStorage.getItem('token');
 
     useEffect(() => {
@@ -29,6 +30,10 @@ export const Clientes = ({ vendedorId }) => {
         fetchClientes();
     }, [vendedorId]);
 
+    const toggleExpand = (index) => {
+        setClienteExpandido(prev => (prev === index ? null : index));
+    };
+
     if (loading) return <p>Cargando clientes...</p>;
 
     return (
@@ -38,15 +43,30 @@ export const Clientes = ({ vendedorId }) => {
                 <p className="sin-clientes">No hay clientes disponibles.</p>
             ) : (
                 <ul className="clientes-lista">
-                    {clientes.map((cliente, index) => (
-                        <li className="cliente-item" key={index}>
-                            <strong>{cliente.nombre}</strong><br />
-                            <span>Rifas Adquiridas: <h2>{cliente.numerosRifas.join(' | ')}</h2></span>
-                        </li>
-                    ))}
+                    {clientes.map((cliente, index) => {
+                        const rifasMostradas = clienteExpandido === index
+                            ? cliente.numerosRifas
+                            : cliente.numerosRifas.slice(0, 3);
+                        const hayMas = cliente.numerosRifas.length > 3;
+
+                        return (
+                            <li className="cliente-item" key={index}>
+                                <strong>{cliente.nombre}</strong><br />
+                                <span>Rifas Adquiridas: </span>
+                                <h2>{rifasMostradas.join(' | ')}</h2>
+                                {hayMas && (
+                                    <button
+                                        onClick={() => toggleExpand(index)}
+                                        className="ver-mas-button ver-mas-perfil-vendedor"
+                                    >
+                                        {clienteExpandido === index ? '+' : '-'}
+                                    </button>
+                                )}
+                            </li>
+                        );
+                    })}
                 </ul>
             )}
         </div>
     );
-
 };

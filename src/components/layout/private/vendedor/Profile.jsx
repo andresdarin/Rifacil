@@ -94,15 +94,13 @@ export const Profile = () => {
                 )}
             </div>
 
-            <section>
-                <MetaProgreso userId={id} año={año} />
-            </section>
-            <section>
-                <RifasAsignadas vendedorId={id} año={año} />
-            </section>
-            <section>
-                <Clientes vendedorId={id} />
-            </section>
+
+            <MetaProgreso userId={id} año={año} />
+
+            <RifasAsignadas vendedorId={id} año={año} />
+
+            <Clientes vendedorId={id} />
+
         </div>
     );
 };
