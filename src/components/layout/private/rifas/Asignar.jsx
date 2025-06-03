@@ -298,7 +298,7 @@ export const Asignar = () => {
                     </div>
                     <div className='info-item'>
                         <h4>Rifas seleccionadas</h4>
-                        <p>{rifasSeleccionadas.length} rifas</p>
+                        <p>{rifasSeleccionadas.length}</p>
                     </div>
                 </div>
                 <button

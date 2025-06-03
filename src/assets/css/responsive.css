@@ -1722,16 +1722,27 @@
     }
 
     .info-seleccionada {
+        height: 3rem;
         position: fixed;  
         bottom: 0;  
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        width: 100vw;
+        width: 100%;
         margin: 0 -1rem 0 0;
         padding: 1rem;
         border-radius: 0% !important;
+    }
+    .info-item{
+        display: flex;
+    }
+    .info-item h4,
+    .info-item p {
+        font-size: .65rem;
+        margin: 0 0.5rem;
+        color: var(--colorWhite);
+
     }
     .info-item-flex{
         display: flex;
