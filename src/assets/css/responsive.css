@@ -2026,7 +2026,7 @@
 
     .rifa-list-vendedor-profile {
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         align-items: center;
         justify-content: center;
         padding: 1rem;
