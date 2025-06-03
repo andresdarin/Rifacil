@@ -84,8 +84,20 @@ export const Tienda = () => {
     };
     const handlePrevRifa = () => paginateRifas(currentRifaPage - 1);
     const handleNextRifa = () => paginateRifas(currentRifaPage + 1);
-    const handleAddToCartRifa = rifa => {
-        addItem({ ...rifa, precio: rifa.precioRifa, nombreProducto: `Rifa #${rifa.NumeroRifa}` });
+    const handleAddToCartRifa = (rifa) => {
+        const yaEnCarrito = cartItems.some(item => item._id === rifa._id); // o item.id
+
+        if (yaEnCarrito) {
+            // opcional: mostrar un mensaje, toast, etc.
+            console.log("La rifa ya está en el carrito.");
+            return;
+        }
+
+        addItem({
+            ...rifa,
+            precio: rifa.precioRifa,
+            nombreProducto: `Rifa #${rifa.NumeroRifa}`
+        });
     };
 
     // ------------------ Productos ------------------
