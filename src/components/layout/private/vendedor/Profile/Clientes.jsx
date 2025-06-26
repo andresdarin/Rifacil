@@ -61,7 +61,7 @@ export const Clientes = ({ vendedorId }) => {
                                         onClick={() => toggleExpand(index)}
                                         className="ver-mas-button ver-mas-perfil-vendedor"
                                     >
-                                        {clienteExpandido === index ? '+' : '-'}
+                                        {clienteExpandido === index ? '-' : '+'}
                                     </button>
                                 )}
                             </li>
