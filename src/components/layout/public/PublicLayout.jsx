@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Header } from './Header';
-import Footer from '../footer/footer';
+import Footer from '../footer/Footer';
 
 export const PublicLayout = () => {
     const location = useLocation();
