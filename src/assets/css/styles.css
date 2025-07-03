@@ -4360,7 +4360,7 @@ button:disabled {
     background: #111;
     color: var(--colorWhite);
     padding: 2rem 1rem;
-    margin: 4rem 0 0 0;
+    margin: 0 0 0 0;
     font-family: 'Segoe UI', sans-serif;
     border-top: 2px solid #444;
     animation: fadeInUp 0.5s ease forwards;
