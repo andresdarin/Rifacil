@@ -46,64 +46,68 @@ export const Resultado = () => {
     }, [token]);
 
     return (
-        <div className="resultado_container" style={{ minHeight: 'calc(100vh - 120px)' }}>
+        <div className="resultado_container">
             {sorteo && !error && (
-                <header className="header__resultado">Ganadores</header>
+                <header className="container-banner__productos">
+                    <h1 className="header__vendedor">Ganadores</h1>
+                </header>
             )}
+            <div className="resultado_content">
 
-            {!sorteo ? (
-                <div className="no-content-wrapper">
-                    <h1 className='no-sorteos'>No se encontraron sorteos</h1>
-                </div>
-            ) : error ? (
-                <div className="no-content-wrapper">
-                    <div>Error: {error}</div>
-                </div>
-            ) : (!sorteo.ganadores || sorteo.ganadores.length === 0) ? (
-                <div className="no-content-wrapper">
-                    <h1 className="no-ganadores">No hay ganadores para mostrar.</h1>
-                </div>
-            ) : (
-                <div className="card_res-container">
-                    {/* Primer ganador */}
-                    <div className="card_res first-winner">
-                        <h1 className='emoji-troph'>🏆</h1>
-                        <h1>Primer Premio</h1>
-                        <h2>{sorteo.ganadores[0]?.numeroRifa}</h2>
-                        <p>{sorteo.ganadores[0]?.nombreParticipante || 'Desconocido'}</p>
-                        <p>{sorteo.ganadores[0]?.premio.nombre}</p>
-                        <p>{sorteo.ganadores[0]?.premio.descripcion}</p>
+                {!sorteo ? (
+                    <div className="no-content-wrapper">
+                        <h1 className='no-sorteos'>No se encontraron sorteos</h1>
                     </div>
-                    {/* Segundo ganador */}
-                    <div className="card_res second-winner">
-                        <h1>🥈</h1>
-                        <h1>Segundo Premio</h1>
-                        <h2>{sorteo.ganadores[1]?.numeroRifa}</h2>
-                        <p>{sorteo.ganadores[1]?.nombreParticipante || 'Desconocido'}</p>
-                        <p>{sorteo.ganadores[1]?.premio.nombre}</p>
-                        <p>{sorteo.ganadores[1]?.premio.descripcion}</p>
+                ) : error ? (
+                    <div className="no-content-wrapper">
+                        <div>Error: {error}</div>
                     </div>
-                    {/* Tercer ganador */}
-                    <div className="card_res second-winner">
-                        <h1>🥉</h1>
-                        <h1>Tercer Premio</h1>
-                        <h2>{sorteo.ganadores[2]?.numeroRifa}</h2>
-                        <p>{sorteo.ganadores[2]?.nombreParticipante || 'Desconocido'}</p>
-                        <p>{sorteo.ganadores[2]?.premio.nombre}</p>
-                        <p>{sorteo.ganadores[2]?.premio.descripcion}</p>
+                ) : (!sorteo.ganadores || sorteo.ganadores.length === 0) ? (
+                    <div className="no-content-wrapper">
+                        <h1 className="no-ganadores">No hay ganadores para mostrar.</h1>
                     </div>
-                    {/* Restantes */}
-                    {sorteo.ganadores.slice(3).map((ganador, idx) => (
-                        <div className="card_res remaining-winner" key={idx}>
-                            <h1>Ganador {idx + 4}</h1>
-                            <h2>{ganador.numeroRifa}</h2>
-                            <p>{ganador.nombreParticipante || 'Desconocido'}</p>
-                            <p>{ganador.premio.nombre}</p>
-                            <p>{ganador.premio.descripcion}</p>
+                ) : (
+                    <div className="card_res-container">
+                        {/* Primer ganador */}
+                        <div className="card_res first-winner">
+                            <h1 className='emoji-troph'>🏆</h1>
+                            <h1>Primer Premio</h1>
+                            <h2>{sorteo.ganadores[0]?.numeroRifa}</h2>
+                            <p>{sorteo.ganadores[0]?.nombreParticipante || 'Desconocido'}</p>
+                            <p>{sorteo.ganadores[0]?.premio.nombre}</p>
+                            <p>{sorteo.ganadores[0]?.premio.descripcion}</p>
                         </div>
-                    ))}
-                </div>
-            )}
+                        {/* Segundo ganador */}
+                        <div className="card_res second-winner">
+                            <h1>🥈</h1>
+                            <h1>Segundo Premio</h1>
+                            <h2>{sorteo.ganadores[1]?.numeroRifa}</h2>
+                            <p>{sorteo.ganadores[1]?.nombreParticipante || 'Desconocido'}</p>
+                            <p>{sorteo.ganadores[1]?.premio.nombre}</p>
+                            <p>{sorteo.ganadores[1]?.premio.descripcion}</p>
+                        </div>
+                        {/* Tercer ganador */}
+                        <div className="card_res second-winner">
+                            <h1>🥉</h1>
+                            <h1>Tercer Premio</h1>
+                            <h2>{sorteo.ganadores[2]?.numeroRifa}</h2>
+                            <p>{sorteo.ganadores[2]?.nombreParticipante || 'Desconocido'}</p>
+                            <p>{sorteo.ganadores[2]?.premio.nombre}</p>
+                            <p>{sorteo.ganadores[2]?.premio.descripcion}</p>
+                        </div>
+                        {/* Restantes */}
+                        {sorteo.ganadores.slice(3).map((ganador, idx) => (
+                            <div className="card_res remaining-winner" key={idx}>
+                                <h1>Ganador {idx + 4}</h1>
+                                <h2>{ganador.numeroRifa}</h2>
+                                <p>{ganador.nombreParticipante || 'Desconocido'}</p>
+                                <p>{ganador.premio.nombre}</p>
+                                <p>{ganador.premio.descripcion}</p>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

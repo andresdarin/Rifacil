@@ -781,6 +781,7 @@ body,
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 2rem 0 5rem 0;
 }
 
 .alta-vendedor__form,
@@ -2170,9 +2171,11 @@ button:disabled {
 }
 
 /*Resultado*/
-
-.resultado_container {
-    padding: 20px;
+.resultado_content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4rem;
 }
 
 .card_res-container {
