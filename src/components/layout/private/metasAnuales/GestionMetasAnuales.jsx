@@ -52,8 +52,12 @@ export const GestionMetasAnuales = () => {
             const data = await response.json();
 
             if (data.status === 'success') {
-                setMensaje('Meta anual creada con éxito');
+                const vendedorSeleccionado = vendedores.find(v => v._id === userId);
+                const nombreVendedor = vendedorSeleccionado ? vendedorSeleccionado.nombreCompleto : 'vendedor seleccionado';
+                setMensaje(`Meta anual del ${nombreVendedor} para el ${año} creada con éxito`);
                 setMetaVentas('');
+
+
             } else {
                 setError(data.message || 'Hubo un error al crear la meta');
             }
@@ -71,50 +75,42 @@ export const GestionMetasAnuales = () => {
 
                 <h1>Establecer Meta Anual</h1>
                 <form className='form-group' onSubmit={handleSubmit}>
-                    <div>
-                        <select
-                            className="form-group form-group-select"
-                            value={userId}
-                            onChange={(e) => setUserId(e.target.value)}
-                            required
-                        >
-                            <option value="">-- Selecciona un vendedor --</option>
-                            {vendedores.map((vendedor) => (
-                                <option key={vendedor._id} value={vendedor._id}>
-                                    {vendedor.nombreCompleto}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
 
-                    <div>
-                        <input
-                            className='form-group'
-                            type="number"
-                            placeholder='Nueva Meta'
-                            value={metaVentas}
-                            onChange={(e) => setMetaVentas(e.target.value)}
-                            required
-                            min={1}
-                        />
-                    </div>
-
-                    <div>
-                        <input
-                            className='form-group'
-                            type="number"
-                            value={año}
-                            onChange={(e) => setAño(e.target.value)}
-                            min={new Date().getFullYear()}
-                            required
-                        />
-                    </div>
-
+                    <select
+                        className="form-group form-group-select"
+                        value={userId}
+                        onChange={(e) => setUserId(e.target.value)}
+                        required
+                    >
+                        <option value="">Selecciona un vendedor</option>
+                        {vendedores.map((vendedor) => (
+                            <option key={vendedor._id} value={vendedor._id}>
+                                {vendedor.nombreCompleto}
+                            </option>
+                        ))}
+                    </select>
+                    <input
+                        className='form-group'
+                        type="number"
+                        placeholder='Nueva Meta'
+                        value={metaVentas}
+                        onChange={(e) => setMetaVentas(e.target.value)}
+                        required
+                        min={1}
+                    />
+                    <input
+                        className='form-group'
+                        type="number"
+                        value={año}
+                        onChange={(e) => setAño(e.target.value)}
+                        min={new Date().getFullYear()}
+                        required
+                    />
                     <button className='btn-asignar' type="submit">Guardar Meta</button>
                 </form>
 
-                {mensaje && <p style={{ color: 'green' }}>{mensaje}</p>}
-                {error && <p style={{ color: 'red' }}>{error}</p>}
+                {mensaje && <p style={{ color: 'green', textAlign: 'center' }}>{mensaje}</p>}
+                {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
             </div>
 
         </div>

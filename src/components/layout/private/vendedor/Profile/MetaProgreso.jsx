@@ -3,12 +3,12 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { Global } from "../../../../../helpers/Global";
 
-const MetaProgreso = ({ userId, año }) => {
-    const [progreso, setProgreso] = useState(null);
+const MetaProgreso = ({ userId }) => {
+    const [metas, setMetas] = useState([]);
     const token = localStorage.getItem("token");
 
     useEffect(() => {
-        const fetchProgreso = async () => {
+        const fetchMetas = async () => {
             try {
                 const response = await fetch(Global.url + "meta-anual/obtener-progreso-meta", {
                     method: "POST",
@@ -16,83 +16,122 @@ const MetaProgreso = ({ userId, año }) => {
                         "Content-Type": "application/json",
                         'Authorization': token
                     },
-                    body: JSON.stringify({ userId, año })
+                    body: JSON.stringify({ userId })
                 });
 
                 const data = await response.json();
 
                 if (data.status === "success") {
-                    const porcentaje = parseFloat(data.meta.progresoMeta.replace("%", ""));
-                    setProgreso(porcentaje);
+                    setMetas(data.metas);
                 } else {
                     console.error("Error:", data.message);
                 }
             } catch (error) {
-                console.error("Error al cargar el progreso:", error);
+                console.error("Error al cargar las metas:", error);
             }
         };
 
-        fetchProgreso();
-    }, [userId, año]);
+        fetchMetas();
+    }, [userId]);
 
-    const getColor = () => {
+    const getColor = (progreso) => {
         if (progreso <= 25) return "#ff3b3b";      // rojo
         if (progreso <= 75) return "#ffc107";      // amarillo
         return "#09de09b2";                        // verde
     };
 
-    const getEmoji = () => {
+    const getEmoji = (progreso) => {
         if (progreso <= 25) return "😱";
         if (progreso <= 75) return "😎";
         return "🔥";
     };
 
-    const getPulseClass = () => {
-        if (progreso <= 25) return "pulsoRojo";
-        if (progreso <= 75) return "pulsoAmarillo";
-        return "pulsoVerde";
-    };
+    const metaDestacada = metas.reduce((max, current) => {
+        return parseFloat(current.porcentajeProgreso) > parseFloat(max.porcentajeProgreso) ? current : max;
+    }, metas[0]);
+
 
     return (
         <div className="progreso-container">
             <h1>Metas Anuales</h1>
 
-            {/* Contenedor sin animación */}
-            <div className="progreso-card-container">
-                {/* Contenedor animado dinámico */}
-                <div
-                    className={`progreso-card ${progreso <= 25
-                        ? "red"
-                        : progreso <= 75
-                            ? "yellow"
-                            : "green"
-                        }`}
-                >
-                    {progreso !== null ? (
-                        <>
-                            <CircularProgressbar
-                                value={progreso}
-                                text={`${progreso}%`}
-                                styles={buildStyles({
-                                    textSize: "18px",
-                                    pathColor: getColor(),
-                                    textColor: "#fff",
-                                    trailColor: "transparent",
-                                    strokeLinecap: "round",
-                                    pathTransitionDuration: 1.5,
-                                })}
-                            />
-                            <div className="emoji-label">{getEmoji()}</div>
-                        </>
 
-                    ) : (
-                        <p>Cargando...</p>
-                    )}
+
+            {metaDestacada && (
+                <div className="meta-destacada">
+                    <div className="titulo-meta">({metaDestacada.año})
+                        <div className="emoji-label">{getEmoji(parseFloat(metaDestacada.porcentajeProgreso))}
+                        </div>
+                    </div>
+
+
+                    <div className={`progreso-card-destacada ${parseFloat(metaDestacada.porcentajeProgreso) <= 25
+                        ? "pulsoRojo"
+                        : parseFloat(metaDestacada.porcentajeProgreso) <= 75
+                            ? "pulsoAmarillo"
+                            : "pulsoVerde"
+                        }`}>
+
+                        <CircularProgressbar
+                            value={parseFloat(metaDestacada.porcentajeProgreso)}
+                            text={`${metaDestacada.porcentajeProgreso}%`}
+                            styles={buildStyles({
+                                textSize: "20px",
+                                pathColor: getColor(parseFloat(metaDestacada.porcentajeProgreso)),
+                                textColor: "#fff",
+                                trailColor: "transparent",
+                                strokeLinecap: "round",
+                                pathTransitionDuration: 1.5,
+                            })}
+                        />
+
+
+                    </div>
+
+
                 </div>
+            )}
+
+            <div className="progreso-card-container-multi">
+                {metas
+                    .filter(meta => meta.año !== metaDestacada.año)
+                    .map((meta) => {
+                        const progreso = parseFloat(meta.porcentajeProgreso);
+                        return (
+                            <div
+                                key={meta.año}
+                                className={`progreso-card ${progreso <= 25
+                                    ? "red"
+                                    : progreso <= 75
+                                        ? "yellow"
+                                        : "green"
+                                    }`}
+                            >
+                                <h3>{meta.año}</h3>
+
+                                <CircularProgressbar
+                                    value={progreso}
+                                    text={`${progreso}%`}
+                                    styles={buildStyles({
+                                        textSize: "18px",
+                                        pathColor: getColor(progreso),
+                                        textColor: "#fff",
+                                        trailColor: "transparent",
+                                        strokeLinecap: "round",
+                                        pathTransitionDuration: 1.5,
+                                    })}
+                                />
+
+
+                            </div>
+
+                        );
+
+                    })}
             </div>
         </div>
-    );
 
+    );
 };
 
 export default MetaProgreso;

@@ -164,10 +164,6 @@ body {
     font-weight: 100;
 }
 
-.sign-up {
-    height: 100vh;
-}
-
 
 .login-container {
     display: flex;
@@ -493,6 +489,7 @@ html,
 body,
 #root {
     height: 100%;
+    width: 100%;
     margin: 0;
     padding: 0;
     display: flex;
@@ -955,6 +952,10 @@ body,
     justify-content: center;
     margin: 2rem auto 2rem auto;
     min-height: 700px;
+}
+
+.card-layout__contacto {
+   min-height: 60rem;
 }
 
 .card-layout__vendedores {
@@ -1464,6 +1465,7 @@ canvas {
 }
 
 .search-bar {
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -2006,11 +2008,13 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .sorteo-container {
+    height: 90vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+
 }
+
 
 
 .form-container {
@@ -2320,6 +2324,7 @@ button:disabled {
     margin: 30rem auto auto auto;
     font-size: 3rem;
     font-weight: 200;
+    text-align: center;
 }
 
 .premios-lista {
@@ -2456,6 +2461,7 @@ button:disabled {
 
 /*Asignar*/
 .asignar-rifas-container {
+    min-height: 100vh;
     display: grid;
     grid-template-columns: 1fr 3fr;
     grid-template-rows: 1fr 0.08fr;
@@ -2596,6 +2602,26 @@ button:disabled {
 .info-item {
     margin: .2rem;
 }
+.info-item h4{
+    font-size: 1.5rem;
+    font-weight: 200;
+    color: var(--colorWhite);
+}
+.info-item p {
+    font-size: 1.2rem;
+    font-weight: 200;
+    color: var(--colorWhite);
+}
+
+.info-item-flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto auto auto auto !important;
+    height: 100%;
+
+}   
 
 .asignar-button {
     grid-column: span 4;
@@ -2660,10 +2686,10 @@ button:disabled {
 }
 
 .historial-container {
+    min-height: 90vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     color: var(--colorWhite);
 }
 
@@ -3319,7 +3345,6 @@ button:disabled {
 }
 
 /* Animación de aparición suave desde abajo */
-/* Animación de aparición suave desde abajo */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -3428,11 +3453,15 @@ button:disabled {
 }
 
 .emoji-label {
-    position: absolute;
     bottom: 60px;
     left: 50%;
     transform: translateX(-50%);
     font-size: 2rem;
+}
+
+.titulo-meta{
+    display: flex;
+    flex-direction: column;
 }
 
 .emoji-troph {
@@ -3630,6 +3659,21 @@ button:disabled {
     transform: translateY(-5px);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
     cursor: pointer;
+}
+
+.venta__card-historial{
+    width: 100%;
+}
+
+.card_sin_expand{
+    width: 100%;
+}
+
+.ventas__listado{
+    width: 100%;
+    max-width: 80%;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .card_sin_expand {
@@ -4011,40 +4055,43 @@ button:disabled {
 }
 
 .gestion-metas {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 10rem auto auto auto;
-    width: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 650px;
+  margin: 8rem auto;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  animation: fadeInUp 0.5s ease;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .gestion-metas h1 {
     color: var(--color1);
     font-weight: 200;
-    font-size: 3rem;
+    font-size: 2.5rem;
     padding: 0 0 2rem 0;
 }
 
 .gestion-metas .form-group {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
+
 
 .form-group-select {
     width: 100%;
     padding: 0.625rem;
-    /* equivalente a 10px si 1rem = 16px */
     border: 0.063rem solid #ccc;
-    /* 1px */
     border-radius: 0.5rem;
-    /* 8px */
     font-size: 1rem;
     background-color: #f5f5f5;
     box-shadow: 0 0 0.313rem rgba(0, 0, 0, 0.1);
-    /* 5px */
     margin: 0.625rem auto;
-    /* 10px */
     display: block;
     appearance: none;
 
@@ -4162,3 +4209,211 @@ button:disabled {
     display: flex;
     justify-content: center;
 }
+
+.boton-estadisticas {
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    margin: 0 1rem;
+    transform: translateY(-50%);
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background-color:var(--color5);
+    color: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1001;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.boton-estadisticas:hover {
+    background-color: var(--color3);
+    transform: translateY(-50%) scale(1.05);
+}
+
+.boton-estadisticas:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+/* Ocultar si mostrarEstadisticas es true */
+.boton-estadisticas.oculto {
+    display: none;
+}
+
+.btn-asignar-rifas-estadisticas{
+    border-radius: 50%
+}
+
+/* Contenedor general */
+.progreso-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Título principal */
+.progreso-container h1 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #222;
+}
+
+/* Tarjeta destacada */
+.meta-destacada {
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.meta-destacada h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #444;
+}
+
+/* Estilo visual de la tarjeta destacada */
+.progreso-card-destacada {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: transform 0.3s ease-in-out;
+}
+
+.progreso-card-destacada:hover {
+    transform: scale(1.05);
+}
+
+/* Contenedor de las demás metas */
+.progreso-card-container-multi {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Tarjetas individuales */
+.progreso-card {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    transition: transform 0.2s;
+}
+
+.progreso-card:hover {
+    transform: scale(1.03);
+}
+
+.progreso-card h3 {
+    margin: 0;
+    font-size: 1rem;
+
+}
+
+/* Emoji */
+.emoji-label {
+    font-size: 3rem;
+    margin-left: 4.1rem;
+    margin-bottom: 2rem;
+}
+
+/* Colores según progreso */
+.red {
+    background-color: var(--colorEliminar); 
+    backdrop-filter: blur(20px);             
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.yellow {
+    background-color: rgba(212, 161, 0, 0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.green {
+    background-color: rgba(0, 127, 0, 0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.footer {
+    background: #111;
+    color: #f0f0f0;
+    padding: 2rem 1rem;
+    margin: 4rem 0 0 0;
+    font-family: 'Segoe UI', sans-serif;
+    border-top: 2px solid #444;
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+.footer__content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer__left h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.2rem;
+}
+
+.footer__left p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #bbb;
+}
+
+.footer__right {
+    display: flex;
+    gap: 1rem;
+}
+
+.footer__right a {
+    color: #f0f0f0;
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.footer__right a:hover {
+    color: #09de09b2; /* verde brillante */
+}
+
+
+.layout-root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container-metas-anuales{
+    min-height: 70vw;
+}
+
+
+
+

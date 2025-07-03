@@ -45,20 +45,24 @@ export const Resultado = () => {
         obtenerSorteo();
     }, [token]);
 
-
-
     return (
-        <div className="resultado_container">
+        <div className="resultado_container" style={{ minHeight: 'calc(100vh - 120px)' }}>
             {sorteo && !error && (
                 <header className="header__resultado">Ganadores</header>
             )}
 
             {!sorteo ? (
-                <h1 className='no-sorteos'>No se encontraron sorteos</h1>
+                <div className="no-content-wrapper">
+                    <h1 className='no-sorteos'>No se encontraron sorteos</h1>
+                </div>
             ) : error ? (
-                <div>Error: {error}</div>
+                <div className="no-content-wrapper">
+                    <div>Error: {error}</div>
+                </div>
             ) : (!sorteo.ganadores || sorteo.ganadores.length === 0) ? (
-                <h1 className="no-ganadores">No hay ganadores para mostrar.</h1>
+                <div className="no-content-wrapper">
+                    <h1 className="no-ganadores">No hay ganadores para mostrar.</h1>
+                </div>
             ) : (
                 <div className="card_res-container">
                     {/* Primer ganador */}
@@ -102,9 +106,6 @@ export const Resultado = () => {
             )}
         </div>
     );
-
-
-
 };
 
 export default Resultado;

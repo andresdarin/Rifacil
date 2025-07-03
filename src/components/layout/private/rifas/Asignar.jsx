@@ -292,11 +292,11 @@ export const Asignar = () => {
             {/* Panel de asignación */}
             <div className="info-seleccionada panel-asignacion">
                 <div className="info-item-flex">
-                    <div className='info-item'>
+                    <div className='info-item info-item-rifas'>
                         <h4>Vendedor</h4>
                         <p>{vendedorSeleccionado ? vendedorSeleccionado.nombreCompleto : 'No seleccionado'}</p>
                     </div>
-                    <div className='info-item'>
+                    <div className='info-item info-item-rifas'>
                         <h4>Rifas seleccionadas</h4>
                         <p>{rifasSeleccionadas.length}</p>
                     </div>

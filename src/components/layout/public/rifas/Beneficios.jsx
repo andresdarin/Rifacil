@@ -57,8 +57,8 @@ export const Beneficios = () => {
 
     return (
         <div className="beneficios_container">
-            <div className="container-banner__beneficios">
-                <header className='beneficios_header'>Beneficios</header>
+            <div className="container-banner__productos">
+                <header className="header__vendedor header__alta-rifa">Beneficios</header>
             </div>
             <div className="beneficios_cards">
                 {beneficios.map((beneficio, index) => (

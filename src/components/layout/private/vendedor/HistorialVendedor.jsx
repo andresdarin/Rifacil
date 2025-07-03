@@ -7,6 +7,7 @@ export const HistorialVendedor = () => {
     const [error, setError] = useState(null);
     const [estadisticas, setEstadisticas] = useState(null);
     const [expandedVentaId, setExpandedVentaId] = useState(null);
+    const [mostrarEstadisticas, setMostrarEstadisticas] = useState(false);
     const expandedRef = useRef(null);
 
     // Simular token del localStorage
@@ -76,6 +77,10 @@ export const HistorialVendedor = () => {
         setExpandedVentaId(prevId => (prevId === id ? null : id));
     };
 
+    const toggleEstadisticas = () => {
+        setMostrarEstadisticas(!mostrarEstadisticas);
+    };
+
     const formatDate = (fecha) => {
         if (!fecha) return 'N/A';
         return new Date(fecha)
@@ -114,21 +119,50 @@ export const HistorialVendedor = () => {
         <>
             <div className="container-banner__productos">
                 <header className="header__vendedor header__vendedor-historial">Historial de Ventas</header>
-
-                {estadisticas && (
-                    <div style={{
-                        padding: '20px',
-                        margin: '20px',
-                        backgroundColor: '#f5f5f5',
-                        borderRadius: '8px',
-                        textAlign: 'center'
-                    }}>
-                        <h3>Resumen</h3>
-                        <p><strong>Total de Ventas:</strong> {estadisticas.totalVentas}</p>
-                        <p><strong>Monto Total Vendido:</strong> {formatCurrency(estadisticas.montoTotalVendido)}</p>
-                    </div>
-                )}
             </div>
+
+            {/* Panel flotante de estadísticas */}
+            {estadisticas && (
+                <div className="info-seleccionada panel-asignacion barra_responsive" style={{
+                    position: 'fixed',
+                    right: mostrarEstadisticas ? '20px' : '-480px',
+                    transform: 'translateY(-50%)',
+                    transition: 'right 0.3s ease-in-out',
+                    zIndex: 1000
+                }}>
+                    <div className="info-item-flex rifas-container">
+                        <div className='info-item '>
+                            <h3 className='historial-icono'>🎟️</h3>
+                            <h4 className='section_card-oculto'>Total de Ventas</h4>
+                            <p>{estadisticas.totalVentas}</p>
+                        </div>
+                        <div className='info-item'>
+                            <h3 className='historial-icono'>💰</h3>
+                            <h4 className='section_card-oculto'>Monto Total Vendido</h4>
+                            <p>{formatCurrency(estadisticas.montoTotalVendido)}</p>
+                        </div>
+                    </div>
+                    <button
+                        className="btn-asignar-rifas btn-asignar-rifas-estadisticas"
+                        onClick={toggleEstadisticas}
+                        style={{
+                            cursor: 'pointer'
+                        }}
+                    >
+                        📊 {mostrarEstadisticas ? 'Ocultar' : 'Ver'}
+                    </button>
+                </div>
+            )}
+
+            {/* Botón toggle flotante */}
+            {estadisticas && (
+                <button
+                    onClick={toggleEstadisticas}
+                    className={`boton-estadisticas ${mostrarEstadisticas ? 'oculto' : ''}`}
+                >
+                    📊
+                </button>
+            )}
 
             {ventas.length === 0 ? (
                 <div style={{ padding: '20px', textAlign: 'center' }}>
@@ -139,13 +173,13 @@ export const HistorialVendedor = () => {
                     {ventas.map((venta) => (
                         <div
                             key={venta._id}
-                            className="venta__card"
+                            className="venta__card venta__card-historial"
                             onClick={() => toggleExpand(venta._id)}
                             ref={expandedVentaId === venta._id ? expandedRef : null}
                         >
                             {expandedVentaId !== venta._id && (
                                 <div className="card_sin_expand">
-                                    <div className="section_card">
+                                    <div className="section_card section_card-oculto">
                                         <h1>{venta.rifa?.nombreParticipante || 'N/A'}</h1>
                                         <h3>Participante</h3>
                                     </div>
@@ -153,7 +187,7 @@ export const HistorialVendedor = () => {
                                         <h1>{venta.rifa?.NumeroRifa || 'N/A'}</h1>
                                         <h3>Número de Rifa</h3>
                                     </div>
-                                    <div className="section_card">
+                                    <div className="section_card section_card-oculto">
                                         <h1>{formatCurrency(venta.rifa?.precioRifa)}</h1>
                                         <h3>Precio</h3>
                                     </div>
@@ -165,7 +199,11 @@ export const HistorialVendedor = () => {
                             )}
 
                             {expandedVentaId === venta._id && (
-                                <div className="expanded__details">
+                                <div className="expanded__details expanded__details-historial">
+                                    <div className="detail__row">
+                                        <h1>Fecha de Compra</h1>
+                                        <h2>{formatDate(venta.fechaCompra)}</h2>
+                                    </div>
                                     <div className="detail__row">
                                         <h1>Participante</h1>
                                         <h2>{venta.rifa?.nombreParticipante || 'N/A'}</h2>
@@ -174,33 +212,14 @@ export const HistorialVendedor = () => {
                                         <h1>Número de Rifa</h1>
                                         <h2>{venta.rifa?.NumeroRifa || 'N/A'}</h2>
                                     </div>
-                                    <div className="detail__row">
-                                        <h1>Precio de Rifa</h1>
-                                        <h2>{formatCurrency(venta.rifa?.precioRifa)}</h2>
-                                    </div>
-                                    <div className="detail__row">
-                                        <h1>Propietario Original</h1>
-                                        <h2>{venta.rifa?.user?.nombreUsu || venta.rifa?.user?.name || 'N/A'}</h2>
-                                    </div>
+
                                     <div className="detail__row">
                                         <h1>Email</h1>
-                                        <h2>{venta.rifa?.user?.email || 'N/A'}</h2>
+                                        <h2>{venta.comprador?.email || 'N/A'}</h2>
                                     </div>
                                     <div className="detail__row">
                                         <h1>Comprador</h1>
                                         <h2>{venta.comprador?.nombreUsu || venta.comprador?.name || 'N/A'}</h2>
-                                    </div>
-                                    <div className="detail__row">
-                                        <h1>Email Comprador</h1>
-                                        <h2>{venta.comprador?.email || 'N/A'}</h2>
-                                    </div>
-                                    <div className="detail__row">
-                                        <h1>Fecha de Compra</h1>
-                                        <h2>{formatDate(venta.fechaCompra)}</h2>
-                                    </div>
-                                    <div className="detail__row">
-                                        <h1>Monto Total</h1>
-                                        <h2>{formatCurrency(venta.montoTotal)}</h2>
                                     </div>
                                     <div className="detail__row">
                                         <h1>Método de Pago</h1>
@@ -210,12 +229,14 @@ export const HistorialVendedor = () => {
                                         <h1>Estado del Pago</h1>
                                         <h2>{venta.pago?.estadoPago || 'N/A'}</h2>
                                     </div>
-                                    {venta.pago?.mp_payment_id && (
-                                        <div className="detail__row">
-                                            <h1>ID de Pago MP</h1>
-                                            <h2>{venta.pago.mp_payment_id}</h2>
-                                        </div>
-                                    )}
+                                    <div className="detail__row">
+                                        <h1>Precio de Rifa</h1>
+                                        <h2>{formatCurrency(venta.rifa?.precioRifa)}</h2>
+                                    </div>
+                                    <div className="detail__row">
+                                        <h1>Monto Total</h1>
+                                        <h2>{formatCurrency(venta.montoTotal)}</h2>
+                                    </div>
                                 </div>
                             )}
                         </div>
