@@ -2008,14 +2008,12 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .sorteo-container {
-    height: 90vh;
+    min-height: 90vh;
     display: flex;
     flex-direction: column;
     align-items: center;
 
 }
-
-
 
 .form-container {
     display: flex;
@@ -4360,7 +4358,7 @@ button:disabled {
 
 .footer {
     background: #111;
-    color: #f0f0f0;
+    color: var(--colorWhite);
     padding: 2rem 1rem;
     margin: 4rem 0 0 0;
     font-family: 'Segoe UI', sans-serif;
@@ -4414,6 +4412,27 @@ button:disabled {
     min-height: 70vw;
 }
 
+.sign-up{
+    width: auto;
+    max-width: none;
+    min-height: 90vh;
+}
 
+.proximos-sorteos-sortear{
+    display: flex;
+    color: var(--colorWhite);
+    list-style: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: var(--color5);
+    border-radius: 0.6rem 2rem 0.6rem 2rem;
+    margin-top: 2rem;
+    backdrop-filter: blur(8px);
+}
+.proximos-sorteos-sortear li{
+    list-style: none;
+}
 
 
