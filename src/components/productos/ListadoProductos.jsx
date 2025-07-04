@@ -275,7 +275,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                                                     {expandedDescriptions[producto._id] ? 'Ver menos' : 'Ver más'}
                                                 </button>
                                             )}
-                                        </h4>]
+                                        </h4>
                                         <h4 className='coursive'>Llevas vendidos {producto.cantidadVendidos} de este producto.</h4>
                                         {expandedId === producto._id && (
                                             <div className="edit-form-container">

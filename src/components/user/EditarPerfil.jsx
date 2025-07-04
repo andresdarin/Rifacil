@@ -5,32 +5,27 @@ import { Global } from '../../helpers/Global';
 import { useNavigate } from 'react-router-dom';
 import defaultAvatar from '../../assets/img/user.png';
 
-
 export const EditarPerfil = () => {
     const [saved, setSaved] = useState('not_sended');
     const [serverMessage, setServerMessage] = useState('');
-    const [previewImage, setPreviewImage] = useState(null); // Para mostrar la imagen antes de subir
+    const [previewImage, setPreviewImage] = useState(null);
     const navigate = useNavigate();
-    const imageInputRef = useRef(null); // << Referencia al input file
+    const imageInputRef = useRef(null);
 
-    const user = JSON.parse(localStorage.getItem('user')); // Usuario logueado
+    const user = JSON.parse(localStorage.getItem('user'));
     const token = localStorage.getItem('token');
 
-    // Inicializa el formulario con datos del usuario
     const { form, changed, setForm } = useForm(user || {});
 
-    // Manejar la selección de imagen para mostrar vista previa y actualizar el form
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            // Vista previa
             const reader = new FileReader();
             reader.onload = () => {
                 setPreviewImage(reader.result);
             };
             reader.readAsDataURL(file);
 
-            // Guardar el archivo en el form para enviar al backend
             setForm({
                 ...form,
                 image: file,
@@ -47,17 +42,14 @@ export const EditarPerfil = () => {
         }
 
         try {
-            // Usamos FormData para enviar la imagen junto con el resto de campos
             const formData = new FormData();
 
-            // Agregar campos del formulario (menos la imagen que ya está separada)
             Object.keys(form).forEach(key => {
                 if (key !== 'image') {
                     formData.append(key, form[key]);
                 }
             });
 
-            // Si hay imagen, la añadimos
             if (form.image) {
                 formData.append('image', form.image);
             }
@@ -67,30 +59,21 @@ export const EditarPerfil = () => {
                 body: formData,
                 headers: {
                     'Authorization': token
-                    // No ponemos Content-Type porque fetch con FormData lo asigna automáticamente
                 }
             });
 
             const data = await request.json();
-            console.log("Respuesta del servidor:", data);
 
             if (data.status === 'success') {
                 setSaved('saved');
                 setServerMessage('');
-                localStorage.setItem('user', JSON.stringify(data.user)); // Actualizar localStorage
 
-                // Actualizar preview con la nueva imagen (si la hay)
-                if (data.user.imagen) {
-                    setPreviewImage(Global.url + 'user/avatar/' + data.user.imagen);
-                }
+                // Mostrar mensaje y cerrar sesión luego
+                setTimeout(() => {
+                    localStorage.clear();
+                    navigate('/login');
+                }, 2000); // Espera 2 segundos para que se vea el mensaje
 
-                if (data.user.rol === 'admin') {
-                    navigate('/admin/profile');
-                } else if (data.user.rol === 'vendedor') {
-                    navigate(`/vendedor/profile/${data.user._id}`);
-                } else {
-                    navigate('/landing');
-                }
             } else {
                 setSaved('error');
                 setServerMessage(data.message || 'Ocurrió un error inesperado');
@@ -110,28 +93,22 @@ export const EditarPerfil = () => {
         if (!confirmDelete) return;
 
         const userData = JSON.parse(localStorage.getItem('user'));
-        console.log('userData', userData)
         const userId = userData?.id || userData?._id;
-        console.log('userId', userId)
         if (!userId) {
             alert('Error interno: no se encontró el ID de usuario.');
             return;
         }
 
         try {
-            const response = await fetch(
-                `${Global.url}usuario/logicDelete/${userId}`,
-                {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': token
-                    }
+            const response = await fetch(`${Global.url}usuario/logicDelete/${userId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': token
                 }
-            );
+            });
 
             const result = await response.json();
-            console.log("Resultado al eliminar:", result);
 
             if (result.status === 'success') {
                 localStorage.clear();
@@ -146,17 +123,14 @@ export const EditarPerfil = () => {
     };
 
     const handleImageClick = () => {
-        // Simula el click en el input oculto
         imageInputRef.current.click();
     };
 
-    // Construir avatarUrl correctamente
     const avatarUrl = previewImage
         ? previewImage
         : user?.imagen
             ? Global.url + 'uploads/avatars/' + user.imagen
             : defaultAvatar;
-
 
     return (
         <div className='edit__layout'>
@@ -165,12 +139,11 @@ export const EditarPerfil = () => {
             </header>
 
             <div className="form-container sign-up">
-
                 <div className='login-card login-card__edit'>
 
                     {saved === 'saved' && (
                         <strong className='alert alert-success'>
-                            Datos actualizados correctamente
+                            Datos actualizados correctamente. Redirigiendo al login...
                         </strong>
                     )}
                     {saved === 'error' && serverMessage && (
@@ -179,42 +152,26 @@ export const EditarPerfil = () => {
                         </strong>
                     )}
 
-                    {/* Imagen de perfil con input oculto */}
                     <div className="profile-image-preview" style={{ marginBottom: '15px', cursor: 'pointer' }}>
-                        {avatarUrl ? (
-                            <>
-                                <img
-                                    src={avatarUrl}
-                                    alt="Imagen de perfil"
-                                    style={{
-                                        width: '150px',
-                                        height: '150px',
-                                        borderRadius: '50%',
-                                        objectFit: 'cover',
-                                        cursor: 'pointer'
-                                    }}
-                                    onClick={handleImageClick}
-                                />
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    ref={imageInputRef}
-                                    style={{ display: 'none' }}
-                                    onChange={handleImageChange}
-                                />
-                            </>
-                        ) : (
-                            <>
-                                <p onClick={handleImageClick} style={{ cursor: 'pointer' }}>No hay imagen de perfil (haz clic para subir)</p>
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    ref={imageInputRef}
-                                    style={{ display: 'none' }}
-                                    onChange={handleImageChange}
-                                />
-                            </>
-                        )}
+                        <img
+                            src={avatarUrl}
+                            alt="Imagen de perfil"
+                            style={{
+                                width: '150px',
+                                height: '150px',
+                                borderRadius: '50%',
+                                objectFit: 'cover',
+                                cursor: 'pointer'
+                            }}
+                            onClick={handleImageClick}
+                        />
+                        <input
+                            type="file"
+                            accept="image/*"
+                            ref={imageInputRef}
+                            style={{ display: 'none' }}
+                            onChange={handleImageChange}
+                        />
                     </div>
 
                     <form className='form-login' onSubmit={updateUser}>
@@ -298,6 +255,7 @@ export const EditarPerfil = () => {
                         </div>
                     </form>
                 </div>
+
                 <button
                     className="float-cart-button float-edit-button"
                     onClick={handleDeleteAccount}

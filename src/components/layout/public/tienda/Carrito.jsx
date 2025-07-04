@@ -30,7 +30,6 @@ export const Carrito = () => {
     };
 
     const handleProceedToCheckout = () => {
-        // Redirige a la página de Checkout
         navigate('/tienda/checkout');
     };
 
