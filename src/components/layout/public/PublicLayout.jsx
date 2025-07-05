@@ -6,7 +6,7 @@ import Footer from '../footer/Footer';
 export const PublicLayout = () => {
     const location = useLocation();
 
-    // Define las rutas donde el Header no debería mostrarse
+    // Estas son las rutas donde el Header no debería mostrarse
     const hideHeaderPaths = ['/', '/login', '/registro', '/recover-pass'];
 
     // Verifica si la ruta actual es '/reset-password/' seguido de cualquier token
@@ -22,7 +22,7 @@ export const PublicLayout = () => {
 
             {/* Contenido Principal */}
             <section className='layout__content'>
-                <Outlet />
+                <Outlet /> {/* ← acá se renderiza la ruta hija de la configuración de react-router */}
             </section>
             <Footer />
         </>

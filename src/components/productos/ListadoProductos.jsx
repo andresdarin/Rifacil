@@ -26,7 +26,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
     const [expandedId, setExpandedId] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [emptyMessage, setEmptyMessage] = useState('');
-    const [expandedDescriptions, setExpandedDescriptions] = useState({}); // Para controlar qué descripciones están expandidas
+    const [expandedDescriptions, setExpandedDescriptions] = useState({});
 
     const fetchProductos = async (page) => {
         try {
@@ -46,7 +46,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
 
             // Si es 404, mostrar un mensaje personalizado
             if (response.status === 404) {
-                setProductos([]); // Asegurarse de limpiar productos
+                setProductos([]);
                 setEmptyMessage('No hay productos disponibles en esta página.');
                 return;
             }
@@ -100,7 +100,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
 
             if (data.status === 'success') {
                 setProductos(data.productos);
-                setPages(1); // Si es una búsqueda, asumir que solo tenemos una página de resultados
+                setPages(1); // Si es una búsqueda, asumir que solo tenemos UNA página de resultados
             } else {
                 setError('No se encontraron productos con ese nombre');
             }
@@ -165,7 +165,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
         const r = Math.floor(Math.random() * 256);
         const g = Math.floor(Math.random() * 256);
         const b = Math.floor(Math.random() * 256);
-        return `rgba(${r}, ${g}, ${b}, 0.75)`; // Color con transparencia
+        return `rgba(${r}, ${g}, ${b}, 0.75)`; // Color con transparencia, esto está épico
     };
 
     // Función para generar un array de colores aleatorios según la cantidad de productos
@@ -248,7 +248,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                 </button>
             </div>
 
-            <div className="card-layout">
+            <div className="card-layout card-layout-productos">
                 <h2 className="titulo-responsive card-title-vertical">Productos</h2>
                 <div className="card-content">
                     <div className="card-list">

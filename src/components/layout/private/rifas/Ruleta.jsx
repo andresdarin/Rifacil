@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+//NO FUNCIONA ESTO A CHECKEAR
+
 const Ruleta = ({ participantes }) => {
     const [giro, setGiro] = useState(0);  // Para el ángulo de giro
     const [ganador, setGanador] = useState(null);

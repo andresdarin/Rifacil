@@ -33,12 +33,12 @@ export const AltaVendedor = () => {
         }
     };
 
-    const validRoles = ['vendedor']; // Define aquí los roles válidos
+    const validRoles = ['vendedor'];
 
     const saveVendedor = async (e) => {
         e.preventDefault();
 
-        // Validar rol
+        // Validación del rol
         if (!form.rol || !validRoles.includes(form.rol.toLowerCase())) {
             setErrorRol(`Rol no válido. Debe ser ${validRoles.join(', ')}`);
             setSaved('error');
@@ -55,7 +55,7 @@ export const AltaVendedor = () => {
                 formData.append(key, newUser[key]);
             }
 
-            // Aquí debe ser 'image' para coincidir con multer.single('image') en backend
+            // Acá debe ser 'image' para coincidir con multer.single('image') en backend, por eso no funcionaba lo de imagen con nombre
             if (avatarFile) {
                 formData.append('image', avatarFile);
             }
@@ -70,7 +70,7 @@ export const AltaVendedor = () => {
             if (data.status === 'success') {
                 setSaved('saved');
                 e.target.reset();
-                setAvatarPreview('/src/assets/img/user.png'); // Usa ruta correcta para imagen default
+                setAvatarPreview('/src/assets/img/user.png');
                 setAvatarFile(null);
             } else {
                 setSaved('error');

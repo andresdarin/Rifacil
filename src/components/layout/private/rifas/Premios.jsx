@@ -68,7 +68,7 @@ export const Premios = () => {
         fetchPremios();
     }, [token]);
 
-    // Manejar la asignación de premios
+    // Asignación de premios
     const handleAsignarPremio = async () => {
         console.log('Sorteo seleccionado:', selectedSorteo);
         console.log('Premios seleccionados:', selectedPremios);

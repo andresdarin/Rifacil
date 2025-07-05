@@ -104,11 +104,12 @@ export const Carrito = () => {
                             <button className="cart-clear-button" onClick={clearCart}>
                                 <i className="fa-solid fa-eraser"></i>
                             </button>
+                            <button className="cart-clear-button cart-next" onClick={handleProceedToCheckout}>
+                                <i class="fa-regular fa-circle-right"></i>
+                            </button>
                         </div>
 
-                        <button className="proceed-to-checkout-button" onClick={handleProceedToCheckout}>
-                            Proceder con la compra
-                        </button>
+
                     </>
                 ) : (
                     <p className="cart-empty-message">El carrito está vacío.</p>

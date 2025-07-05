@@ -13,11 +13,9 @@ export const PrivateLayout = () => {
 
             {/*contenido Principal*/}
             <section className='layout__content'>
-                <Outlet />
+                <Outlet /> {/* ← acá se renderiza la ruta hija de la configuración de react-router */}
             </section>
             <Footer />
-            {/*Barra Lateral*/}
-            <Sidebar />
         </div>
     )
 }

@@ -57,7 +57,7 @@ export const CrearRifa = () => {
 
             setMessage({ type: 'success', text: `Se generaron ${data.rifas.length} rifas correctamente.` });
             setRefreshList(prev => !prev);  // Trigger a refresh en ListadoRifas
-            // Reset campos
+            // Resetea campos
             setContador(4);
             setPrecio('');
             setFecha(null);
@@ -65,7 +65,7 @@ export const CrearRifa = () => {
             setMessage({ type: 'error', text: error.message });
         }
 
-        // Quitar mensaje tras 3 segundos
+        // Quitar mensaje después de 3 segundos
         setTimeout(() => setMessage(null), 3000);
     };
 

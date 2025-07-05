@@ -10,6 +10,44 @@ export const Sortear = () => {
     const [fechaSorteo, setFechaSorteo] = useState(null);
     const [proximosSorteos, setProximosSorteos] = useState([]);
     const token = localStorage.getItem('token');
+    const [ganadores, setGanadores] = useState([]);
+
+
+    useEffect(() => {
+        document.body.style.backgroundSize = "cover";
+        document.body.style.backgroundPosition = "center";
+
+        fetch('http://localhost:4001/api/sorteo/sorteosFuturos')
+            .then(res => res.json())
+            .then(data => {
+                if (data.sorteos) {
+                    setProximosSorteos(data.sorteos);
+                }
+            })
+            .catch(err => console.error('Error fetching próximos sorteos:', err));
+
+        fetch(Global.url + 'sorteo/listarGanadores', {
+            headers: { Authorization: token }
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (Array.isArray(data.sorteos) && data.sorteos.length > 0) {
+                    const sorted = data.sorteos
+                        .map(s => ({ ...s, fechaParsed: new Date(s.fechaSorteo) }))
+                        .sort((a, b) => b.fechaParsed - a.fechaParsed);
+                    const now = new Date();
+                    const reciente = sorted.find(s => s.fechaParsed <= now) || sorted[0];
+                    if (reciente && reciente.ganadores) {
+                        setGanadores(reciente.ganadores.slice(0, 3));
+                    }
+                }
+            })
+            .catch(err => console.error('Error fetching ganadores:', err));
+
+        return () => {
+            document.body.style.backgroundImage = '';
+        };
+    }, []);
 
     useEffect(() => {
         // Configurar fondo
@@ -49,7 +87,7 @@ export const Sortear = () => {
                 return;
             }
 
-            setMensaje(`¡Sorteo realizado exitosamente! Detalles: ${data.message}`);
+            setMensaje(`¡${data.message}! puedes ver los detalles en la pagina principal.`);
             setError(null);
         } catch (err) {
             setError('Error al conectar con el servidor');
@@ -61,6 +99,17 @@ export const Sortear = () => {
             <div className="container-banner__productos">
                 <header className="header__vendedor header__sortear">Sortear</header>
             </div>
+            {ganadores.length > 0 && (
+                <div className="ganadores-preview proximos-sorteos-sortear">
+                    <strong>Felicitaciones!</strong>
+                    <ul>
+                        {ganadores.map((g, i) => (
+                            <li style={{ listStyle: 'none' }} key={i}>{g.nombreParticipante || 'Desconocido'}</li>
+                        ))}
+                    </ul>
+                </div>
+            )
+            }
 
             {/* Calendario y botón */}
             <div className='calendar_container calendar_container__sortear'>
@@ -95,6 +144,6 @@ export const Sortear = () => {
                 </div>
             </div>
 
-        </div>
+        </div >
     );
 };

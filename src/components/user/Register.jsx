@@ -2,10 +2,9 @@ import React, { useState, useRef } from 'react';
 import { useForm } from '../../hooks/useForm';
 import { Global } from '../../helpers/Global';
 import { useNavigate } from 'react-router-dom';
-import userDefaultImg from '../../assets/img/Default.png'; // imagen por defecto
+import userDefaultImg from '../../assets/img/Default.png';
 
 const Register = () => {
-
     const { form, changed } = useForm({});
     const [saved, setSaved] = useState('not_sended');
     const [serverMessage, setServerMessage] = useState('');
@@ -29,40 +28,50 @@ const Register = () => {
     const saveUser = async (e) => {
         e.preventDefault();
 
-        try {
-            let formData = new FormData();
+        // Validación rápida frontend
+        if (!form.password || !form.passwordRep || form.password !== form.passwordRep) {
+            setSaved('error');
+            setServerMessage('Las contraseñas no coinciden');
+            return;
+        }
 
+        try {
+            const formData = new FormData();
+
+            // Añadir campos del formulario
             for (const key in form) {
                 formData.append(key, form[key]);
             }
 
+            // Añadir imagen si hay
             if (avatarFile) {
-                formData.append('avatar', avatarFile);
+                formData.append('image', avatarFile);
             }
 
-            const registerRequest = await fetch(Global.url + 'usuario/register', {
+            const res = await fetch(Global.url + 'usuario/register', {
                 method: 'POST',
-                body: formData,
+                body: formData
             });
 
-            const registerData = await registerRequest.json();
+            const data = await res.json();
 
-            if (registerData.status === 'success') {
+            if (data.status === 'success') {
                 setSaved('saved');
                 setServerMessage('');
 
-                const loginRequest = await fetch(Global.url + 'usuario/login', {
+                // Intentar login automático
+                const loginRes = await fetch(Global.url + 'usuario/login', {
                     method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify({
                         email: form.email,
                         password: form.password
-                    }),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
+                    })
                 });
 
-                const loginData = await loginRequest.json();
+                const loginData = await loginRes.json();
 
                 if (loginData.status === 'success') {
                     localStorage.setItem('token', loginData.token);
@@ -70,15 +79,15 @@ const Register = () => {
                     navigate('/landing');
                 } else {
                     setSaved('error');
-                    setServerMessage('Registro exitoso pero no se pudo iniciar sesión automáticamente. Por favor, inicia sesión.');
+                    setServerMessage('Registro exitoso pero no se pudo iniciar sesión automáticamente.');
                     navigate('/login');
                 }
             } else {
                 setSaved('error');
-                setServerMessage(registerData.message || 'Ocurrió un error inesperado');
+                setServerMessage(data.message || 'Ocurrió un error inesperado');
             }
-        } catch (error) {
-            console.error("Error en fetch:", error);
+        } catch (err) {
+            console.error('Error en registro:', err);
             setSaved('error');
             setServerMessage('Error al conectar con el servidor');
         }
@@ -87,39 +96,21 @@ const Register = () => {
     return (
         <div className="form-container sign-up">
             <div className='login-card'>
-
-                {saved === 'saved' && (
-                    <strong className='alert alert-success'>
-                        Usuario registrado correctamente
-                    </strong>
-                )}
-                {saved === 'error' && serverMessage && (
-                    <strong className='alert alert-danger'>
-                        {serverMessage}
-                    </strong>
-                )}
+                {saved === 'saved' && <strong className='alert alert-success'>Usuario registrado correctamente</strong>}
+                {saved === 'error' && serverMessage && <strong className='alert alert-danger'>{serverMessage}</strong>}
 
                 <form className='form-login' onSubmit={saveUser}>
+                    {/* Avatar */}
                     <div className="form-group form-group_login">
                         <div
                             className="avatar-preview avatar-preview-register"
-                            onClick={() => fileInputRef.current && fileInputRef.current.click()}
+                            onClick={() => fileInputRef.current?.click()}
                         >
-                            {avatarFile ? (
-                                <img
-                                    src={URL.createObjectURL(avatarFile)}
-                                    alt="Vista previa avatar"
-                                />
-                            ) : (
-                                <img
-                                    src={userDefaultImg}
-                                    alt="Imagen por defecto"
-                                />
-                            )}
+                            <img
+                                src={avatarFile ? URL.createObjectURL(avatarFile) : userDefaultImg}
+                                alt="Vista previa"
+                            />
                         </div>
-
-
-                        {/* Input file oculto */}
                         <input
                             type="file"
                             accept="image/*"
@@ -129,13 +120,12 @@ const Register = () => {
                         />
                     </div>
 
-                    {/* Los demás inputs */}
-
+                    {/* Campos de texto */}
                     <div className="form-group form-group_login">
                         <input type='text' name='nombreUsu' placeholder='Nombre de usuario' onChange={changed} />
                     </div>
                     <div className="form-group form-group_login">
-                        <input type='text' name='nombreCompleto' placeholder='Nombre Completo' onChange={changed} />
+                        <input type='text' name='nombreCompleto' placeholder='Nombre completo' onChange={changed} />
                     </div>
                     <div className="form-group form-group_login">
                         <input type='text' name='ci' placeholder='Documento de identidad' onChange={changed} />
@@ -147,15 +137,16 @@ const Register = () => {
                         <input type='text' name='direccion' placeholder='Dirección' onChange={changed} />
                     </div>
                     <div className="form-group form-group_login">
-                        <input type='email' name='email' placeholder='eMail' onChange={changed} />
+                        <input type='email' name='email' placeholder='Correo electrónico' onChange={changed} />
                     </div>
                     <div className="form-group form-group_login">
                         <input type='password' name='password' placeholder='Contraseña' onChange={changed} />
                     </div>
                     <div className="form-group form-group_login">
-                        <input type='password' name='passwordRep' placeholder='Confirma tu Contraseña' onChange={changed} />
+                        <input type='password' name='passwordRep' placeholder='Repetir contraseña' onChange={changed} />
                     </div>
 
+                    {/* Botones */}
                     <div className="buttons-login buttons-register">
                         <button type="submit" className='btn'>Registrarse</button>
                         <button type="button" className='btn' onClick={LoginRedirect}>Login</button>

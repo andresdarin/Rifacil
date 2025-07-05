@@ -117,7 +117,7 @@ export const Asignar = () => {
     }, []);
 
     const asignarRifas = useCallback(async () => {
-        // Prevenir múltiples clicks
+        // Prevenir múltiples clics
         if (asignando) {
             return;
         }

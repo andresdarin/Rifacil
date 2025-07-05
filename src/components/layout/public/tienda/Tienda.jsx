@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { CartContext } from '../../../../context/CartProvider';
 import fotoRifa from '../../../../assets/img/foto_rifa.png';
 
-// Registrar elementos necesarios para el gráfico (si se usa)
+// Registrar elementos necesarios para el gráfico 
 Chart.register(ArcElement, Tooltip, Legend);
 
 export const Tienda = () => {
@@ -88,7 +88,6 @@ export const Tienda = () => {
         const yaEnCarrito = cartItems.some(item => item._id === rifa._id); // o item.id
 
         if (yaEnCarrito) {
-            // opcional: mostrar un mensaje, toast, etc.
             console.log("La rifa ya está en el carrito.");
             return;
         }
@@ -123,7 +122,7 @@ export const Tienda = () => {
             const data = await res.json();
             if (data.status === 'success') {
                 setProductos(data.products);
-                setTotalPages(data.pages); // Usar pages del backend
+                setTotalPages(data.pages);
             }
         } catch (err) {
             console.error(err);
@@ -176,7 +175,7 @@ export const Tienda = () => {
         }
     }, [searchTermProd, isSearching]);
 
-    // Para los productos mostrados, si estamos buscando hacemos paginación del lado del cliente
+    // Para los productos mostrados, si se está buscando, se hace paginación del lado del cliente
     const currentProducts = isSearching
         ? productos.slice((currentPage - 1) * 10, currentPage * 10)
         : productos;

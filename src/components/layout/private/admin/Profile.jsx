@@ -16,7 +16,7 @@ export const Profile = () => {
 
 		// Solo cargamos si ya terminó la validación y tenemos auth
 		if (!loading && auth && auth.imagen) {
-			// Agregamos timestamp para evitar caché
+			// Timestamp se usa para evitar caché
 			const urlImagen = `${Global.url.replace(/\/$/, '')}/uploads/avatars/${auth.imagen}?t=${new Date().getTime()}`;
 			setUserImage(urlImagen);
 		} else if (!loading && auth && !auth.imagen) {
@@ -27,7 +27,7 @@ export const Profile = () => {
 		return () => {
 			document.body.style.backgroundImage = '';
 		};
-	}, [auth, loading]); // Ahora se ejecutará cada vez que auth cambie
+	}, [auth, loading]); // Ahora se ejecuta cada vez que auth cambie
 
 	if (loading) return <p>Cargando perfil...</p>;
 

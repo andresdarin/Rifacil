@@ -106,12 +106,16 @@ export const HistorialVendedor = () => {
 
     if (error) {
         return (
-            <div className="container-banner__productos">
-                <header className="header__vendedor header__vendedor-historial">Historial de Ventas</header>
-                <div style={{ padding: '20px', textAlign: 'center', color: 'red' }}>
-                    <p>Error: {error}</p>
+            <>
+                <div className="container-banner__productos">
+                    <header className="header__vendedor header__vendedor-historial">Historial de Ventas</header>
+
                 </div>
-            </div>
+                <div style={{ padding: '20px', textAlign: 'center' }}>
+                    <p>{error}</p>
+                </div>
+            </>
+
         );
     }
 

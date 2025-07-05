@@ -1,4 +1,3 @@
-// src/components/user/EditarPerfil.jsx
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from '../../hooks/useForm';
 import { Global } from '../../helpers/Global';
@@ -9,6 +8,12 @@ export const EditarPerfil = () => {
     const [saved, setSaved] = useState('not_sended');
     const [serverMessage, setServerMessage] = useState('');
     const [previewImage, setPreviewImage] = useState(null);
+    const [passwordForm, setPasswordForm] = useState({
+        newPassword: '',
+        confirmPassword: '',
+        currentPassword: ''
+    });
+
     const navigate = useNavigate();
     const imageInputRef = useRef(null);
 
@@ -33,11 +38,28 @@ export const EditarPerfil = () => {
         }
     };
 
+    const handlePasswordChange = (e) => {
+        setPasswordForm({
+            ...passwordForm,
+            [e.target.name]: e.target.value
+        });
+    };
+
     const updateUser = async (e) => {
         e.preventDefault();
-        if (!form.currentPassword) {
+
+        if (!passwordForm.currentPassword) {
             setSaved('error');
             setServerMessage('Debes ingresar tu contraseña para confirmar los cambios');
+            return;
+        }
+
+        if (
+            (passwordForm.newPassword || passwordForm.confirmPassword) &&
+            passwordForm.newPassword !== passwordForm.confirmPassword
+        ) {
+            setSaved('error');
+            setServerMessage('Las contraseñas no coinciden');
             return;
         }
 
@@ -54,6 +76,14 @@ export const EditarPerfil = () => {
                 formData.append('image', form.image);
             }
 
+            // Importante: enviar la nueva contraseña con la clave 'password'
+            if (passwordForm.newPassword) {
+                formData.append('password', passwordForm.newPassword);
+            }
+
+            // También enviar la currentPassword para validación en backend
+            formData.append('currentPassword', passwordForm.currentPassword);
+
             const request = await fetch(Global.url + 'usuario/update', {
                 method: 'PUT',
                 body: formData,
@@ -67,13 +97,12 @@ export const EditarPerfil = () => {
             if (data.status === 'success') {
                 setSaved('saved');
                 setServerMessage('');
+                setPasswordForm({ newPassword: '', confirmPassword: '', currentPassword: '' });
 
-                // Mostrar mensaje y cerrar sesión luego
                 setTimeout(() => {
                     localStorage.clear();
                     navigate('/login');
-                }, 2000); // Espera 2 segundos para que se vea el mensaje
-
+                }, 2000);
             } else {
                 setSaved('error');
                 setServerMessage(data.message || 'Ocurrió un error inesperado');
@@ -86,10 +115,7 @@ export const EditarPerfil = () => {
     };
 
     const handleDeleteAccount = async () => {
-        const token = localStorage.getItem('token');
-        const confirmDelete = window.confirm(
-            '¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.'
-        );
+        const confirmDelete = window.confirm('¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.');
         if (!confirmDelete) return;
 
         const userData = JSON.parse(localStorage.getItem('user'));
@@ -140,113 +166,49 @@ export const EditarPerfil = () => {
 
             <div className="form-container sign-up">
                 <div className='login-card login-card__edit'>
-
-                    {saved === 'saved' && (
-                        <strong className='alert alert-success'>
-                            Datos actualizados correctamente. Redirigiendo al login...
-                        </strong>
-                    )}
-                    {saved === 'error' && serverMessage && (
-                        <strong className='alert alert-danger'>
-                            {serverMessage}
-                        </strong>
-                    )}
+                    {saved === 'saved' && <strong className='alert alert-success'>Datos actualizados correctamente. Redirigiendo al login...</strong>}
+                    {saved === 'error' && serverMessage && <strong className='alert alert-danger'>{serverMessage}</strong>}
 
                     <div className="profile-image-preview" style={{ marginBottom: '15px', cursor: 'pointer' }}>
-                        <img
-                            src={avatarUrl}
-                            alt="Imagen de perfil"
-                            style={{
-                                width: '150px',
-                                height: '150px',
-                                borderRadius: '50%',
-                                objectFit: 'cover',
-                                cursor: 'pointer'
-                            }}
-                            onClick={handleImageClick}
-                        />
-                        <input
-                            type="file"
-                            accept="image/*"
-                            ref={imageInputRef}
-                            style={{ display: 'none' }}
-                            onChange={handleImageChange}
-                        />
+                        <img src={avatarUrl} alt="Imagen de perfil" style={{ width: '150px', height: '150px', borderRadius: '50%', objectFit: 'cover', cursor: 'pointer' }} onClick={handleImageClick} />
+                        <input type="file" accept="image/*" ref={imageInputRef} style={{ display: 'none' }} onChange={handleImageChange} />
                     </div>
 
                     <form className='form-login' onSubmit={updateUser}>
                         <div className="form-group form-group_login">
-                            <input
-                                type='text'
-                                name='nombreUsu'
-                                placeholder={user.nombreUsu || 'Nuevo nombre de usuario'}
-                                onChange={changed}
-                                value={form.nombreUsu || ''}
-                            />
+                            <input type='text' name='nombreUsu' placeholder={user.nombreUsu || 'Nuevo nombre de usuario'} onChange={changed} value={form.nombreUsu || ''} />
                         </div>
                         <div className="form-group form-group_login">
-                            <input
-                                type='text'
-                                name='nombreCompleto'
-                                placeholder={user.nombreCompleto || 'Nuevo nombre Completo'}
-                                onChange={changed}
-                                value={form.nombreCompleto || ''}
-                            />
+                            <input type='text' name='nombreCompleto' placeholder={user.nombreCompleto || 'Nuevo nombre Completo'} onChange={changed} value={form.nombreCompleto || ''} />
                         </div>
                         <div className="form-group form-group_login">
-                            <input
-                                type='text'
-                                name='ci'
-                                placeholder={user.ci || 'Nuevo Documento de identidad'}
-                                onChange={changed}
-                                value={form.ci || ''}
-                            />
+                            <input type='text' name='ci' placeholder={user.ci || 'Nuevo Documento de identidad'} onChange={changed} value={form.ci || ''} />
                         </div>
                         <div className="form-group form-group_login">
-                            <input
-                                type='text'
-                                name='telefono'
-                                placeholder={user.telefono || 'Nuevo Teléfono'}
-                                onChange={changed}
-                                value={form.telefono || ''}
-                            />
+                            <input type='text' name='telefono' placeholder={user.telefono || 'Nuevo Teléfono'} onChange={changed} value={form.telefono || ''} />
                         </div>
                         <div className="form-group form-group_login">
-                            <input
-                                type='text'
-                                name='direccion'
-                                placeholder={user.direccion || 'Nuevo Dirección'}
-                                onChange={changed}
-                                value={form.direccion || ''}
-                            />
+                            <input type='text' name='direccion' placeholder={user.direccion || 'Nuevo Dirección'} onChange={changed} value={form.direccion || ''} />
                         </div>
                         <div className="form-group form-group_login">
-                            <input
-                                type='email'
-                                name='email'
-                                placeholder={user.email || 'Nuevo eMail'}
-                                onChange={changed}
-                                value={form.email || ''}
-                            />
+                            <input type='email' name='email' placeholder={user.email || 'Nuevo eMail'} onChange={changed} value={form.email || ''} />
                         </div>
-                        <div className="form-group form-group_login form-group_pass-confirm">
-                            <input
-                                type='password'
-                                name='currentPassword'
-                                placeholder='Ingresa tu contraseña para guardar'
-                                onChange={changed}
-                                value={form.currentPassword || ''}
-                                required
-                            />
+
+                        <hr className="divider" />
+                        <h3>Cambiar Contraseña</h3>
+
+                        <div className="form-group form-group_login">
+                            <input type='password' name='newPassword' placeholder='Nueva contraseña' onChange={handlePasswordChange} value={passwordForm.newPassword} />
                         </div>
                         <div className="form-group form-group_login">
-                            <button
-                                type="button"
-                                className="btn"
-                                onClick={() => navigate('/recover-pass')}
-                            >
-                                Cambiar contraseña
-                            </button>
+                            <input type='password' name='confirmPassword' placeholder='Confirmar nueva contraseña' onChange={handlePasswordChange} value={passwordForm.confirmPassword} />
+                        </div>
+                        <div className="form-group form-group_login">
+                            <input type='password' name='currentPassword' placeholder='Contraseña actual (para confirmar)' onChange={handlePasswordChange} value={passwordForm.currentPassword} required />
+                        </div>
+
+                        <div className="form-group form-group_login">
+                            <button type="button" className="btn" onClick={() => navigate('/recover-pass')}>Recuperar contraseña</button>
                         </div>
 
                         <div className="buttons-login buttons-register">
@@ -256,12 +218,7 @@ export const EditarPerfil = () => {
                     </form>
                 </div>
 
-                <button
-                    className="float-cart-button float-edit-button"
-                    onClick={handleDeleteAccount}
-                >
-                    Borrar Cuenta Permanentemente!
-                </button>
+                <button className="float-cart-button float-edit-button" onClick={handleDeleteAccount}>Borrar Cuenta Permanentemente!</button>
             </div>
         </div>
     );

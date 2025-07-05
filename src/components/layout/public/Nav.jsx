@@ -9,7 +9,7 @@ export const Nav = () => {
         setIsMenuOpen(prev => !prev);
     };
 
-    // useEffect para cerrar el menú si se hace clic fuera
+    // useEffect para cerrar el menú si se hace clic afuera
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (menuRef.current && !menuRef.current.contains(event.target)) {

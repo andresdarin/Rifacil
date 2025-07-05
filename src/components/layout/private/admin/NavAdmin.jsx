@@ -26,7 +26,7 @@ export const NavAdmin = () => {
         setIsDropdownOpen(open => !open);
     };
 
-    // Cierra el menú al hacer clic fuera
+    // Cierra el menú al hacer clic afuera
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (menuRef.current && !menuRef.current.contains(event.target)) {

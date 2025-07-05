@@ -6,7 +6,7 @@ import avatarPreviewImg from '../../../../assets/img/Default.png';
 import { useNavigate } from 'react-router-dom';
 
 export const AdminConfig = () => {
-    const { auth, setAuth } = useContext(AuthContext); // Agregar el contexto
+    const { auth, setAuth } = useContext(AuthContext);
     const [adminData, setAdminData] = useState({
         nombreCompleto: '',
         email: '',
@@ -120,10 +120,10 @@ export const AdminConfig = () => {
             const data = await res.json();
 
             if (data.status === 'success') {
-                // Actualizar localStorage
+                // Actualiza localStorage
                 localStorage.setItem('user', JSON.stringify(data.user));
 
-                // Actualizar el contexto de autenticación
+                // Actualiza el contexto de autenticación
                 setAuth(data.user);
 
                 setSaved('saved');
