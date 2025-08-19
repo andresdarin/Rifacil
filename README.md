@@ -1,4 +1,4 @@
-# RifaCil 🎟️
+# Rifáil 🎟️
 
 **RifaCil** es una plataforma moderna para la gestión de rifas, permitiendo a los vendedores crear rifas fácilmente y a los clientes comprar y participar de manera segura y sencilla.
 
