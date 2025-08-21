@@ -8,7 +8,7 @@ export const LandingPage = () => {
             <div className="container-banner" id="banner">
                 <div>
                     <span className='year__landing'>20</span>
-                    <span className='year__landing year__landing-2'>24</span>
+                    <span className='year__landing year__landing-2'>25</span>
                     <header className='header__landing'>Rifácil</header>
                 </div>
                 <p className='subtitle__landing'>Embárcate hacia la fortuna!</p>

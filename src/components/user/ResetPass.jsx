@@ -5,7 +5,7 @@ import { Global } from '../../helpers/Global';
 import { FaLock } from 'react-icons/fa';
 
 export const ResetPass = () => {
-    const { token } = useParams(); // Obtener el token de la URL
+    const { token } = useParams(); // Obtener el token DESDE la URL NO del body
     const { form, changed } = useForm({ password: '', confirmPassword: '' });
     const [status, setStatus] = useState("not_sended");
     const navigate = useNavigate();
@@ -81,7 +81,7 @@ export const ResetPass = () => {
                             name='password'
                             placeholder='Nueva Contraseña'
                             onChange={changed}
-                            required // Aseguramos que el campo sea obligatorio
+                            required
                         />
                         <FaLock className='icon' />
                     </div>
@@ -92,7 +92,7 @@ export const ResetPass = () => {
                             name='confirmPassword'
                             placeholder='Confirmar Nueva Contraseña'
                             onChange={changed}
-                            required // Aseguramos que el campo sea obligatorio
+                            required
                         />
                         <FaLock className='icon' />
                     </div>

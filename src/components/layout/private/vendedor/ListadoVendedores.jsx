@@ -6,13 +6,12 @@ export const ListadoVendedores = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1); // Estado para las páginas totales
+    const [totalPages, setTotalPages] = useState(1);
 
     // Función para obtener la lista de vendedores
     const fetchVendedores = async (page) => {
         try {
             const token = localStorage.getItem('token');
-
             if (!token) {
                 throw new Error('No se encontró un token de autorización.');
             }
@@ -30,14 +29,18 @@ export const ListadoVendedores = () => {
             }
 
             const data = await response.json();
-            console.log(data); // Verificar la respuesta del backend en la consola
+            console.log(data); // Verificar la respuesta del backend
 
             if (data.status === 'success' && Array.isArray(data.users)) {
-                setVendedores(data.users);
-
-                // Usa los datos que devuelve el backend
-                setPage(data.page);  // Número de página actual
-                setTotalPages(data.pages);  // Número total de páginas
+                // Ordenar vendedores (activos primero, luego inactivos)
+                const sortedVendedores = data.users.sort((a, b) => {
+                    if (a.estado === 'activo' && b.estado === 'inactivo') return -1;
+                    if (a.estado === 'inactivo' && b.estado === 'activo') return 1;
+                    return 0;
+                });
+                setVendedores(sortedVendedores);
+                setPage(data.page);  // Página actual
+                setTotalPages(data.pages);  // Total de páginas
             } else {
                 setError('No se pudieron obtener los vendedores');
             }
@@ -84,9 +87,36 @@ export const ListadoVendedores = () => {
         }
     };
 
+    const handleToggleStatus = async (id) => {
+        const confirmChange = window.confirm("¿Deseas cambiar el estado de este usuario?");
+        if (confirmChange) {
+            try {
+                const token = localStorage.getItem('token');
+
+                const response = await fetch(`${Global.url}usuario/change-status/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': token,
+                    },
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.status === 'success') {
+                    reloadUsuarios(); // Actualizar la lista
+                } else {
+                    alert(result.message || "Error al cambiar el estado del usuario");
+                }
+            } catch (error) {
+                alert("Error en el servidor: " + error.message);
+            }
+        }
+    };
+
     // Función para cambiar de página
     const handlePageChange = (newPage) => {
-        console.log('Cambiando a la página:', newPage); // Verifica el valor
+        console.log('Cambiando a la página:', newPage);
         if (newPage >= 1 && newPage <= totalPages) {
             setPage(newPage);
         }
@@ -100,7 +130,6 @@ export const ListadoVendedores = () => {
         </div>
     );
 
-
     return (
         <>
             <div className='card-layout__vendedores'>
@@ -108,14 +137,29 @@ export const ListadoVendedores = () => {
                 <div className="card-container">
                     {vendedores.length > 0 ? (
                         vendedores.map((vendedor) => (
-                            <div key={vendedor._id} className="card card-vendedores">
+                            <div key={vendedor._id} className={`card card-vendedores ${vendedor.estado === 'inactivo' ? 'opaco' : ''}`}>
                                 <div>
                                     <h1>{vendedor.nombreCompleto}</h1>
                                     <h4>{vendedor.email}</h4>
+                                    <h5 className={`estado-usuario ${vendedor.estado === 'activo' ? 'activo' : 'inactivo'}`}>
+                                        {vendedor.estado}
+                                    </h5>
                                 </div>
 
-                                <div className="card-buttons">
-                                    <button className="delete-button" onClick={() => handleDeleteUser(vendedor._id)}>
+                                <div className="card-buttons card-buttons-prof">
+                                    <button
+                                        className="status-button"
+                                        onClick={() => handleToggleStatus(vendedor._id)}
+                                        title="Cambiar estado"
+                                    >
+                                        <i className="fa-solid fa-user-secret" aria-hidden="true"></i>
+                                    </button>
+
+                                    <button
+                                        className="delete-button delete-button_vendedores"
+                                        onClick={() => handleDeleteUser(vendedor._id)}
+                                        title="Eliminar vendedor"
+                                    >
                                         <i className="fa fa-trash" aria-hidden="true" />
                                     </button>
                                 </div>

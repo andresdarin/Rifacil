@@ -30,6 +30,14 @@ import Checkout from '../components/layout/public/tienda/Checkout.jsx';
 import PagoSuccess from '../components/layout/public/tienda/PagoSuccess.jsx';
 import { PagoFailure } from '../components/layout/public/tienda/PagoFailure.jsx';
 import { PagoPending } from '../components/layout/public/tienda/PagoPending.jsx';
+import MetaProgreso from '../components/layout/private/vendedor/Profile/MetaProgreso.jsx';
+import { Estadisticas } from '../components/layout/private/vendedor/Estadisticas.jsx';
+import { VenderRifa } from '../components/layout/private/vendedor/VenderRifa.jsx';
+import { HistorialVendedor } from '../components/layout/private/vendedor/HistorialVendedor.jsx';
+import PagoRedirect from '../components/layout/public/tienda/PagoRedirect.jsx';
+import { EditarPerfil } from '../components/user/EditarPerfil.jsx';
+import { GestionMetasAnuales } from '../components/layout/private/metasAnuales/GestionMetasAnuales.jsx';
+
 
 export const Rutas = () => {
     return (
@@ -45,12 +53,14 @@ export const Rutas = () => {
                     <Route path='/reset-password/:token' element={<ResetPass />} />
                     <Route path='/resultado' element={<Resultado />} />
                     <Route path='/beneficios' element={<Beneficios />} />
+                    <Route path='/editarPerfil' element={<EditarPerfil />} />
                     <Route path='/tienda' element={<Tienda />} />
                     <Route path='/tienda/carrito' element={<Carrito />} />
                     <Route path='/tienda/checkout' element={<Checkout />} />
                     <Route path='/tienda/success' element={<PagoSuccess />} />
                     <Route path='/tienda/failure' element={<PagoFailure />} />
                     <Route path='/tienda/pending' element={<PagoPending />} />
+                    <Route path='/tienda/pagoRedirect' element={<PagoRedirect />} />
                 </Route>
 
                 <Route path='/admin' element={<PrivateLayout />}>
@@ -58,6 +68,7 @@ export const Rutas = () => {
                     <Route path='logout' element={<Logout />} />
                     <Route path='perfil' element={<AdminProfile />} />
                     <Route path='alta-vendedor' element={<AltaVendedor />} />
+                    <Route path='gestion-metas-anuales' element={<GestionMetasAnuales />} />
                     <Route path='rifas/asignar' element={<Asignar />} />
                     <Route path='rifas/crear' element={<CrearRifa />} />
                     <Route path='rifas/historial' element={<Historial />} />
@@ -70,9 +81,15 @@ export const Rutas = () => {
                 </Route>
 
                 <Route path='/vendedor' element={<PrivateLayout />}>
-                    <Route path='profile' element={<Profile />} />
+                    <Route path='profile/:id' element={<Profile />} />
+                    <Route path='estadisticas/:id' element={<Estadisticas />} />
+                    <Route path='historial-vendedor/:id' element={<HistorialVendedor />} />
+                    <Route path='vender-rifa/:id' element={<VenderRifa />} />
+                    <Route path='editarVendedor/:id' element={<EditarPerfil />} />
                     <Route path='logout' element={<Logout />} />
+                    <Route path='meta-anual/obtener-progreso' element={<MetaProgreso />} />
                 </Route>
+
 
                 <Route path='*' element={<Error404 />} />
             </Routes>

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 
 export const Rifas = () => {
     useEffect(() => {
-        document.body.style.backgroundImage = "url('/src/assets/img/BackgroundLong.png')";
         document.body.style.backgroundSize = "cover";
         document.body.style.backgroundPosition = "center";
 
@@ -11,7 +10,7 @@ export const Rifas = () => {
         };
     }, []);
     return (
-        <div className="container-banner__vendedor">
+        <div className="container-banner__productos">
             <header className='header__vendedor'>Rifas</header>
         </div>
     )

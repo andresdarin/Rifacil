@@ -1,22 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 export const useForm = (initialObj = {}) => {
-
-    const [form, setForm] = useState(initialObj)
+    const [form, setForm] = useState(initialObj);
 
     const changed = ({ target }) => {
         const { name, value } = target;
-
         setForm({
             ...form,
-            [name]: value
-        })
-
-
-    }
+            [name]: value,
+        });
+    };
 
     return {
         form,
-        changed
-    }
-}
+        changed,
+        setForm,
+    };
+};

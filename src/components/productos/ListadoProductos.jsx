@@ -10,7 +10,6 @@ Chart.register(ArcElement, Tooltip, Legend);
 
 export const ListadoProductos = ({ showHeroSection = true, showFormSection = true }) => {
     useEffect(() => {
-        document.body.style.backgroundImage = "url('/src/assets/img/BackgroundLong.png')";
         document.body.style.backgroundSize = "cover";
         document.body.style.backgroundPosition = "center";
 
@@ -27,7 +26,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
     const [expandedId, setExpandedId] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [emptyMessage, setEmptyMessage] = useState('');
-    const [expandedDescriptions, setExpandedDescriptions] = useState({}); // Para controlar qué descripciones están expandidas
+    const [expandedDescriptions, setExpandedDescriptions] = useState({});
 
     const fetchProductos = async (page) => {
         try {
@@ -47,7 +46,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
 
             // Si es 404, mostrar un mensaje personalizado
             if (response.status === 404) {
-                setProductos([]); // Asegurarse de limpiar productos
+                setProductos([]);
                 setEmptyMessage('No hay productos disponibles en esta página.');
                 return;
             }
@@ -101,7 +100,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
 
             if (data.status === 'success') {
                 setProductos(data.productos);
-                setPages(1); // Si es una búsqueda, asumir que solo tenemos una página de resultados
+                setPages(1); // Si es una búsqueda, asumir que solo tenemos UNA página de resultados
             } else {
                 setError('No se encontraron productos con ese nombre');
             }
@@ -166,7 +165,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
         const r = Math.floor(Math.random() * 256);
         const g = Math.floor(Math.random() * 256);
         const b = Math.floor(Math.random() * 256);
-        return `rgba(${r}, ${g}, ${b}, 0.75)`; // Color con transparencia
+        return `rgba(${r}, ${g}, ${b}, 0.75)`; // Color con transparencia, esto está épico
     };
 
     // Función para generar un array de colores aleatorios según la cantidad de productos
@@ -226,11 +225,14 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
         }));
     };
 
+    const hasVentas = productos.some(producto => producto.cantidadVendidos > 0);
+
+
     return (
         <>
             {showHeroSection && (
                 <div className="container-banner__productos">
-                    <header className="header__productos">Productos</header>
+                    <header className="header__productos header__productos-listado">Productos</header>
                 </div>
             )}
             {/* Campo de búsqueda */}
@@ -246,13 +248,21 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                 </button>
             </div>
 
-            <div className="card-layout">
+            <div className="card-layout card-layout-productos">
+                <h2 className="titulo-responsive card-title-vertical">Productos</h2>
                 <div className="card-content">
                     <div className="card-list">
                         {productos.length > 0 ? (
                             productos.map((producto) => (
-                                <div key={producto._id} className="card">
-                                    <div>
+                                <div key={producto._id} className="card card-productos">
+                                    <div className="img-container-list-prod">
+                                        <img
+                                            className='img'
+                                            src={producto.imagen ? `${Global.url}uploads/${producto.imagen}` : '/images/default-product.png'}
+                                            alt={producto.nombreProducto}
+                                        />
+                                    </div>
+                                    <div className='card-content__productos'>
                                         <h1>{producto.nombreProducto}</h1>
                                         <h4>${producto.precio}</h4>
                                         <h4>
@@ -266,7 +276,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                                                 </button>
                                             )}
                                         </h4>
-                                        <h4>Llevas vendidos {producto.cantidadVendidos} de este producto.</h4>
+                                        <h4 className='coursive'>Llevas vendidos {producto.cantidadVendidos} de este producto.</h4>
                                         {expandedId === producto._id && (
                                             <div className="edit-form-container">
                                                 <EditarProducto
@@ -278,7 +288,7 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                                             </div>
                                         )}
                                     </div>
-                                    <div className="card-buttons">
+                                    <div className="card-buttons card-buttons__productos">
                                         <button className="edit-button" onClick={() => handleEditToggle(producto._id)}>
                                             <i className="fa fa-pencil" aria-hidden="true" />
                                         </button>
@@ -294,12 +304,14 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                     </div>
 
                     {/* Gráfico de Doughnut - Manteniendo la estructura */}
-                    <div className="chart-title-container">
-                        <h2 className='emptyMessage'>Estadísticas de venta</h2>
-                        <div className={`chart-container ${productos.length === 0 ? 'hidden' : ''}`}>
-                            <Doughnut data={data} options={options} />
+                    {hasVentas && (
+                        <div className="chart-title-container">
+                            <h2 className='emptyMessage'>Estadísticas de venta</h2>
+                            <div className="chart-container">
+                                <Doughnut data={data} options={options} />
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
 
                 {/* Paginado */}
@@ -321,8 +333,9 @@ export const ListadoProductos = ({ showHeroSection = true, showFormSection = tru
                     </button>
                 </div>
 
-                <AltaProducto showHeroSection={false} showFormSection={showFormSection} reloadProductos={reloadProductos} />
+
             </div>
+            <AltaProducto showHeroSection={false} showFormSection={showFormSection} reloadProductos={reloadProductos} />
         </>
     );
 

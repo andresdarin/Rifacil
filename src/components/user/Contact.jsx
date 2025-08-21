@@ -12,7 +12,6 @@ const Contacto = ({ showHeroSection = true, showFormSection = true }) => {
     });
 
     useEffect(() => {
-        document.body.style.backgroundImage = "url('/src/assets/img/BackgroundLong.png')";
         document.body.style.backgroundSize = "cover";
         document.body.style.backgroundPosition = "center";
 

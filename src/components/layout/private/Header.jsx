@@ -30,7 +30,7 @@ export const Header = () => {
             <div className="navbar__header">
                 <img src={logo} alt="Logo" className='header_logo' />
             </div>
-            <NavComponent />
+            <NavComponent className="navbar__container-lists--banner" />
         </header>
     );
 };

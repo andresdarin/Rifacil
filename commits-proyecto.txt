@@ -1,0 +1,86 @@
+54b27af 2025-05-08 Andrés Darín: ultimo sorteo
+8fc3d7f 2025-05-08 Andrés Darín: Fixes
+3bd1b2b 2025-05-07 Andrés Darín: No muestra vendedores Inactivos
+3a5b257 2025-05-06 Andrés Darín: Enhance rifa assignment functionality and styling; add conditional rendering for assigned vendors and improve responsive design
+210d1b9 2025-05-06 Andrés Darín: Cambiar estado y eliminar
+55c6d46 2025-05-02 Andrés Darín: Fixes for Deploy
+6655394 2025-05-02 Andrés Darín: Final Fixes b4 Testing
+01df2cc 2025-05-02 Andrés Darín: Refactor admin navigation and styles; enhance responsiveness and accessibility
+0523800 2025-04-29 Andrés Darín: Alta Rifas
+b6f3cfa 2025-04-28 Andrés Darín: Tendencias Responsive
+436ea15 2025-04-28 Andrés Darín: Admin menu
+3596da6 2025-04-27 Andrés Darín: Responsive
+f5576ee 2025-04-27 Andrés Darín: Responsive
+5aacd3b 2025-04-26 Andrés Darín: Fixes
+bb0f666 2025-04-26 Andrés Darín: Fixes
+581c133 2025-04-24 Andrés Darín: VenderRifa
+bffe23b 2025-04-23 Andrés Darín: Profile Vendedor
+36e4185 2025-04-18 Andrés Darín: Vendedor
+40f6a42 2025-04-09 Andrés Darín: Vendedor Profile
+20f56c4 2025-04-03 Andrés Darín: cositas
+53aae22 2025-03-31 Andrés Darín: register
+284d2d5 2025-03-31 Andrés Darín: ajuste register
+e28fc8e 2025-03-19 Andrés Darín: https
+730f200 2025-03-02 Andrés Darín: .js en global
+7804ad4 2025-03-02 Andrés Darín: .env
+7ee7ff0 2025-03-02 Andrés Darín: Amplify connection w EB
+b8ba6cb 2025-02-25 Andrés Darín: desinstalacion de wheel of p
+3f289c8 2025-02-24 Andrés Darín: pagosss con mercado pago ngrok, por migrar a aws
+4c86f5c 2025-02-10 Andrés Darín: Mercado Pago
+19e3f6b 2024-12-28 Andrés Darín: Tienda
+39a49ab 2024-12-08 Andrés Darín: Asignar
+a9843b5 2024-12-06 Andrés Darín: Asignar
+ca0bfac 2024-12-05 Andrés Darín: Ajustes
+a3688f6 2024-11-28 Andrés Darín: Agendar Sorteo
+8b71d51 2024-11-28 Andrés Darín: Resultados
+9ad6ced 2024-11-26 Andrés Darín: Beneficios | Resultado
+6b8dad6 2024-11-21 Andrés Darín: Sorteo | Premios
+c41fa62 2024-11-18 Andrés Darín: Rifas
+65b3cb0 2024-11-12 Andrés Darín: Gestion Rifas
+a9ce426 2024-10-30 Andrés Darín: Error Config
+1ea1f00 2024-10-30 Andrés Darín: Update Admin Config
+f71a9e7 2024-10-30 Andrés Darín: Admin Config
+3d54d07 2024-10-24 Andrés Darín: Listados | Paginados
+66359a2 2024-10-22 Andrés Darín: Reset Pass
+57ebb96 2024-10-22 Andrés Darín: ResetPass
+8fa5d4e 2024-10-20 Andrés Darín: 404 img
+24d05f7 2024-10-20 Andrés Darín: Tendencias
+b033f54 2024-10-20 Andrés Darín: Graficos por ventas
+5a4bd44 2024-10-18 Andrés Darín: Arreglos | SearchBar
+b674db2 2024-10-13 Andrés Darín: Grafico Dona
+ab2aa46 2024-09-27 Andrés Darín: Recover | Reset Pass
+7a90a46 2024-09-27 Andrés Darín: Minor Adjustments
+2557b15 2024-09-26 Andrés Darín: Contacto
+909f320 2024-09-24 Andrés Darín: Edit Producto
+cd7ce77 2024-09-22 Andrés Darín: Aside productos | Listado css
+c7e10ac 2024-09-22 Andrés Darín: Paginado de Productos
+9a05d44 2024-09-21 Andrés Darín: Alta | Eliminar Producto
+46eac02 2024-09-21 Andrés Darín: Pagination
+be5695b 2024-09-21 Andrés Darín: ListadoVendedores Styles
+0fb9cad 2024-09-20 Andrés Darín: Listados
+d03e4c9 2024-09-20 Andrés Darín: Hero de Listado de Productos
+845ae67 2024-09-20 Andrés Darín: Nav Según Rol
+cf02d62 2024-09-19 Andrés Darín: List Vendedores | AuthProv (Solución al Bad Request)
+d8beae6 2024-09-17 Andrés Darín: Alta Vendedor | Ruta Alta Vendedor
+d31b404 2024-08-27 Andrés Darín: Adjustments
+ff9f363 2024-08-27 Andrés Darín: Logo Nav Update
+f3d635c 2024-08-27 Andrés Darín: Hidding Header in  Login and Register
+ae429e9 2024-08-27 Andrés Darín: Navegacion y Rutas entre perfiles
+471a499 2024-08-27 Andrés Darín: Admin Vendedor | Profile
+d64e148 2024-08-26 Andrés Darín: Landing Page
+383b973 2024-08-25 Andrés Darín: Landing Page
+9e6c197 2024-08-23 Andrés Darín: LogIn
+60b7caa 2024-08-22 Andrés Darín: Auth Provider | Private Page
+5a77ade 2024-08-22 Andrés Darín: AuthProvider
+93d7a26 2024-08-19 Andrés Darín: Register | AuthProvider
+f5c6d74 2024-08-08 Andrés Darín: Adjustments
+84a79d0 2024-08-08 Andrés Darín: Register
+db22596 2024-08-07 Andrés Darín: Front Login
+00662c1 2024-08-07 Andrés Darín: Doc title | Logo | | Login Adj | Styles
+5e56607 2024-08-07 Andrés Darín: Private | Public LyO | Rutas
+07ffc92 2024-08-07 Andrés Darín: Maquetacion front end
+1ee43e5 2024-08-07 Andrés Darín: Login | Rutas
+e68256b 2024-08-07 Andrés Darín: Global | useForm
+e582481 2024-08-07 Andrés Darín: Folders
+10bb01f 2024-07-11 Andrés Darín: Primer Commit (dependencias | rutas)
+dee4db6 2024-07-10 Andrés Darín: se agrega el proyecto

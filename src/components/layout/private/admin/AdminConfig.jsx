@@ -1,180 +1,242 @@
-import React, { useState, useEffect, useRef } from 'react';
+// src/components/admin/AdminConfig.jsx
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { AuthContext } from '../../../../context/AuthProvider';
 import { Global } from '../../../../helpers/Global';
+import avatarPreviewImg from '../../../../assets/img/Default.png';
+import { useNavigate } from 'react-router-dom';
 
 export const AdminConfig = () => {
+    const { auth, setAuth } = useContext(AuthContext);
     const [adminData, setAdminData] = useState({
-        nombre: '',
+        nombreCompleto: '',
         email: '',
         password: '',
         confirmarPassword: '',
-        avatar: '/src/assets/img/user.png'  // Ruta de la imagen por defecto
+        currentPassword: '',
+        avatarFile: null
     });
-
-    const [avatarPreview, setAvatarPreview] = useState(adminData.avatar); // Preview del avatar
-    const fileInputRef = useRef(null); // Referencia al input de archivo
+    const [avatarPreview, setAvatarPreview] = useState(avatarPreviewImg);
     const [saved, setSaved] = useState('not_sended');
-    const [errorMessage, setErrorMessage] = useState(''); // Estado para almacenar mensajes de error
+    const [errorMessage, setErrorMessage] = useState('');
+    const fileInputRef = useRef(null);
+    const navigate = useNavigate();
+
+    const token = localStorage.getItem('token');
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const userId = storedUser?._id;
 
     useEffect(() => {
-        // Cambia el fondo de la página
-        document.body.style.backgroundImage = "url('/src/assets/img/BackGorundVendedor.png')";
         document.body.style.backgroundSize = "cover";
         document.body.style.backgroundPosition = "center";
 
-        // Limpia el fondo al desmontar el componente
-        return () => {
-            document.body.style.backgroundImage = '';
-        };
-    }, []);
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+        const userId = storedUser?._id;
 
-    const handleInputChange = (e) => {
-        setAdminData({
-            ...adminData,
-            [e.target.name]: e.target.value
-        });
-    };
-
-    const handleFormSubmit = async (e) => {
-        e.preventDefault();
-
-        if (adminData.password !== adminData.confirmarPassword) {
-            setErrorMessage("Las contraseñas no coinciden");
-            setSaved('error');
-            return;
-        }
-
-        const token = localStorage.getItem('token');
-        const data = {
-            nombre: adminData.nombre,
-            email: adminData.email,
-            password: adminData.password
-        };
-
-        try {
-            const response = await fetch(`${Global.url}usuario/update`, {
-                method: 'PUT',
+        if (userId) {
+            fetch(`${Global.url}usuario/profile/${userId}`, {
                 headers: {
-                    'Authorization': token,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-
-            const contentType = response.headers.get("content-type");
-            if (contentType && contentType.includes("application/json")) {
-                const result = await response.json();
-                if (response.ok) {
-                    setSaved('saved');
-                    setErrorMessage('');
-                } else {
-                    setSaved('error');
-                    setErrorMessage(result.message || 'Error al actualizar el perfil');
+                    'Authorization': token
                 }
-            } else {
-                setSaved('error');
-                setErrorMessage("Error inesperado en el servidor. Verifica la URL o el token.");
-            }
-        } catch (error) {
-            setSaved('error');
-            setErrorMessage('Error en el servidor: ' + error.message);
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        const user = data.user;
+                        setAdminData(prev => ({
+                            ...prev,
+                            nombreCompleto: user.nombreCompleto || '',
+                            email: user.email || '',
+                        }));
+                        if (user.imagen) {
+                            setAvatarPreview(Global.url + 'uploads/avatars/' + user.imagen);
+                        }
+                    }
+                })
+                .catch(err => {
+                    console.error("Error al cargar el perfil del admin:", err);
+                });
         }
+    }, [token]);
+
+    const handleInputChange = e => {
+        const { name, value } = e.target;
+        setAdminData(prev => ({
+            ...prev,
+            [name]: value
+        }));
     };
 
-    const handleImageChange = (e) => {
+    const handleImageChange = e => {
         const file = e.target.files[0];
         if (file) {
+            setAdminData(prev => ({
+                ...prev,
+                avatarFile: file
+            }));
+
             const reader = new FileReader();
             reader.onloadend = () => {
-                setAvatarPreview(reader.result); // Actualiza la vista previa
+                setAvatarPreview(reader.result);
             };
             reader.readAsDataURL(file);
-            setAdminData({
-                ...adminData,
-                avatar: file  // Almacena el archivo de imagen en los datos del administrador
-            });
         }
     };
 
     const handleImageClick = () => {
-        fileInputRef.current.click(); // Activa el input de archivo
+        fileInputRef.current.click();
+    };
+
+    const handleSubmit = async e => {
+        e.preventDefault();
+
+        if (!adminData.currentPassword) {
+            setSaved('error');
+            setErrorMessage('Debes ingresar tu contraseña actual para guardar los cambios.');
+            return;
+        }
+
+        if (adminData.password && adminData.password !== adminData.confirmarPassword) {
+            setSaved('error');
+            setErrorMessage('Las contraseñas nuevas no coinciden.');
+            return;
+        }
+
+        try {
+            const formData = new FormData();
+            formData.append('nombreCompleto', adminData.nombreCompleto);
+            formData.append('email', adminData.email);
+            formData.append('currentPassword', adminData.currentPassword);
+            if (adminData.password) formData.append('password', adminData.password);
+            if (adminData.avatarFile) formData.append('image', adminData.avatarFile);
+
+            const res = await fetch(`${Global.url}usuario/update`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': token
+                },
+                body: formData
+            });
+
+            const data = await res.json();
+
+            if (data.status === 'success') {
+                // Actualiza localStorage
+                localStorage.setItem('user', JSON.stringify(data.user));
+
+                // Actualiza el contexto de autenticación
+                setAuth(data.user);
+
+                setSaved('saved');
+                setErrorMessage('');
+                setTimeout(() => {
+                    navigate('/admin/profile');
+                }, 1500);
+            } else {
+                setSaved('error');
+                setErrorMessage(data.message || 'Error desconocido');
+            }
+        } catch (error) {
+            console.error('Error al actualizar:', error);
+            setSaved('error');
+            setErrorMessage('Error al conectar con el servidor.');
+        }
     };
 
     return (
-        <div>
-            <div className="container-banner__vendedor">
-                <header className='header__vendedor'>Editar Perfil</header>
-            </div>
-            <div className="config-admin-w-avatar">
-                {/* Imagen del Avatar */}
-                <div className="config-admin-w-avatar">
-                    <div className="avatar-preview" onClick={handleImageClick}>
-                        <img src={avatarPreview} alt="Avatar" className="avatar-img" />
+        <div className='edit__layout'>
+            <header className="container-banner__productos header__editar-perfil">
+                <h1 className="header__vendedor">Config Admin</h1>
+            </header>
+
+            <div className="form-container sign-up">
+                <div className='login-card login-card__edit'>
+                    {saved === 'saved' && (
+                        <strong className='alert alert-success'>
+                            Datos actualizados correctamente
+                        </strong>
+                    )}
+                    {saved === 'error' && errorMessage && (
+                        <strong className='alert alert-danger'>
+                            {errorMessage}
+                        </strong>
+                    )}
+
+                    <div
+                        className="profile-image-preview"
+                        style={{ marginBottom: '15px', cursor: 'pointer' }}
+                        onClick={handleImageClick}
+                    >
+                        <img
+                            src={avatarPreview}
+                            alt="Avatar"
+                            style={{
+                                width: '150px',
+                                height: '150px',
+                                borderRadius: '50%',
+                                objectFit: 'cover'
+                            }}
+                        />
                         <input
                             type="file"
-                            id="avatar-upload"
                             accept="image/*"
+                            ref={fileInputRef}
                             style={{ display: 'none' }}
                             onChange={handleImageChange}
-                            ref={fileInputRef}
                         />
                     </div>
-                    <form className="form__admin-config" onSubmit={handleFormSubmit}>
-                        <div className="form-group form-group__config">
+
+                    <form className='form-login' onSubmit={handleSubmit}>
+                        <div className="form-group form-group_login">
                             <input
-                                type="text"
-                                id="nombre"
-                                name="nombre"
-                                placeholder='Nombre'
-                                value={adminData.nombre}
+                                type='text'
+                                name='nombreCompleto'
+                                placeholder='Nombre completo'
+                                value={adminData.nombreCompleto}
                                 onChange={handleInputChange}
                             />
                         </div>
-
-                        <div className="form-group form-group__config">
+                        <div className="form-group form-group_login">
                             <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                placeholder='Email'
+                                type='email'
+                                name='email'
+                                placeholder='Correo electrónico'
                                 value={adminData.email}
                                 onChange={handleInputChange}
                             />
                         </div>
-
-                        <div className="form-group form-group__config">
+                        <div className="form-group form-group_login">
                             <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                placeholder='Nueva Contraseña'
+                                type='password'
+                                name='password'
+                                placeholder='Nueva contraseña (opcional)'
                                 value={adminData.password}
                                 onChange={handleInputChange}
                             />
                         </div>
-
-                        <div className="form-group form-group__config">
+                        <div className="form-group form-group_login">
                             <input
-                                type="password"
-                                id="confirmarPassword"
-                                name="confirmarPassword"
-                                placeholder='Confirmar Contraseña'
+                                type='password'
+                                name='confirmarPassword'
+                                placeholder='Confirmar nueva contraseña'
                                 value={adminData.confirmarPassword}
                                 onChange={handleInputChange}
                             />
                         </div>
+                        <div className="form-group form-group_login form-group_pass-confirm">
+                            <input
+                                type='password'
+                                name='currentPassword'
+                                placeholder='Contraseña actual'
+                                value={adminData.currentPassword}
+                                onChange={handleInputChange}
+                                required
+                            />
+                        </div>
 
-                        {/* Mensajes de estado */}
-                        {saved === 'saved' && (
-                            <strong className='alert alert_edit alert-success'>Perfil actualizado correctamente</strong>
-                        )}
-                        {saved === 'error' && errorMessage && (
-                            <strong className='alert alert_edit alert-danger'>{errorMessage}</strong>
-                        )}
-
-                        <button type="submit" className="admin-config__submit-button">
-                            <i className="fa fa-save" aria-hidden="true"></i>
-                        </button>
-
+                        <div className="buttons-login buttons-register">
+                            <button type="button" className='btn btn-cancelar-editar' onClick={() => navigate(-1)}>Cancelar</button>
+                            <button type="submit" className='btn btn-cancelar-editar'>Guardar Cambios</button>
+                        </div>
                     </form>
                 </div>
             </div>

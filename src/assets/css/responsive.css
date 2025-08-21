@@ -1,4 +1,30 @@
-@media (max-width: 1365px) {
+@keyframes fadeSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/*@media (max-width: 1365px) {
     .layout {
         grid-template-areas:
             "nav nav"
@@ -8,104 +34,2410 @@
         grid-template-columns: 50% 50%;
     }
 
-    .aside__container{
+    .aside__container {
         display: flex;
         flex-direction: row;
     }
 
-    .layout__aside{
+    .layout__aside {
         margin-left: 2rem;
         padding-bottom: 2rem;
     }
 
-    .aside__profile-info{
+    .aside__profile-info {
         margin-right: 2rem;
     }
 
 }
 
 @media (max-width: 845px) {
-    .aside__profile-info{
+    .aside__profile-info {
         width: 100%;
     }
 
-    .profile-info__general-info{
+    .profile-info__general-info {
         justify-content: center;
     }
 
-    .profile-info__stats{
+    .profile-info__stats {
         justify-content: center;
     }
 
-    .aside__container{
+    .aside__container {
         flex-direction: column;
     }
 }
 
-
-@media (max-width: 690px){
-    .layout{
+@media (max-width: 690px) {
+    .layout {
         grid-template-rows: auto auto auto;
     }
 
-    .layout__navbar{
+    .layout__navbar {
+        background-image: url('../img/HeroAltaVendedor.png');
+        background-color: var(--color5);
+        opacity: 0.8;
         flex-direction: column;
         align-items: normal;
         min-height: auto;
-        padding: 1rem 1rem;
+        width: 100%;
+        padding: 0;
     }
 
-    .navbar__title{
+    .navbar__title {
         display: block;
     }
 
-    .navbar__container-lists{
+    .navbar__container-lists {
         width: 100%;
         flex-direction: column;
         padding: 0;
     }
 
-    .container-lists__menu-list{
+    .container-lists__menu-list {
         flex-direction: column;
     }
 
-    .container-lists__list-end{
+    .container-lists__list-end {
         flex-direction: column;
         align-items: normal;
         margin-top: 5rem;
     }
 
-    .menu-list__item{
+    .menu-list__item {
         width: 100%;
     }
 
-    .menu-list__link{
+    .menu-list__link {
         display: block;
     }
 
-    .list-end__link, .list-end__link-image{
+    .list-end__link,
+    .list-end__link-image {
         display: block;
     }
 
-    .list-end__link-image{
+    .list-end__link-image {
         padding: 0.5rem 1rem;
     }
 }
 
-
 @media (max-width: 447px) {
-    .profile-info__stats{
+    .profile-info__stats {
         flex-direction: column;
         align-items: normal;
     }
 
-    .stats__following:first-child{
-        padding: 0; 
+    .stats__following:first-child {
+        padding: 0;
     }
-    
-    .stats__following{
+
+    .stats__following {
         padding: 0;
         border-right: none;
     }
+}*/
+
+@media screen and (max-width: 768px) {
+
+    .layout__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .form-container {
+        display: flex;
+        align-self: center;
+        justify-content: center;
+        width: 90%;
+        padding: 10px;
+    }
+
+    /* Login */
+
+    .content__title h1 {
+        font-size: 2rem;
+        margin: 0;
+        text-align: center;
+        color: var(--colorWhite);
+    }
+
+    .login-card {
+        display: flex;
+        align-self: center;
+        justify-content: center;
+        width: 100%;
+        margin: 0px;
+        width: 20rem;
+    }
+
+    .form-login {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-width: 100%;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 16px;
+        padding: 8px 10px;
+        margin: 10px;
+    }
+
+    .social-icons {
+        display: none;
+    }
+
+    .buttons-login {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .buttons-login-label {
+        flex-direction: column;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .remember-forgot {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .buttons-login-label a {
+        margin: 0px;
+    }
+
+    .form-group .icon {
+        padding: 0px;
+        margin: 0px;
+        overflow: hidden;
+    }
+
+    .form-group_login {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .form-login input {
+        padding: 10px 7px;
+        border-radius: 5px;
+        font-size: 14px;
+        color: var(--color5);
+    }
+
+    /* Registro */
+    .content__title-register {
+        font-size: 2rem;
+        font-weight: 200;
+        margin: 0;
+        text-align: center;
+        color: var(--colorWhite);
+    }
+
+    .buttons-register {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    /* Estilo para el botón de registro */
+
+
+    /* Estilo general para los items del menú */
+    .menu-toggle {
+        display: flex;
+        align-items: flex-start;
+        background-color: transparent;
+        color: var(--colorWhite);
+    }
+
+    .menu-list__item {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Estilo para los enlaces del menú principal */
+    .menu-list__link {
+        margin: 0;
+        text-align: center;
+        background-color: transparent;
+        color: var(--colorWhite);
+    }
+
+    /* Estilo cuando el enlace está activo */
+    .menu-list__link.active {
+        color: var(--color5);
+        border: none;
+        background-color: transparent;
+    }
+
+    /* Estilo para los enlaces cuando se pasan por encima (hover) */
+    .menu-list__link:hover {
+        background-color: transparent;
+    }
+
+    /* Estilo cuando el menú principal está abierto */
+    .container-lists__menu-list {
+        background-image: url('../img/HeroAltaVendedor.png');
+        background-color: var(--color5);
+        color: var(--colorWhite);
+        position: absolute;
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        top: 0;
+        left: 0;
+        padding: 20px;
+        opacity: 1;
+        z-index: 999;
+    }
+
+    /* Estado abierto */
+    .container-lists__menu-list.open {
+        display: block;
+    }
+
+    /* Estilo para el submenú */
+    .dropdown-menu {
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-radius: 0;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        width: 100%;
+        position: static;
+        background-color: transparent;
+        transition: max-height 0.3s ease-out;
+        animation: fadeSlideIn 1s ease forwards;
+    }
+
+    /* Estilo para cada item del submenú */
+    .dropdown-menu__item {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        margin-left: 7rem;
+    }
+
+    /* Estilo para los enlaces del submenú */
+    .dropdown-menu__link {
+        display: block;
+        padding: 3px;
+        text-decoration: none;
+        color: black;
+        text-align: center;
+    }
+
+    /* Mostrar el submenú cuando el enlace del menú tiene la clase 'selected' */
+    .menu-list__link--dropdown.selected+.dropdown-menu {
+        display: flex;
+    }
+
+    /* Estilo para la flecha de los dropdowns */
+    .dropdown-arrow {
+        margin-left: 8px;
+        transition: transform 0.3s ease;
+        /* Transición suave al rotar */
+    }
+
+    /* Rotar la flecha cuando el dropdown está abierto */
+    .menu-list__link--dropdown.selected .dropdown-arrow {
+        transform: rotate(180deg);
+        /* Gira 180 grados cuando el dropdown está abierto */
+    }
+
+    .hamburger-btn {
+        display: block;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        z-index: 5;
+        max-width: 5px;
+    }
+
+    .arrow-down {
+        width: 12px;
+        height: 12px;
+        border: solid var(--colorWhite);
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+        transition: transform 0.3s ease;
+        /* si querés que se vea más grande ajustá width/height/border-width */
+    }
+
+    .arrow-down.open {
+        transform: rotate(-135deg);
+    }
+
+    .layout__navbar {
+        position: fixed;
+        padding: 0;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        background-image: url('../img/HeroAltaVendedor.png');
+        background-size: cover;
+        background-position: center;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: fadeSlideIn 1s ease forwards;
+    }
+
+
+    .navbar__header {
+        display: none;
+        /* Oculta el logo en pantallas pequeñas */
+    }
+
+    .navbar__container-lists {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* Centra la flecha */
+        width: 100%;
+    }
+
+    /*Landing Page*/
+    /* Ajuste del container-banner */
+    .container-banner {
+        height: 45vh;
+        background-size: cover;
+        background-position: center;
+    }
+
+    /* Ajustar el tamaño del texto de las clases .header__landing y .year__landing */
+    .header__landing {
+        font-size: 100px;
+        margin-top: -40px;
+        margin-bottom: -20px;
+    }
+
+    .year__landing {
+        font-size: 30px;
+        /* Reducir tamaño */
+        margin-left: 5px;
+        margin-bottom: -20px;
+    }
+
+    .subtitle__landing {
+        font-size: 20px;
+        /* Reducir tamaño */
+        margin-top: 10px;
+    }
+
+    /* Ajustar las columnas */
+    .columns {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        /* Asegura que las columnas ocupen todo el ancho */
+        justify-content: flex-start;
+        gap: 0;
+        /* Elimina el espacio entre las columnas */
+        margin: 0;
+        padding: 0;
+    }
+
+    .column {
+        max-width: 100%;
+        height: 100%;
+        padding: 10px;
+    }
+
+    /* Ajustar el tamaño de las imágenes */
+    .column1,
+    .column2,
+    .column3,
+    .column4,
+    .column5,
+    .column6 {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        min-height: 200px;
+        /* Asegura una altura mínima */
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .columns {
+        flex-direction: column;
+    }
+
+    .column1 {
+        order: 1;
+        /* Primer elemento */
+    }
+
+    .column2 {
+        order: 2;
+        /* Segundo elemento */
+    }
+
+    .column4 {
+        order: 3;
+        /* Cuarto elemento */
+    }
+
+    .column3 {
+        order: 4;
+        /* Tercer elemento */
+    }
+
+    .column5 {
+        order: 5;
+        /* Quinto elemento */
+    }
+
+    .column6 {
+        order: 6;
+        /* Sexto elemento */
+    }
+
+    .article_title {
+        font-size: 30px;
+        /* Reducir tamaño */
+        text-align: center;
+        /* Centra el título */
+    }
+
+    .article_subtitle {
+        font-size: 20px;
+        text-align: center;
+        /* Centra el subtítulo */
+    }
+
+    .article_under-title {
+        font-size: 15px;
+        text-align: center;
+        /* Centra el subtítulo */
+    }
+
+    .article_paragraph {
+        font-size: 10px;
+        text-align: justify;
+        /* Justifica el párrafo */
+        text-align-last: center;
+        /* Centra la última línea del párrafo */
+        /* Centrar el texto si es necesario */
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+
+    /*proximo sorteo*/
+    .header__prox {
+        font-size: 1.5rem;
+        /* Ajustar el tamaño del texto en pantallas pequeñas */
+    }
+
+    .article_subtitle {
+        font-size: 1rem;
+        /* Ajustar el tamaño de la fecha */
+    }
+
+    .premios-list li {
+        font-size: 0.9rem;
+        /* Reducir el tamaño del texto de los premios */
+    }
+
+    .premio-descripcion {
+        font-size: 0.9rem;
+        /* Reducir tamaño de la descripción */
+    }
+
+    /*Beneficios*/
+    .beneficios_header {
+        font-size: 5rem;
+        margin-bottom: -20px;
+    }
+
+    .beneficios_cards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .beneficio_imagen {
+        width: 200px;
+        height: 200px;
+    }
+
+    /* Resultados */
+    .header__resultado {
+        font-size: 3.5rem;
+        margin: 1rem 2rem 2rem 2rem;
+    }
+
+    .card_res-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .first-winner {
+        grid-column: span 2;
+        background-color: goldenrod;
+        font-size: 20px;
+    }
+
+    .second-winner {
+        grid-column: span 2;
+        background-color: var(--color4);
+    }
+
+    .remaining-winner {
+        grid-column: span 1;
+        background-color: var(--color5);
+    }
+
+    .card_res {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        /* Agregá esta línea */
+        padding-top: 1rem;
+        /* Si querés que no esté pegadísimo al borde */
+    }
+
+    .card_res h2 {
+        font-size: 15px;
+        padding: .5rem;
+        margin: .5rem;
+        border-radius: 0.3rem 1rem 0.3rem 1rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        align-self: center;
+        margin-top: 0;
+        /* quitamos separación arriba */
+    }
+
+    .card_res p {
+        font-size: 12px;
+        text-align: justify;
+    }
+
+    /*Contacto*/
+    /* .container-banner__contacto */
+    .container-banner__contacto,
+    .container-banner__productos,
+    .container-banner__vendedor {
+        height: 20vh;
+        background-size: cover;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        background-color: var(--color5);
+    }
+
+    .container-banner__productos {
+        display: flex;
+        align-items: bottom;
+        justify-content: center;
+    }
+
+    /* .header__contacto */
+    .header__contacto {
+        font-size: 5rem;
+        margin: 0 0 -30px 8px;
+    }
+
+    /* .card-layout__contacto */
+    .card-layout__contacto {
+        flex-direction: column;
+    }
+
+    /* .contacto__form */
+    .contacto__form {
+        width: 93%;
+        min-height: 30vh;
+        padding: 1rem;
+        border-radius: 1rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 1rem;
+        margin: 0.3rem;
+    }
+
+    .edit-producto__submit-button {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+
+    .contacto__submit-button {
+        margin-top: 0;
+        margin-bottom: .1em;
+    }
+
+    /*Tienda*/
+    .header__productos {
+        margin: 0 0 -30px 60px;
+    }
+
+    .header_tienda {
+        font-size: 4.5rem;
+        color: var(--colorWhite);
+        text-align: center;
+        margin: 0 0 -1.8rem;
+    }
+
+    .header__productos-listado {
+        margin: 0 0 -1.6rem 0;
+        font-size: 4rem;
+    }
+
+
+    .search-bar {
+        flex-direction: row;
+        align-items: center;
+        margin: 1rem 0 0 0;
+    }
+
+    .search-bar input {
+        width: 35vh;
+        padding: 0.5rem 1rem;
+        margin: 1rem 0 1rem 0;
+    }
+
+    .search-bar__submit-button {
+        width: 50px;
+        height: 40px;
+        margin-top: 1.2rem;
+    }
+
+    .card-tienda-layout-rifa {
+        display: grid;
+    }
+
+    .card-tienda-list-producto {
+        display: flex;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card-tienda-layout-rifa {
+        display: flex;
+    }
+
+    .card-tienda-list {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 110%;
+        padding: 0;
+    }
+
+    .rifa-imagen {
+        width: 4rem;
+    }
+
+    .card-tienda-item-rifa {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: row;
+        min-width: 90%;
+    }
+
+    .items-tienda-rifa {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+    }
+
+    .card-tienda-item {
+        width: 95%;
+        padding: 10px;
+        margin: 0 0 1rem 0;
+        background-color: var(--color5);
+    }
+
+    .card-tienda-item h1 {
+        font-size: 1rem;
+    }
+
+    .card-tienda-item h3 {
+        font-size: 0.8rem;
+    }
+
+    .card-tienda-item h4 {
+        font-size: 0.8rem;
+    }
+
+    .card-tienda-buttons-rifa {
+        width: 3rem;
+    }
+
+    .items-tienda-rifa h1 {
+        padding: 0 1rem;
+        font-size: 1.5rem;
+    }
+
+    .items-tienda-rifa h3 {
+        margin: 0 0 0 auto;
+    }
+
+    .add-to-cart-button {
+        display: flex;
+        width: 1.4rem !important;
+        border-radius: 0.3rem 1rem 0.3rem 1rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        align-items: flex-end;
+        justify-content: center;
+    }
+
+
+    .float-cart-button {
+        bottom: 20px;
+        left: 20px;
+        font-size: 20px;
+        padding: 12px;
+        width: 4rem;
+        height: 4rem;
+    }
+
+    .emptyMessage {
+        font-size: 0.8rem;
+        margin: 1rem;
+    }
+
+    /*carrito*/
+    /* Estilo para la lista de elementos en el carrito */
+    .header__carrito {
+        font-size: 3rem;
+        margin: 0 0 0 4.9rem;
+
+    }
+
+    .cart-item {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        margin: .8rem 0;
+    }
+
+    .cart-item-image {
+        width: 80px;
+        height: 80px;
+        margin: 0 10px 0 0;
+        margin-bottom: 10px;
+    }
+
+    .cart-item-details {
+        text-align: left;
+        margin-bottom: 10px;
+    }
+
+    .cart-item-title {
+        font-size: .8rem;
+    }
+
+    .cart-item-price {
+        font-size: 0.6rem;
+    }
+
+    .cart-item-quantity-container {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+    }
+
+    .cart-item-quantity-container h2 {
+        font-size: 2rem;
+        width: 2rem;
+        height: 2rem;
+        border: none;
+        margin: .5rem 0 0 0;
+    }
+
+    .cart-remove-item-button {
+        display: none;
+    }
+
+    .cart-quantity-button {
+        width: 20px;
+        height: 20px;
+        font-size: 1rem;
+    }
+
+    .cart-summary {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .cart-total {
+        font-size: 1.2rem;
+    }
+
+    .cart-clear-button {
+        font-size: 18px;
+        padding: 8px 15px;
+    }
+
+    .proceed-to-checkout-button {
+        width: 100%;
+        padding: 15px;
+        font-size: 1.2rem;
+        border-radius: 0.3rem 1rem 0.3rem 1rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        background-color: var(--color5);
+    }
+
+    .cart-empty-message {
+        font-size: 1rem;
+        padding: 10px;
+    }
+
+    /*Checkout*/
+    .header__checkout {
+        font-size: 3.5rem;
+        margin: 0 0 -1.2rem 4.0rem;
+    }
+
+    .checkout-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 0 20px 20px 20px;
+        margin: 0;
+    }
+
+    .checkout-box {
+        width: 100%;
+        /* Ocupa todo el ancho disponible */
+        margin-bottom: 20px;
+    }
+
+    .btn-mercado-pago-container {
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        /* Asegura que los botones ocupen todo el ancho */
+    }
+
+    .btn-mercado-pago img {
+        width: 120px;
+        /* Ajusta el tamaño de las imágenes en móviles */
+        height: auto;
+        margin: 10px 0;
+    }
+
+    .checkout-title h1 {
+        font-size: 1.2rem;
+        /* Reduce el tamaño de la fuente para pantallas pequeñas */
+    }
+
+    .checkout-item {
+        flex-direction: column;
+        /* Estilo más apropiado para móviles */
+        padding: 10px;
+        align-items: flex-start;
+    }
+
+    .checkout-item span {
+        font-size: 1rem;
+        /* Ajusta tamaño de la fuente */
+    }
+
+    .checkout-total {
+        font-size: 1.2rem;
+        margin: 1rem 0 3rem 0;
+        /* Ajusta el tamaño del total */
+    }
+
+    .checkout-list {
+        width: 100%;
+        padding: 0;
+    }
+
+    /* **********************************ADMIN********************************** */
+
+    .container-banner__vendedor {
+        height: 22vh;
+        background-position: center;
+        border-radius: 0;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .header__vendedor {
+        font-size: 4rem;
+        margin: 0 0 -2.0rem 8px;
+        text-align: center;
+        width: 100%;
+    }
+
+    .header__alta-vendedor {
+        font-size: 4rem;
+        margin: 0 0 -1.6rem 8px;
+    }
+
+    .header__admin,
+    .header__vendedor_prof {
+        font-size: 4rem;
+        margin: 0 0 -1.6rem 8px;
+    }
+
+
+
+
+    /* **********************************Tendencias********************************** */
+    .tendencias-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .tendencias-title {
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+    }
+
+    .chart-bar-container {
+        height: 300px;
+        width: 100vw;
+        margin-bottom: 15px;
+    }
+
+    .legend-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        width: 100vw;
+    }
+
+    .legend-item {
+        font-size: 0.8rem;
+        margin-bottom: 6px;
+    }
+
+    .legend-color {
+        height: 12px;
+        margin-right: 6px;
+    }
+
+    .legend-product-name {
+        max-width: 110px;
+    }
+
+    /* **********************************Vendedores********************************** */
+
+
+
+    .card-title-vertical {
+        display: block;
+        position: absolute;
+        font-size: 10rem;
+        margin: 0 0 1rem 0;
+        text-align: center;
+        rotate: +15deg;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        color: var(--color1);
+        opacity: 0.9;
+        z-index: 1;
+    }
+
+    .search-bar__submit-button {
+        align-self: center;
+    }
+
+    .card-layout {
+        flex-direction: column;
+        margin: 1rem auto;
+    }
+
+    .card-content {
+        flex-direction: column;
+        width: 100%;
+        margin: 1rem auto;
+        gap: 1rem;
+    }
+
+    .card-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        width: auto;
+    }
+
+    .card {
+        background-image: url('../img/HeroAltaVendedor.png');
+        flex-direction: column;
+        min-width: 90%;
+        padding: 1rem;
+        text-align: center;
+        z-index: 2;
+    }
+
+    .card-buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: flex-end;
+        gap: 0.5rem;
+        margin-top: auto;
+        margin: 0;
+        padding: 0;
+    }
+
+    .chart-container {
+        width: 90vw;
+        height: 90vw;
+        max-width: none;
+    }
+
+    .pagination {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        gap: 1rem;
+    }
+
+    .pagination-tienda {
+        display: flex;
+        align-self: center;
+        margin: auto 0 auto auto;
+    }
+
+    .arrow-pagination {
+        margin: 0;
+        background-color: transparent;
+        z-index: 2;
+    }
+
+    .card-vendedores {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 90vw;
+        padding: 1rem;
+        z-index: 2;
+    }
+
+    .button {
+        margin: 0 0 0 0;
+    }
+
+    .delete-button_vendedores,
+    .status-button {
+        width: 35px;
+        height: 35px;
+        font-size: 2rem;
+        padding: 0.5rem;
+        color: var(--colorEliminar);
+        background-color: transparent;
+        text-shadow:
+            0 0 10px var(--color1),
+            0 0 10px var(--colorEliminar),
+            0 0 20px var(--colorEliminar),
+            0 0 40px var(--colorEliminar);
+    }
+
+    .status-button {
+        color: var(--color5);
+        text-shadow:
+            0 0 10px var(--color1),
+            0 0 10px var(--colorEditar),
+            0 0 20px var(--colorEditar),
+            0 0 40px var(--colorEditar);
+    }
+
+    .card-productos {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 90vw;
+        padding: 1rem;
+        z-index: 2;
+    }
+
+    .card-productos h1 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin: 0;
+        padding: 0;
+    }
+
+    .card-buttons__productos {
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .emptyMessage {
+        font-size: 1.4rem;
+        margin: 1.5rem;
+        text-align: center;
+    }
+
+    .chart-container {
+        width: 100%;
+        height: auto;
+        min-width: 100vw;
+        margin: 1rem auto;
+    }
+
+
+    .card_sorteo-agendado {
+        padding: 1rem;
+        margin-top: 2rem;
+    }
+
+    .chart-title-container {
+        display: none;
+    }
+
+    /* **********************************AltaVendedor********************************** */
+    .alta-vendedor__container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .alta-vendedor__form-container,
+    .alta-producto__form-container {
+        width: 100%;
+        padding: .5rem;
+    }
+
+    .alta-vendedor__form,
+    .alta-producto__form {
+        width: 90vw;
+        display: flex;
+        flex-direction: column;
+        border-radius: 0%;
+        padding-top: 0rem;
+        background-color: transparent;
+        background-image: none;
+    }
+
+    .form-group__vendedor,
+    .form-group__producto {
+        margin: 0;
+    }
+
+    .alta-vendedor__submit-button,
+    .alta-producto__submit-button {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1.2rem;
+        border-radius: 0.3rem 1rem 0.3rem 1rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        background-color: var(--color5);
+    }
+
+    .alta-vendedor__submit-button:hover,
+    .alta-producto__submit-button:hover {
+        background-color: var(--color5);
+        color: var(--colorWhite);
+        transform: none;
+    }
+
+    .card-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* **********************************AdminConfig********************************** */
+
+
+    .config-admin-w-avatar {
+        flex-direction: column;
+        padding: 2rem 1rem;
+        gap: 2rem;
+    }
+
+    .avatar-img {
+        width: 12rem;
+        height: 12rem;
+        margin: 0 auto;
+    }
+
+    .form__admin-config {
+        width: 100%;
+    }
+
+    .form-group__config input {
+        font-size: 1rem;
+        padding: 0.8rem;
+    }
+
+    .admin-config__submit-button {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1.2rem;
+        border-radius: 0.3rem 1rem 0.3rem 1rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        background-color: var(--color5);
+    }
+
+    .admin-config__submit-button:hover {
+        background-color: var(--color5);
+        color: var(--colorWhite);
+        transform: none;
+    }
+
+    .header__vendedor-config {
+        font-size: 4rem;
+        text-align: center;
+        margin: 0 0 -1.6rem 0;
+    }
+
+    .alert.alert_edit {
+        font-size: 0.9rem;
+        text-align: center;
+        margin-top: 1rem;
+    }
+
+    /* **********************************Rifasssssssss********************************** */
+
+    .vendedor-span {
+        display: none;
+    }
+
+    .container-crear-rifa {
+        width: 100vw;
+    }
+
+    .header__alta-rifa {
+        font-size: 4rem !important;
+        margin: 0 0 -1.6rem 0;
+        text-align: center;
+    }
+
+    @media (max-width: 768px) {
+
+        /* Contenedor principal - Añadimos estilos más modernos */
+        .container-crear-rifa {
+            width: 100%;
+            padding: 1rem;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8));
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header_rifas {
+            margin: 0 0 -2.6rem 0;
+            font-size: 4rem;
+        }
+
+        /* Card principal de la rifa */
+        .card_rifa {
+            padding: 1.5rem 1rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.1));
+            border-radius: 12px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            min-width: none;
+        }
+
+        .card_rifa:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Título principal más llamativo */
+        .card_rifa h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+            letter-spacing: 0.5px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.8rem;
+        }
+
+        .card_rifa h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--color5);
+            border-radius: 3px;
+        }
+
+        /* Mejoramos el contador */
+        .contador__controls {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .contador__titulo {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            width: 100%;
+            text-align: center;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* Números del contador */
+        .contador__numero-container {
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 0.5rem 0;
+        }
+
+        .contador__numero {
+            width: 3.5rem;
+            height: 3.5rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contador__numero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+            z-index: 1;
+        }
+
+        /* Botones del contador */
+        .counter_icon_minus,
+        .counter_icon_plus {
+            background: var(--color5);
+            color: var(--colorWhite);
+            width: 3.5rem;
+            height: 3.5rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .counter_icon_minus:active,
+        .counter_icon_plus:active {
+            transform: scale(0.9);
+        }
+
+        .counter_number {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 3.5rem;
+            height: 3.5rem;
+        }
+
+        /* Inputs con mejor estilo */
+        .input_precio,
+        .input_fecha-crear {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #fff;
+            transition: all 0.3s ease;
+            margin: 0.8rem 0;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .input_precio:focus,
+        .input_fecha-crear:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--color5);
+            box-shadow: 0 0 0 2px rgba(var(--color5-rgb), 0.3);
+            outline: none;
+        }
+
+        /* Placeholder para inputs */
+        .input_precio::placeholder,
+        .input_fecha-crear::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Botón de generar con animación */
+        .generar__button {
+            width: 100%;
+            padding: 1.2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: var(--color5);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-top: 1.5rem;
+            box-shadow: 0 4px 12px rgba(var(--color5-rgb), 0.4);
+        }
+
+        .generar__button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.6s ease;
+        }
+
+        .generar__button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(var(--color5-rgb), 0.5);
+            background: var(--color5);
+        }
+
+        .generar__button:hover::before {
+            left: 100%;
+        }
+
+        .generar__button:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 8px rgba(var(--color5-rgb), 0.4);
+        }
+
+        .generar__button:focus {
+            animation: pulse 1s infinite;
+        }
+    }
+
+    .contador__titulo_generar {
+        display: none;
+    }
+
+    .currency {
+        color: var(--colorWhite);
+        width: 3rem;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    .react-datepicker-popper {
+        inset: 0 !important;
+        margin: auto !important;
+        position: fixed !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        z-index: 9999 !important;
+    }
+
+
+    .grid-rifas {
+        width: 100vw;
+    }
+
+    .grid-container {
+        grid-template-columns: repeat(1, 1fr);
+        gap: .5rem;
+    }
+
+    .grid-card {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        text-align: left;
+        width: 95vw;
+        padding: 0.75rem;
+        gap: 0.75rem;
+        height: 3rem;
+        margin: .2rem;
+    }
+
+    .grid-card h1,
+    .grid-card span,
+    .grid-card h4 {
+        margin: 0;
+        font-size: 0.9rem;
+    }
+
+    .grid-rifas h2 {
+        font-size: 2rem;
+        padding: 1rem;
+    }
+
+    .nro_rifa {
+        font-size: 1.2rem;
+        font-weight: bold;
+        flex-basis: 20%;
+    }
+
+    .description {
+        display: none;
+    }
+
+    .currency_list {
+        height: 1.5rem;
+        width: 1.5rem;
+        font-size: .8rem;
+        font-weight: bold;
+        flex-basis: 20%;
+    }
+
+    /* **********************************Asignar********************************** */
+    .asignar-rifas-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .vendedores-list,
+    .rifas-list {
+        width: 100%;
+    }
+
+
+    .vendedores-dropdown {
+        display: block;
+    }
+
+    .item-vendedor {
+        display: none;
+    }
+
+    .asignar-button__rifas {
+        width: 100vw;
+        padding: 1rem;
+        font-size: 1.2rem;
+        border-radius: 0.3rem 1rem 0.3rem 1rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        background-color: var(--color5);
+    }
+
+    .asignar-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+    }
+
+    .rifa-list {
+        grid-template-columns: repeat(4, 1fr);
+        box-shadow: none;
+    }
+
+    .rifa-item {
+        font-size: 1rem;
+        height: 3rem;
+        width: 4.5rem;
+        border-radius: .2rem;
+        padding: .2rem;
+    }
+
+    .vendedores-dropdown {
+        color: var(--color4);
+
+        display: block;
+        border: none;
+        padding: 12px;
+        border-radius: .2rem 1rem;
+        font-size: 16px;
+        transition: all .3s;
+        margin-top: 10px;
+        width: 90%;
+    }
+
+    .vendedores-dropdown:focus {
+        outline: none;
+        box-shadow: 0px 15px 20px -5px var(--color5), 
+            0px 10px 10px -5px var(--color5), 
+            0px 5px 5px -5px var(--color5)
+
+    }
+
+    .vendedores-dropdown option {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        font-size: 16px;
+        background-color: var(--colorWhite);
+        color: var(--color5);
+    }
+
+    .vendedores-dropdown {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    .panel-asignacion{
+        position: fixed;
+    }
+
+    .info-seleccionada {
+        height: 3rem;
+        position: fixed;  
+        bottom: 0;  
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin: 0 -1rem 0 0;
+        padding: 1rem;
+        border-radius: 0% !important;
+    }
+    .info-item{
+        display: flex;
+    }
+    .info-item h4,
+    .info-item p {
+        font-size: .65rem;
+        margin: 0 0.5rem;
+        color: var(--colorWhite);
+    }
+
+    .info-item p{
+        font-size: 1.9rem;
+        color: var(--colorWhite);
+    }
+
+    .info-item-flex{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+    .info-item-rifas h4,
+    .info-item-rifas p{
+        font-size: .65rem;
+        margin: 0 0.5rem;
+        color: var(--colorWhite);
+    }
+    .btn-asignar-rifas{
+        border-radius: 50% !important;
+        width: 6rem !important;
+        height: 6rem !important;
+        display: flex;
+        align-items: center;  
+        justify-content: center;  
+        flex-direction: column;
+        margin-bottom: 5rem;
+
+    }
+
+        .btn-icon {
+        display: inline;
+    }
+    .btn-text {
+        display: none;
+    }
+    .btn-asignar{
+        margin-top: 0;
+        margin-bottom: 5rem;
+    }
+
+
+
+    /* **********************************Historial********************************** */
+
+    .table-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        margin: 0 auto;
+    }
+
+    .historial_sorteos-titles {
+        display: none;
+    }
+
+    .historial_sorteos-titles h1 {
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    .historial_sorteos-tb {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        background-color: transparent;
+        background-image: none;
+        box-shadow: none;
+    }
+
+    .historial_sorteos-tb th,
+    .historial_sorteos-tb td {
+        padding: 1rem;
+        text-align: left;
+    }
+
+    .historial_sorteos-tb th {
+        background-color: var(--color5);
+        color: var(--colorWhite);
+    }
+
+    .historial_sorteos-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .nro_premio-list {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .historial_sorteos-mes,
+    .historial_sorteos-anio {
+        display: none;
+    }
+
+    .historial_sorteos-fecha {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin: 2rem 0 1rem 0;
+        font-size: 4.5em;
+        font-weight: bold;
+        padding: 1.5rem !important;
+    }
+
+    .nro_premio-list .item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        align-self: center;
+        padding: .7rem;
+        font-size: 1.2rem;
+        background-color: var(--color5);
+        color: var(--colorWhite);
+        border-radius: 0.3rem;
+        height: 10rem;
+        margin: 0.2rem;
+    }
+
+    .item--destacado {
+        grid-column: span 3;
+        height: 2rem;
+        width: 97%;
+        background-image: url('../img/HeroAltaVendedor.png') !important;
+        background-image: none;
+    }
+
+    .emoji-troph_historial {
+        display: block;
+    }
+
+    .table-container h1 {
+        margin: 0;
+    }
+
+    /* **********************************Premios********************************** */
+
+
+    .grid-container_premios {
+        grid-template-columns: 1fr;
+        align-items: center;
+        justify-content: center;
+        /* una sola columna */
+    }
+
+
+    .responsive-only {
+        display: block;
+        width: 90vw;
+        max-width: 400px;
+        margin: 10px auto;
+        padding: 0.7rem;
+        font-size: 1rem;
+        border-radius: 0.5rem;
+        border: 1px solid #ccc;
+        background-color: white;
+    }
+
+    .desktop-only {
+        display: none;
+    }
+
+    .sorteo-item {
+        display: none;
+    }
+
+    .premios-header {
+        display: none;
+    }
+
+    .premios-lista {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: center;
+        justify-content: center;
+        width: 90%;
+        padding: 1rem;
+    }
+
+    .premio-item {
+        display: flex;
+        font-size: 10px;
+        width: 11rem;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        margin: 0.5rem 0;
+        background-color: var(--color5);
+        color: var(--colorWhite);
+        border-radius: 0.3rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .sorteos-lista {
+        width: 90%;
+    }
+
+    .container-banner_premios {
+        width: 100%;
+    }
+
+    .header_premios {
+        font-size: 4rem;
+        margin-bottom: -1.6rem;
+    }
+
+    .crear-premio-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+    }
+
+    .crear-premio_button {
+        width: 90%;
+        padding: 1rem;
+    }
+
+    .asignar-premio_button button {
+        width: 75%;
+        align-self: center;
+    }
+
+    .react-datepicker {
+        position: relative;
+        overflow: hidden;
+        width: 70vw;
+        font-size: 1rem;
+        background-color: var(--color5);
+        color: var(--colorWhite);
+        border-radius: 0.3rem 1rem 0.3rem 1rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .react-datepicker__month-container {
+        width: 70vw;
+        padding: .2rem;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .react-datepicker__month {
+        width: 60vw;
+    }
+
+    .react-datepicker__day {
+        margin: 0;
+        width: 2.3rem;
+    }
+
+    .react-datepicker__day-names {
+        display: flex;
+        justify-content: space-between;
+        font-size: .7rem;
+        margin: 1rem 0 0 0;
+    }
+
+    .sortear__button {
+        width: 90vw;
+        padding: 1rem;
+        font-size: 1.2rem;
+        border-radius: 0.3rem 1rem 0.3rem 1rem;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        background-color: var(--color5);
+    }
+
+    .react-datepicker__navigation {
+        margin: .2rem 0 0 0;
+    }
+
+    .header__sortear,
+    .header__ {
+        font-size: 4rem;
+        margin: -2rem 0 -1.6rem 0;
+    }
+
+    .rifa-list-vendedor-profile {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+    }
+
+    .container-banner_metas {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100vw;
+    }
+
+    .rifa-item-vendedor-profile {
+        min-width: none;
+        margin: .2rem;
+    }
+    .ver-mas-perfil-vendedor{
+        margin: 0;
+    }
+
+    .clientes-container{
+        width: 100%;
+    }
+    
+.numeros-rifas-scroll {
+    max-height: 3.5rem;
+    overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+
+.numeros-rifas-scroll::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+
+    .cliente-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        height: 5rem;
+        width: 100%;
+    }
+
+    .cliente-item h2 {
+        font-size: 1rem;
+        font-weight: 400;
+        margin: 0;
+        padding: 0;
+    }
+
+    .cliente-item strong,
+    .cliente-item span {
+        margin: 0;
+        font-size: 1rem;
+        width: 50vw;
+        padding: 1rem;
+
+    }
+
+    .cliente-rifas {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 5px;
+    }
+
+    .rifas-label {
+        font-weight: 500;
+        color: #555;
+    }
+
+    .rifas-numeros {
+        font-weight: 600;
+        color: #000;
+    }
+
+    /* **********************************Estadisticas********************************** */
+    .header__estadisticas {
+        font-size: 4rem;
+        margin: 0 0 -1.6rem 0;
+        text-align: center;
+    }
+
+    .estadisticas__resumen {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        margin: 0 auto;
+    }
+
+    .estadisticas__resumen>div {
+        margin-bottom: 2rem;
+    }
+
+    .estadisticas-ventas {
+        background-image: url('../img/HeroAltaVendedor.png');
+        background-color: var(--color5);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        margin: 0 auto;
+    }
+
+    .estadisticas-grafica {
+        background-image: url('../img/HeroAltaVendedor.png');
+        background-color: var(--color5);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        margin: 0 auto;
+    }
+
+    .meta-chart-container {
+        width: 70vw;
+    }
+
+    .topproducto-item {
+        font-size: .8rem;
+        height: 2rem;
+        align-items: center;
+    }
+
+    .chart-text {
+        font-size: .5rem;
+    }
+
+    .meta-chart-emoji {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        margin-left: .5rem;
+    }
+
+    /* **********************************Ventas********************************** */
+
+    .ventas__listado {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        margin: 0 auto;
+    }
+
+    .venta__card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        margin: 0 auto;
+        height: 6rem;
+        width: 90vw;
+    }
+
+    .card_sin_expand {
+        display: flex;
+        flex-direction: row;
+        padding: 1rem;
+        width: 90vw;
+    }
+
+    .header__vendedor-historial {
+        margin: 0 0 -1.6rem 0;
+        font-size: 4rem;
+    }
+
+    .section_card {
+        display: flex;
+        flex-direction: column;
+        align-items: space-between;
+        justify-content: space-around;
+        margin: 0 auto;
+        min-width: 1px;
+    }
+
+    .section_card h1 {
+        font-size: 1rem;
+        margin: .5rem 0 auto 0;
+        padding: 0;
+    }
+
+    .section_card h3 {
+        font-size: .7rem;
+        margin: auto 0 .5rem 0;
+        color: var(--color3);
+        margin: 0;
+        padding: 0;
+    }
+
+    .expanded__details {
+        background-image: url('../img/HeroAltaVendedor.png');
+        background-color: var(--color5);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        margin: 0 auto;
+        z-index: 4;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .blur-background {
+        filter: blur(4px);
+        transition: filter 0.3s ease;
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        backdrop-filter: blur(4px);
+        background-color: rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    /* **********************************VenderRifa********************************** */
+    .header__vender {
+        font-size: 4rem;
+        margin: 0 0 -1.6rem 0;
+        text-align: center;
+    }
+
+    .rifas__manuales {
+        display: flex;
+        flex-direction: wrap;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        margin: 0 auto;
+    }
+
+    .rifa-card-venta {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        margin: 0 auto;
+        height: 3rem;
+        border-radius: .3rem;
+        font-size: .9rem;
+        min-width: 25vw;
+    }
+
+    .expanded {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        margin: 0 auto;
+        height: 130vw;
+        width: 90vw;
+    }
+
+    .expanded h3 {
+        font-size: 1.5rem;
+        margin: 0;
+        padding: 0;
+        font-weight: bold;
+
+    }
+
+    .card-content__productos {
+    flex-direction: column;
+    width: 100%;
+    overflow-x: auto;
+    height: 12rem;
+    margin: 1rem auto;
+    gap: 1rem;
+    }
+
+    .header__editar-perfil{
+        display: none;
+    }
+
+    .btn-cancelar-editar{
+        height: 5rem;
+    }
+
+    .login-card__edit{
+        width: 90vw;
+        margin-top: 10vw;
+    }
+    .float-edit-button{
+        position: inherit;
+        width: 80vw;
+        margin: 2rem auto;  
+        border-radius: 0.3rem;
+    }
+
+    .PS_all{
+        background-color: var(--colorBlack);
+        min-width: 100vw;
+        z-index: 1000;
+        color: var(--colo);
+    }
+
+    .pagination-listar-rifas{
+        background-color: var(--color5);
+        border-radius: 0.6rem 2rem 0.6rem 2rem;
+        margin: 1rem 0;
+        padding: .7rem;
+        width: 45vw;
+    }
+    .page-numbers {
+        display: none;
+    }
+
+    .precio_fecha{       
+        display: flex;
+        flex-direction: column;
+    }
+
+    .boton-estadisticas {
+        top: auto;
+        bottom: 20px;
+        right: 15px;
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+    }
+
+    .barra_responsive {
+    position: fixed;
+    bottom: 0%;
+    right: 20px;
+    z-index: 9999;
+    background-color: var(--color3);
+    color: #000;
+    border: none;
+    border-radius: 50%;
+    min-width: 100%;
+    height: 60px;
+    font-size: 24px;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    }
+    .barra_responsive:hover {
+        transform: scale(1.1);
+    }
+
+    .boton-estadisticas.oculto {
+        display: none;
+    }
+
+    .section_card-oculto{
+        display: none;
+    }
+
+    .venta__card-historial{
+        width: 90%;
+    }
+    .expanded__details{
+        display: flex;
+        justify-content: space-between;
+    }
+    .detail__row{
+        text-align: space;
+    }
+
+    .expanded__details-historial {
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.1); 
+        backdrop-filter: blur(10px);
+        border-radius: 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.2); 
+    }
+
+    .gestion-metas{
+        padding: 2rem;
+        margin: 2rem;
+        border: 1px solid var(--color4);
+        border-radius: 1rem;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+    }
+
 }
 
