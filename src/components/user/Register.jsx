@@ -48,6 +48,7 @@ const Register = () => {
                 formData.append('image', avatarFile);
             }
 
+            // Aquí NO ponemos headers, porque FormData los maneja automáticamente
             const res = await fetch(Global.url + 'usuario/register', {
                 method: 'POST',
                 body: formData
@@ -62,9 +63,7 @@ const Register = () => {
                 // Intentar login automático
                 const loginRes = await fetch(Global.url + 'usuario/login', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         email: form.email,
                         password: form.password
