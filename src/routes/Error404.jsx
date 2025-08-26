@@ -6,7 +6,6 @@ import errorImage from '../../src/assets/img/ImgError404.png'
 const Error404 = () => {
 
     useEffect(() => {
-        document.body.style.backgroundImage = "url('/src/assets/img/HeroAltaVendedor.png')";
         document.body.style.backgroundSize = "cover";
         document.body.style.backgroundPosition = "center";
 

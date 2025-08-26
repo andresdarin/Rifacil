@@ -10,9 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@fvilers/disable-react-devtools": "^1.3.0",
     "@mercadopago/sdk-react": "^0.0.23",
     "chart.js": "^4.4.4",
     "chartjs-plugin-annotation": "^3.1.0",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "mongoose": "^8.5.0",
@@ -20,11 +24,12 @@
     "nodemon": "^3.1.4",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.2.0",
+    "react-circular-progressbar": "^2.2.0",
     "react-datepicker": "^7.5.0",
     "react-dom": "^18.3.1",
     "react-icons": "^5.2.1",
     "react-router-dom": "^6.24.1",
-    "react-toastify": "^10.0.5",
+    "react-toastify": "^11.0.5",
     "rifacil": "file:",
     "validator": "^13.12.0"
   },
@@ -32,10 +37,13 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.21",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.2",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
+    "postcss": "^8.5.4",
+    "postcss-pxtorem": "^6.1.0",
     "vite": "^5.3.1"
   }
 }

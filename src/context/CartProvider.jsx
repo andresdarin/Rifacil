@@ -5,8 +5,8 @@ export const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState(() => {
-        const storedCart = localStorage.getItem('cart');
-        return storedCart ? JSON.parse(storedCart) : [];
+        const stored = localStorage.getItem('cart');
+        return stored ? JSON.parse(stored) : [];
     });
 
     useEffect(() => {
@@ -14,53 +14,70 @@ const CartProvider = ({ children }) => {
     }, [cartItems]);
 
     const addItem = (item) => {
-        setCartItems((prevItems) => {
-            const existingItem = prevItems.find(cartItem => cartItem._id === item._id);
-
-            if (existingItem) {
-                return prevItems.map(cartItem =>
-                    cartItem._id === item._id
-                        ? { ...cartItem, quantity: cartItem.quantity + 1 }
-                        : cartItem
+        setCartItems((prev) => {
+            // Detectar tipo
+            const tipo = item.precioRifa !== undefined ? 'rifa' : 'producto';
+            const enriched = { ...item, tipo };
+            const exists = prev.find(
+                (i) => i._id === enriched._id && i.tipo === enriched.tipo
+            );
+            if (exists) {
+                return prev.map((i) =>
+                    i._id === enriched._id && i.tipo === enriched.tipo
+                        ? { ...i, quantity: i.quantity + 1 }
+                        : i
                 );
             }
-            return [...prevItems, { ...item, quantity: 1 }];
+            return [...prev, { ...enriched, quantity: 1 }];
         });
     };
 
     const removeItem = (itemId) => {
-        setCartItems((prevItems) =>
-            prevItems
-                .map((item) =>
-                    item._id === itemId
-                        ? { ...item, quantity: item.quantity - 1 }
-                        : item
+        setCartItems((prev) =>
+            prev
+                .map((i) =>
+                    i._id === itemId ? { ...i, quantity: i.quantity - 1 } : i
                 )
-                .filter((item) => item.quantity > 0)
+                .filter((i) => i.quantity > 0)
         );
     };
 
-    const clearCart = () => {
-        setCartItems([]);
-    };
+    const clearCart = () => setCartItems([]);
 
-    const updateQuantity = (itemId, newQuantity) => {
-        setCartItems((prevItems) =>
-            prevItems.map((item) =>
-                item._id === itemId
-                    ? { ...item, quantity: newQuantity }
-                    : item
-            ).filter(item => item.quantity > 0)
+    const updateQuantity = (itemId, newQty) => {
+        setCartItems((prev) =>
+            prev
+                .map((i) =>
+                    i._id === itemId ? { ...i, quantity: newQty } : i
+                )
+                .filter((i) => i.quantity > 0)
         );
     };
 
-    // Función para calcular el total
     const calculateTotal = () => {
-        return cartItems.reduce((total, item) => total + item.precio * item.quantity, 0);
+        return cartItems.reduce((sum, item) => {
+            const unitPrice = item.precioRifa
+                ? parseFloat(item.precioRifa) || 0
+                : parseFloat(item.precio) || 0;
+            return sum + unitPrice * item.quantity;
+        }, 0);
     };
+
+    console.log('Carrito antes de sumar:', cartItems);
+
+
 
     return (
-        <CartContext.Provider value={{ cartItems, addItem, removeItem, clearCart, updateQuantity, calculateTotal }}>
+        <CartContext.Provider
+            value={{
+                cartItems,
+                addItem,
+                removeItem,
+                clearCart,
+                updateQuantity,
+                calculateTotal,
+            }}
+        >
             {children}
         </CartContext.Provider>
     );

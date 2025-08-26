@@ -22,7 +22,6 @@ import digitalHome from '../../../../assets/img/beneficios/digital-home.png';
 
 export const Beneficios = () => {
     useEffect(() => {
-        document.body.style.backgroundImage = "url('/src/assets/img/BackgroundLong.png')";
         document.body.style.backgroundSize = "cover";
         document.body.style.backgroundPosition = "center";
 
@@ -58,8 +57,8 @@ export const Beneficios = () => {
 
     return (
         <div className="beneficios_container">
-            <div className="container-banner__beneficios">
-                <header className='beneficios_header'>Beneficios</header>
+            <div className="container-banner__productos">
+                <header className="header__vendedor header__alta-rifa">Beneficios</header>
             </div>
             <div className="beneficios_cards">
                 {beneficios.map((beneficio, index) => (

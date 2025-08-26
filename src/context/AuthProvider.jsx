@@ -39,8 +39,6 @@ const AuthProvider = ({ children }) => {
         }
     };
 
-
-
     const authUser = async () => {
         const token = localStorage.getItem("token");
         const user = localStorage.getItem("user");
@@ -59,17 +57,17 @@ const AuthProvider = ({ children }) => {
             return;
         }
 
-        if (!userObj || !userObj.id) {
+        if (!userObj || !(userObj._id || userObj.id)) {
             console.error("User ID is undefined");
             setLoading(false);
             return;
         }
 
-        const userId = userObj.id;
+        const userId = userObj._id || userObj.id;
+
 
         // Verifica que userId no sea undefined antes de hacer las solicitudes
         if (userId) {
-            // Asegúrate de que la URL sea correcta
             const userProfileUrl = `${Global.url}usuario/profile/${userId}`;
 
             const userData = await fetchData(userProfileUrl, token);

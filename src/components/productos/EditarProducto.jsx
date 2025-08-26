@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Global } from '../../helpers/Global'; // Asegúrate de importar la URL global si es necesario
+import { Global } from '../../helpers/Global';
 
 const EditarProducto = ({ producto, showHeroSection, showFormSection, reloadProductos }) => {
     const [formData, setFormData] = useState({

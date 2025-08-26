@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Global } from '../../../../helpers/Global';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AgregarPremio = () => {
     const [descripcion, setDescripcion] = useState('');
@@ -7,23 +9,19 @@ const AgregarPremio = () => {
     const [sorteoSeleccionado, setSorteoSeleccionado] = useState('');
     const [ganadores, setGanadores] = useState([]);
     const [ganadorSeleccionado, setGanadorSeleccionado] = useState('');
-    const [mensaje, setMensaje] = useState(null);
     const token = localStorage.getItem('token');
 
     useEffect(() => {
-        // Cargar sorteos disponibles
         const fetchSorteos = async () => {
             try {
                 const response = await fetch(Global.url + 'sorteo/listarSorteos', {
-                    headers: {
-                        'Authorization': token
-                    }
+                    headers: { 'Authorization': token }
                 });
                 if (!response.ok) throw new Error('Error al cargar sorteos');
                 const data = await response.json();
                 setSorteos(data.sorteos);
             } catch (error) {
-                console.error(error.message);
+                toast.error(error.message);
             }
         };
 
@@ -33,18 +31,15 @@ const AgregarPremio = () => {
     const handleSorteoChange = async (sorteoId) => {
         setSorteoSeleccionado(sorteoId);
 
-        // Cargar posibles ganadores según el sorteo seleccionado
         try {
             const response = await fetch(Global.url + `sorteo/${sorteoId}/ganadores`, {
-                headers: {
-                    'Authorization': token
-                }
+                headers: { 'Authorization': token }
             });
             if (!response.ok) throw new Error('Error al cargar ganadores');
             const data = await response.json();
             setGanadores(data.ganadores);
         } catch (error) {
-            console.error(error.message);
+            toast.error(error.message);
         }
     };
 
@@ -67,22 +62,21 @@ const AgregarPremio = () => {
 
             const data = await response.json();
             if (response.ok) {
-                setMensaje('Premio agregado exitosamente');
+                toast.success('Premio agregado exitosamente');
                 setDescripcion('');
                 setSorteoSeleccionado('');
                 setGanadorSeleccionado('');
             } else {
-                setMensaje(data.message || 'Error al agregar el premio');
+                toast.error(data.message || 'Error al agregar el premio');
             }
         } catch (error) {
-            setMensaje('Error en la conexión con el servidor');
+            toast.error('Error en la conexión con el servidor');
         }
     };
 
     return (
         <div className="form-container">
             <h2>Agregar Premio</h2>
-            {mensaje && <p>{mensaje}</p>}
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="descripcion">Descripción del Premio</label>
@@ -111,8 +105,12 @@ const AgregarPremio = () => {
                         ))}
                     </select>
                 </div>
+
                 <button type="submit">Agregar Premio</button>
             </form>
+
+            {/* Contenedor de notificaciones */}
+            <ToastContainer position="top-right" autoClose={3000} />
         </div>
     );
 };

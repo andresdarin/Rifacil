@@ -15,10 +15,6 @@ export const ListadoSorteos = () => {
                     },
                 });
 
-                if (!response.ok) {
-                    throw new Error("No se pudo obtener el próximo sorteo");
-                }
-
                 const data = await response.json();
                 const sorteos = data.sorteos;
 
@@ -26,10 +22,10 @@ export const ListadoSorteos = () => {
                 if (sorteos && sorteos.length > 0) {
                     setProximoSorteo(sorteos[0]); // Toma el primer sorteo futuro
                 } else {
-                    setError("No hay sorteos futuros disponibles.");
+                    setError("No hay próximo sorteo disponible.");
                 }
             } catch (err) {
-                setError(err.message);
+                setError("No hay próximo sorteo disponible.");
             }
         };
 
@@ -37,7 +33,11 @@ export const ListadoSorteos = () => {
     }, []);
 
     if (error) {
-        return <div>Error: {error}</div>;
+        return (
+            <div className="error__sorteo">
+                😢 {error}
+            </div>
+        );
     }
 
     if (!proximoSorteo) {
@@ -52,21 +52,18 @@ export const ListadoSorteos = () => {
                     {new Date(proximoSorteo.fechaSorteo).toLocaleDateString()}
                 </h2>
             </div>
-            <div className="sorteo__container">
-                <div className="premios-list">
-                    <h3>Premios</h3>
-                    <ul>
-                        {proximoSorteo.premios.map((premio, index) => (
-                            <li key={premio.id}>
-                                <strong>{`${index + 1}º Premio: ${premio.nombre}`}</strong>
-                                {/* Muestra la descripción si existe */}
-                                <p className="premio-descripcion">
-                                    {premio.descripcion || "Sin descripción disponible"}
-                                </p>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+            <div className="premios-list">
+                <h3>Premios</h3>
+                <ul>
+                    {proximoSorteo.premios.map((premio, index) => (
+                        <li key={premio.id}>
+                            <strong>{`${index + 1}º Premio: ${premio.nombre}`}</strong>
+                            <p className="premio-descripcion">
+                                {premio.descripcion || "Sin descripción disponible"}
+                            </p>
+                        </li>
+                    ))}
+                </ul>
             </div>
         </div>
     );

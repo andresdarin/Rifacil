@@ -1,12 +1,13 @@
 import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Header } from './Header';
+import Footer from '../footer/Footer';
 
 export const PublicLayout = () => {
     const location = useLocation();
 
-    // Define las rutas donde el Header no debería mostrarse
-    const hideHeaderPaths = ['/login', '/registro', '/recover-pass'];
+    // Estas son las rutas donde el Header no debería mostrarse
+    const hideHeaderPaths = ['/', '/login', '/registro', '/recover-pass'];
 
     // Verifica si la ruta actual es '/reset-password/' seguido de cualquier token
     const isResetPasswordPath = location.pathname.startsWith('/reset-password/');
@@ -21,8 +22,9 @@ export const PublicLayout = () => {
 
             {/* Contenido Principal */}
             <section className='layout__content'>
-                <Outlet />
+                <Outlet /> {/* ← acá se renderiza la ruta hija de la configuración de react-router */}
             </section>
+            <Footer />
         </>
     );
 };

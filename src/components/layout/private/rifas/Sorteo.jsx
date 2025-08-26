@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
+import { format, parseISO } from 'date-fns';
 import { Global } from '../../../../helpers/Global';
 
 registerLocale('es', es);
@@ -15,35 +16,29 @@ export const Sorteo = () => {
     const token = localStorage.getItem('token');
 
     useEffect(() => {
-        document.body.style.backgroundImage = "url('/src/assets/img/BackgroundLong.png')";
         document.body.style.backgroundSize = "cover";
         document.body.style.backgroundPosition = "center";
-
-        return () => {
-            document.body.style.backgroundImage = '';
-        };
+        return () => { document.body.style.backgroundImage = ''; };
     }, []);
 
-    const handleDateChange = (date) => {
-        setFechaSeleccionada(date);
-    };
+    const handleDateChange = date => setFechaSeleccionada(date);
 
-    const agendarSorteo = async (e) => {
+    const agendarSorteo = async e => {
         e.preventDefault();
+        if (!fechaSeleccionada) {
+            setError('Debes seleccionar una fecha para el sorteo.');
+            return;
+        }
         setLoading(true);
         setError(null);
         setResultado(null);
 
+        const fechaSorteo = `${fechaSeleccionada.getFullYear()}-${String(
+            fechaSeleccionada.getMonth() + 1
+        ).padStart(2, '0')}-${String(fechaSeleccionada.getDate()).padStart(2, '0')}`;
+
         try {
-            const fechaSorteo = fechaSeleccionada
-                ? fechaSeleccionada.toISOString().split('T')[0] // Formato YYYY-MM-DD
-                : null;
-
-            if (!fechaSorteo) {
-                throw new Error('Debes seleccionar una fecha para el sorteo.');
-            }
-
-            const response = await fetch(Global.url + 'sorteo/generarSorteo', {
+            const resp = await fetch(Global.url + 'sorteo/generarSorteo', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -52,13 +47,10 @@ export const Sorteo = () => {
                 body: JSON.stringify({ fechaSorteo }),
             });
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || 'Error al agendar el sorteo.');
-            }
+            const { sorteo, message } = await resp.json();
+            if (!resp.ok) throw new Error(message);
 
-            const data = await response.json();
-            setResultado({ ...data, fechaSorteo });
+            setResultado(sorteo);
         } catch (err) {
             setError(err.message);
         } finally {
@@ -68,18 +60,16 @@ export const Sorteo = () => {
 
     return (
         <div className='sorteo-container'>
-            <div className="container-banner__vendedor">
-                <header className="header__vendedor">Agendar Sorteo</header>
+            <div className="container-banner__productos">
+                <header className="header__vendedor header__sortear">Agendar Sorteo</header>
             </div>
-
             <div className="form-container">
                 <form onSubmit={agendarSorteo}>
                     <div className='calendar_container'>
                         <DatePicker
                             selected={fechaSeleccionada}
                             onChange={handleDateChange}
-                            dateFormat="dd/MM/yyyy"
-                            className='date-picker_sorteo'
+                            dateFormat="dd.MM.yyyy"
                             locale="es"
                             inline
                         />
@@ -88,11 +78,19 @@ export const Sorteo = () => {
                         {loading ? 'Agendando sorteo...' : 'Agendar Sorteo'}
                     </button>
                 </form>
+
                 {error && <p className='card_sorteo-agendado csa_p'>{error}</p>}
+
                 {resultado && (
                     <div className='card_sorteo-agendado'>
                         <h3>¡Sorteo agendado con éxito!</h3>
-                        <h4>{new Date(resultado.fechaSorteo).toLocaleDateString('es-ES')}</h4>
+                        <h4>
+                            {format(
+                                parseISO(resultado.fechaSorteo),
+                                'dd.MM.yy',
+                                { locale: es }
+                            )}
+                        </h4>
                     </div>
                 )}
             </div>
