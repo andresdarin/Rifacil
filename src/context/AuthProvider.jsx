@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { Global } from '../helpers/Global';
+import { Global } from '@/services/config';
 
 // Crear el contexto de autenticación
 export const AuthContext = createContext();
@@ -81,7 +81,7 @@ const AuthProvider = ({ children }) => {
                 setAuth({});
             }
         } else {
-            console.error("No existe el user ID");
+            console.error("User ID is undefined");
         }
 
         setLoading(false);

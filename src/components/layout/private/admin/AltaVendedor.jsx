@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useForm } from '../../../../hooks/useForm';
-import { Global } from '../../../../helpers/Global';
+import { Global } from '@/services/config';
 
 export const AltaVendedor = () => {
     const { form, changed } = useForm({})

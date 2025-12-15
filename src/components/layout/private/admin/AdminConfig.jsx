@@ -1,8 +1,8 @@
 // src/components/admin/AdminConfig.jsx
 import React, { useState, useEffect, useRef, useContext } from 'react';
-import { AuthContext } from '../../../../context/AuthProvider';
-import { Global } from '../../../../helpers/Global';
-import avatarPreviewImg from '../../../../assets/img/Default.png';
+import { AuthContext } from '@/context/AuthProvider';
+import { Global } from '@/services/config';
+import avatarPreviewImg from '@/assets/img/Default.png';
 import { useNavigate } from 'react-router-dom';
 
 export const AdminConfig = () => {

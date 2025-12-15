@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Global } from '../../../../helpers/Global';
-import MetaProgreso from './Profile/MetaProgreso';
-import { RifasAsignadas } from './Profile/RifasAsignadas';
-import { Clientes } from './Profile/Clientes';
+import { Global } from '@/services/config';
+import MetaProgreso from './Profile/MetaProgreso.jsx';
+import { RifasAsignadas } from './Profile/RifasAsignadas.jsx';
+import { Clientes } from './Profile/Clientes.jsx';
 
 export const Profile = () => {
     const { id } = useParams();

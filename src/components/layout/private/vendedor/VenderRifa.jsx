@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Global } from '../../../../helpers/Global';
+import { Global } from '@/services/config';
 
 export const VenderRifa = () => {
     const [rifas, setRifas] = useState([]);
