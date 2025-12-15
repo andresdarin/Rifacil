@@ -15,7 +15,6 @@ import Contacto from '../components/user/Contact.jsx';
 import { RecoverPass } from '../components/user/RecoverPass.jsx';
 import { ResetPass } from '../components/user/ResetPass.jsx';
 import { AdminConfig } from '../components/layout/private/admin/AdminConfig.jsx';
-import { Rifas } from '../components/layout/private/rifas/Rifas.jsx';
 import { CrearRifa } from '../components/layout/private/rifas/CrearRifa.jsx';
 import { Historial } from '../components/layout/private/rifas/Historial.jsx';
 import { Sorteo } from '../components/layout/private/rifas/Sorteo.jsx';

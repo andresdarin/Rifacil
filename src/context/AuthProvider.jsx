@@ -81,7 +81,7 @@ const AuthProvider = ({ children }) => {
                 setAuth({});
             }
         } else {
-            console.error("No existe el user ID");
+            console.error("User ID is undefined");
         }
 
         setLoading(false);

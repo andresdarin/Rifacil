@@ -496,51 +496,77 @@ body,
     flex-direction: column;
 }
 
+.banner-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+}
+
+.year-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: -20px;
+}
+
 .header__landing {
-    margin-bottom: 0;
-    font-size: 200px;
+    margin: 0;
+    font-size: clamp(60px, 12vw, 200px);
     color: var(--colorWhite);
     text-align: center;
-    margin-top: -75px;
-    margin-bottom: -40px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-shadow:
+        2px 2px 4px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(9, 222, 9, 0.5);
+    line-height: 1.1;
 }
 
 .year__landing {
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-    padding: 0;
-    margin-left: 11px;
-    margin-bottom: -30px;
-    font-size: 50px;
+    display: inline-block;
+    font-size: clamp(24px, 4vw, 50px);
     color: var(--color1);
     text-align: center;
+    font-weight: 700;
     text-shadow:
         0 0 10px var(--color1),
         0 0 10px var(--colorSuccess),
         0 0 20px var(--colorSuccess),
         0 0 40px var(--colorSuccess);
+    line-height: 1;
 }
 
+.year__landing-2 {
+    margin-left: 0;
+}
 
 .subtitle__landing {
-    margin-top: 0;
-    font-size: 35px;
-    color: white;
+    margin-top: 20px;
+    font-size: clamp(18px, 3vw, 35px);
+    color: var(--colorWhite);
     text-align: center;
+    font-weight: 400;
     text-shadow:
+        2px 2px 4px rgba(0, 0, 0, 0.7),
         0 0 10px var(--color1),
         0 0 10px var(--colorSuccess),
-        0 0 20px var(--colorSuccess),
-        0 0 40px var(--colorSuccess);
+        0 0 20px var(--colorSuccess);
+    letter-spacing: 1px;
 }
 
 .container-banner {
-    width: 100vw;
-    height: 45vh;
+    width: 100%;
+    min-height: 500px;
+    height: 50vh;
+    max-height: 700px;
     background-image: url('../img/Banner.jpg');
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -548,47 +574,102 @@ body,
     color: white;
     text-align: center;
     box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+
+.container-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.1) 100%);
+    z-index: 0;
 }
 
 .columns {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: space-between;
-    flex-grow: 1;
     width: 100%;
     box-sizing: border-box;
-    color: black;
-    background-color: white;
+    margin: 0;
+    padding: 0;
 }
 
 .column {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 100%;
-    max-width: 50%;
-    min-height: 40rem;
-    padding: 20px;
+    justify-content: center;
+    width: 50%;
+    min-height: 500px;
+    padding: 0;
     box-sizing: border-box;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    margin: 0;
+    position: relative;
     overflow: hidden;
 }
 
+.column-content {
+    padding: 60px 50px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 2;
+}
 
-/* Imágenes de fondo para las columnas */
+.column1,
+.column4,
+.column5 {
+    background-image: url('../img/ImgLP1.jpg');
+}
+
 .column1 {
     background-image: url('../img/ImgLP1.jpg');
 }
 
 .column2 {
+    background-color: rgba(32, 64, 69, 0.95);
     background-image: url('../img/ImgLP2.png');
+    background-blend-mode: overlay;
+}
+
+.column2::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(32, 64, 69, 0.85) 0%, rgba(32, 64, 69, 0.75) 100%);
+    z-index: 1;
 }
 
 .column3 {
+    background-color: rgba(32, 64, 69, 0.95);
     background-image: url('../img/ImgLP2.png');
+    background-blend-mode: overlay;
+}
+
+.column3::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(32, 64, 69, 0.85) 0%, rgba(32, 64, 69, 0.75) 100%);
+    z-index: 1;
 }
 
 .column4 {
@@ -600,48 +681,67 @@ body,
 }
 
 .column6 {
+    background-color: rgba(32, 64, 69, 0.95);
     background-image: url('../img/ImgLP2.png');
+    background-blend-mode: overlay;
+}
+
+.column6::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(32, 64, 69, 0.85) 0%, rgba(32, 64, 69, 0.75) 100%);
+    z-index: 1;
 }
 
 .article_title {
     text-transform: uppercase;
-    font-size: 100px;
-    line-height: 1.0;
+    font-size: clamp(32px, 5vw, 100px);
+    line-height: 1.1;
+    font-weight: 700;
+    margin: 20px 0;
+    color: var(--colorWhite);
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+    letter-spacing: 2px;
 }
 
 .article_subtitle {
     text-transform: uppercase;
-    font-size: 40px;
-    align-self: center;
+    font-size: clamp(20px, 2.5vw, 40px);
+    align-self: flex-start;
     color: var(--colorWhite);
-
+    font-weight: 600;
+    margin: 0 0 15px 0;
     text-shadow:
+        2px 2px 4px rgba(0, 0, 0, 0.7),
         0 0 10px var(--color1),
         0 0 10px var(--colorSuccess),
-        0 0 20px var(--colorSuccess),
-        0 0 40px var(--colorSuccess);
-
+        0 0 20px var(--colorSuccess);
     -webkit-text-stroke: 1px var(--colorSuccess);
+    letter-spacing: 1px;
 }
 
 .article_under-title {
-    margin: 20px 0px 20px 0px;
+    margin: 15px 0;
     text-transform: uppercase;
-    font-size: 25px;
+    font-size: clamp(14px, 1.5vw, 25px);
+    color: var(--colorWhite);
+    font-weight: 400;
+    line-height: 1.4;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .article_paragraph {
-    margin-top: 20px 0px 20px 0px;
-    justify-content: start;
+    margin: 20px 0 0 0;
     text-align: left;
-}
-
-.column:first-child {
-    margin-left: 0;
-}
-
-.column:last-child {
-    margin-right: 0;
+    font-size: clamp(14px, 1.2vw, 18px);
+    color: var(--colorWhite);
+    line-height: 1.6;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    max-width: 90%;
 }
 
 /*Alta Vendedor*/
