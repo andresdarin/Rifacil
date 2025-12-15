@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Global } from '../../../../helpers/Global';
+import { Global } from '@/services/config';
 
 export const HistorialVendedor = () => {
     const [ventas, setVentas] = useState([]);

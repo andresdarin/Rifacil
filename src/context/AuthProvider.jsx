@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { Global } from '../helpers/Global';
+import { Global } from '@/services/config';
 
 // Crear el contexto de autenticación
 export const AuthContext = createContext();

@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../../../../context/AuthProvider';
-import { Global } from '../../../../helpers/Global';
-import { ListadoVendedores } from '../vendedor/ListadoVendedores';
-import ListadoProductos from '../../../productos/ListadoProductos';
-import AltaProducto from '../../../productos/AltaProducto';
-import Tendencias from '../../../productos/Tendencias';
+import { AuthContext } from '@/context/AuthProvider';
+import { Global } from '@/services/config';
+import { ListadoVendedores } from '../vendedor/ListadoVendedores.jsx';
+import ListadoProductos from '@/features/productos/ListadoProductos';
+import AltaProducto from '@/features/productos/AltaProducto';
+import Tendencias from '@/features/productos/Tendencias';
 
 export const Profile = () => {
 	const { auth, loading } = useContext(AuthContext);

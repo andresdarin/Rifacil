@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Global } from '../../../helpers/Global';
+import { Global } from '@/services/config';
 
 export const ListadoSorteos = () => {
     const [proximoSorteo, setProximoSorteo] = useState(null);
